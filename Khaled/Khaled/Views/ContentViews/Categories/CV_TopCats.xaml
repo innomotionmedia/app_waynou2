@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:helpers="clr-namespace:Khaled.Helpers"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Khaled.Views.ContentViews.Categories.CV_TopCats">
+    <ContentView.Content>
+        <StackLayout HeightRequest="180">
+           <Label Text="{helpers:Translate TOPCATS}" TextColor="White"  FontSize="18" FontFamily="ExtraBoldText"/>
+            <CarouselView  x:Name="carouselview"
+                           HorizontalScrollBarVisibility="Never"
+                           Loop="False">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView Padding="3,0,3,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Frame Padding="10" BackgroundColor="{Binding backgroundColor}" HeightRequest="120"  IsClippedToBounds="True" HasShadow="False">
+                                    <StackLayout>
+                                        <Image HeightRequest="70" Source="{Binding thumbnailL}"/>
+                                        <Label Text="{Binding nameL}"/>
+                                    </StackLayout>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="left"  Tapped="TapGestureRecognizer_Tapped"/>
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                                <Frame Padding="10" BackgroundColor="{Binding backgroundColor2}" HeightRequest="120" Grid.Column="1"  IsClippedToBounds="True" HasShadow="False">
+                                    <StackLayout>
+                                        <Image HeightRequest="70" Source="{Binding thumbnailM}"/>
+                                        <Label Text="{Binding nameM}"/>
+                                    </StackLayout>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="mid"  Tapped="TapGestureRecognizer_Tapped"/>
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                                <Frame Padding="10" BackgroundColor="{Binding backgroundColor3}" HeightRequest="120" Grid.Column="2"  IsClippedToBounds="True" HasShadow="False">
+                                    <StackLayout>
+                                        <Image HeightRequest="70" Source="{Binding thumbnailR}"/>
+                                        <Label Text="{Binding nameR}"/>
+                                    </StackLayout>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="right"  Tapped="TapGestureRecognizer_Tapped"/>
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                            </Grid>
+                        </ContentView> 
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
+

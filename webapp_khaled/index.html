@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Anzeigen</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+<div class="container">
+    <img class="mainPic" id="mainpicture"/>
+    <div class="paddedContainer">
+        <h1 id="label_title"></h1>
+    </div>
+    <div class="divider"></div>
+    <div class="center_table">
+        <table>
+            <tr>
+                <td>
+                    <div onclick="OpenTelephone()">
+                        <a href="">
+                            <img class="img_icons" src="./img/btn_telephone.png"/>
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div onclick="OpenBrowserWithAdresse()">
+                        <a href="">
+                            <img class="img_icons" src="./img/btn_gps.png"/>
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div onclick="OpenEmailService()">
+                        <a href="">
+                            <img class="img_icons" src="./img/btn_mail.png"/>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="paddedContainer">
+        <p id="label_description"></p>
+        <table>
+            <tr>
+                <td>
+                    <div onclick="OpenBrowserWithAdresse()">
+                        <a href="">
+                            <img class="img_icons" src="./img/btn_gps.png"/>
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <p id="label_addresse"></p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img class="img_icons" src="./img/btn_clock.png"/>
+                </td>
+                <td>
+                    <p id="label_hours"></p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div onclick="OpenTelephone()">
+                        <a href="">
+                            <img class="img_icons" src="./img/btn_telephone.png"/>
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <p id="label_telephone"></p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div onclick="OpenEmailService()">
+                        <a href="">
+                            <img class="img_icons" src="./img/btn_mail.png"/>
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <p id="label_email"></p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div onclick="OpenWebPage()">
+                        <a href="">
+                            <img class="img_icons" src="./img/btn_web.png"/>
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <p id="label_web"></p>
+                </td>
+            </tr>
+        </table>
+        
+    </div>
+</div>
+</body>
+<script src="index.js"></script>
+</html> 

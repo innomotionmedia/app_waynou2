@@ -1,0 +1,94 @@
+html *
+ {
+	font-family: FontReg; /*general font*/
+	scroll-behavior: smooth;
+  }
+
+  @font-face {
+    font-family: FontBold;
+    src: url('Raleway-Bold.ttf');
+}
+
+@font-face {
+    font-family: FontReg;
+    src: url('Raleway-Regular.ttf');
+}
+
+@font-face {
+    font-family: FontExtraBold;
+    src: url('Raleway-ExtraBold.ttf');
+}
+
+/* MainLayout */
+body{
+	margin: 0;
+	color:  black; /*global textcolor*/
+}
+
+h1{
+	font-size: 4em;
+}
+
+p{
+	font-size: 2em;
+}
+
+.divider{
+	height: 1em; 
+}
+
+.container {
+	background-color: white;
+    height: auto;
+	width: 50%;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+}
+
+.paddedContainer{
+	padding: 2%;
+}
+
+.mainPic{
+	width:100%;
+}
+
+.img_icons{
+	width: 4em;
+}
+
+tr > * + * {
+	padding-left: 2em;
+  }
+
+  tr.spaceUnder>td {
+	padding-bottom: 1em;
+  }
+
+  .center_table{
+	display: flex;
+	justify-content: center;
+  }
+
+
+/* media for half screen and phones */
+@media (max-width: 1000px){
+
+	.container {
+		width: 100%; /*can be in percentage also.*/
+		height: auto;
+		margin: 0 auto;
+		padding: 0;
+		position: relative;
+	  }
+
+
+	.divider{
+		height: 3em; 
+	}
+
+
+}
+
+

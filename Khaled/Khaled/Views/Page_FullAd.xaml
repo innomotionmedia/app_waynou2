@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    BackgroundColor="White"
+    xmlns:helpers="clr-namespace:Khaled.Helpers"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+    x:Class="Khaled.Views.Page_FullAd">
+    <ContentPage.Content>
+        <RefreshView IsRefreshing="False" x:Name="refreshview_view" Refreshing="RefreshView_Refreshing">
+           <ScrollView>
+                <StackLayout Spacing="0">
+                    <Image Aspect="AspectFill" x:Name="img_mainPic"/>
+                    <BoxView HeightRequest="1" BackgroundColor="{StaticResource LightGray}"/>
+                    <Grid HeightRequest="50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Frame x:Name="frame_telephone" Padding="10" HasShadow="False">
+                            <Image Source="btn_telephone" VerticalOptions="Center" HorizontalOptions="Center"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Tapped_Quicks"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Frame x:Name="frame_gps" Grid.Column="1" Padding="10"  HasShadow="False">
+                            <Image Source="btn_gps" VerticalOptions="Center" HorizontalOptions="Center"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Tapped_Quicks"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Frame x:Name="frame_mail" Margin="2" Grid.Column="2" Padding="10"  HasShadow="False">
+                            <Image Source="btn_mail" VerticalOptions="Center" HorizontalOptions="Center"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Tapped_Quicks"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Frame x:Name="frame_share" Grid.Column="3" Padding="10"  HasShadow="False">
+                            <Image Source="btn_share" VerticalOptions="Center" HorizontalOptions="Center"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Tapped_Quicks"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Frame BackgroundColor="{StaticResource MainTheme}" CornerRadius="0" x:Name="frame_heart" Grid.Column="4" Padding="10"  HasShadow="False">
+                            <abstractions:TintedImage TintColor="Transparent"
+                                                      VerticalOptions="Center"
+                                                      HorizontalOptions="Center"
+                                                      Source="img_fav"
+                                                      x:Name="img_heart"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Tapped_Quicks"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </Grid>
+                    <BoxView HeightRequest="1" BackgroundColor="{StaticResource LightGray}"/>
+                    <Grid ColumnSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Frame CornerRadius="0" Padding="5,10,5,5" x:Name="tab1" HasShadow="False" BackgroundColor="White">
+                            <Label FontSize="13"
+                                   FontAttributes="Bold"
+                                   VerticalOptions="Center"
+                                   TextColor="{StaticResource TextBlack}"
+                                   HorizontalOptions="Center"
+                                   Text="{helpers:Translate DESCRIPTION}"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Tapped_tabs"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                         <Frame CornerRadius="0" Padding="5" x:Name="tab2" HasShadow="False"  BackgroundColor="{StaticResource TabGray}" Grid.Column="1">
+                            <Label FontSize="13"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextBlack}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"
+                                   Text="{helpers:Translate ACTIONS}"/>
+                             <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Tapped_tabs"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                         <Frame CornerRadius="0" Padding="5" x:Name="tab3" HasShadow="False"  BackgroundColor="{StaticResource TabGray}"  Grid.Column="2" >
+                            <Label FontSize="13"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextBlack}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"
+                                   Text="{helpers:Translate BOOKSLOT}"/>
+                             <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Tapped_tabs"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </Grid>
+                    <!--changeable layouts-->
+                    <StackLayout Margin="0,10,0,0" BackgroundColor="White" Padding="15" x:Name="layout1">
+                        <Label TextColor="{StaticResource TextBlack}" x:Name="label_description"/>
+                        <Grid Margin="0,30,0,0" RowSpacing="15" BackgroundColor="Transparent">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label x:Name="label_adresse"
+                                   VerticalOptions="Center"
+                                   FontSize="14"
+                                   Grid.Row="0" Grid.Column="1">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Tapped_Quicks"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label x:Name="label_hours"
+                                   VerticalOptions="Center"
+                                   FontSize="14"
+                                   Grid.Row="1" Grid.Column="1"/>
+                            <Label x:Name="label_telephone"
+                                   VerticalOptions="Center"
+                                   FontSize="14"
+                                   Grid.Row="2" Grid.Column="1">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Tapped_Quicks"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label x:Name="label_email"
+                                   VerticalOptions="Center"
+                                   FontSize="14"
+                                   Grid.Row="3" Grid.Column="1">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Tapped_Quicks"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label x:Name="label_web"
+                                   VerticalOptions="Center"
+                                   FontSize="14"
+                                   Grid.Row="4" Grid.Column="1">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Tapped_Quicks"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Image Source="btn_gps"
+                                   Grid.Row="0" Grid.Column="0"/>
+                            <Image Source="btn_clock"
+                                   Grid.Row="1" Grid.Column="0"/>
+                            <Image Source="btn_telephone"
+                                   Grid.Row="2" Grid.Column="0"/>
+                            <Image Source="btn_mail"
+                                   Margin="3"
+                                   Grid.Row="3" Grid.Column="0"/>
+                            <Image Source="btn_web"
+                                   Grid.Row="4" Grid.Column="0"/>
+                        </Grid>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>

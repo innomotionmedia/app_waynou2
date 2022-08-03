@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:helpers="clr-namespace:Khaled.Helpers"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Khaled.Views.ContentViews.CV_FilterHeader">
+    <NavigationPage.TitleView>
+        <Frame CornerRadius="8" Margin="10,1,10,2" Padding="0" IsClippedToBounds="True" HasShadow="False" BackgroundColor="#f7f5f5">
+            <ScrollView HorizontalScrollBarVisibility="Never" Orientation="Horizontal">
+                <Grid ColumnSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Frame Grid.Column="0" Margin="5" CornerRadius="6" BackgroundColor="Black" HasShadow="False" Padding="5" IsClippedToBounds="True">
+                        <Label Text="{helpers:Translate City}"
+                               FontSize="14"
+                               x:Name="label_filter_city"
+                               VerticalOptions="Center"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               TextColor="White"/>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Frame Grid.Column="1" IsVisible="false" x:Name="frame_radiusFilter" Margin="5" CornerRadius="6" BackgroundColor="Black" HasShadow="False" Padding="5" IsClippedToBounds="True">
+                        <Label Text="+5 km"
+                               FontSize="14"
+                               x:Name="label_radius_filter"
+                               VerticalOptions="Center"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               TextColor="White"/>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </Frame>
+    </NavigationPage.TitleView>
+</ContentView>
+

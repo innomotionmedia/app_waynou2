@@ -1,0 +1,105 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2478" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="Com.Kumulos" Version="6.1.0" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
+    <PackageReference Include="Xamarin.Forms.Maps" Version="4.8.0.1821" />
+    <PackageReference Include="Plugin.CrossPlatformTintedImage" Version="1.0.0" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.2" />
+    <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="20.2.0.39" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Com.Kumulos" />
+    <None Remove="Helpers\" />
+    <None Remove="CustomComps\" />
+    <None Remove="Backend\" />
+    <None Remove="Backend\APIs\" />
+    <None Remove="Resources\" />
+    <None Remove="Views\" />
+    <None Remove="Views\MainMenu\" />
+    <None Remove="Views\ContentViews\" />
+    <None Remove="Rg.Plugins.Popup" />
+    <None Remove="Views\PopUps\" />
+    <None Remove="Xamarin.Forms.Maps" />
+    <None Remove="Views\ContentViews\Categories\" />
+    <None Remove="Views\ContentViews\MainMenuTabs\" />
+    <None Remove="Plugin.CrossPlatformTintedImage" />
+    <None Remove="Backend\Databases\" />
+    <None Remove="sqlite-net-pcl" />
+    <None Remove="Resources\Fonts\" />
+    <None Remove="Resources\Fonts\Raleway-Regular.ttf" />
+    <None Remove="Resources\Fonts\Raleway-ExtraBold.ttf" />
+    <None Remove="Resources\Fonts\Raleway-Bold.ttf" />
+    <None Remove="Xamarin.CommunityToolkit" />
+    <None Remove="Syncfusion.Xamarin.SfComboBox" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+    <Folder Include="CustomComps\" />
+    <Folder Include="Backend\" />
+    <Folder Include="Backend\APIs\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Views\" />
+    <Folder Include="Views\MainMenu\" />
+    <Folder Include="Views\ContentViews\" />
+    <Folder Include="Views\PopUps\" />
+    <Folder Include="Views\ContentViews\Categories\" />
+    <Folder Include="Views\ContentViews\AdDisplay\" />
+    <Folder Include="Backend\Databases\" />
+    <Folder Include="Resources\Fonts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\ContentViews\CV_PickCity.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\Raleway-Regular.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Raleway-ExtraBold.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Raleway-Bold.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\AppResources.DE.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResources.ar.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\AppResources.de.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Views\ContentViews\CV_PickCity.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources\AppResources.Designer.cs">
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResources.ar.Designer.cs">
+      <DependentUpon>AppResources.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppResources.de.Designer.cs">
+      <DependentUpon>AppResources.de.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+   
+</Project>

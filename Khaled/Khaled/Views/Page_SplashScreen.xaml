@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="{StaticResource MainTheme}"
+    x:Class="Khaled.Views.Page_SplashScreen">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".5*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height=".8*"/>
+            </Grid.RowDefinitions>
+            <Image x:Name="image_logo" Grid.Row="1" IsVisible="false" Margin="70,10,70,0" Source="img_logo"/>
+            <Label VerticalOptions="Start" Margin="0,0,0,0"
+                   HorizontalOptions="Center" FontSize="80"
+                   TextColor="Black"
+                   FontFamily="ExtraBoldText" Text="Waynou" Grid.Row="2"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+

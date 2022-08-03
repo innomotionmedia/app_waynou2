@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Khaled.Views.ContentViews"
+    xmlns:helpers="clr-namespace:Khaled.Helpers"
+    x:Class="Khaled.Views.ContentViews.MainMenuTabs.CV_AllAdsRes">
+    <ContentView.Content>
+        <StackLayout>
+            <StackLayout>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                    </Grid.RowDefinitions>
+                    <Frame CornerRadius="8" Margin="10" Padding="0" IsClippedToBounds="True" HasShadow="False" BackgroundColor="#f7f5f5">
+                        <ScrollView HorizontalScrollBarVisibility="Never" Orientation="Horizontal">
+                            <Grid ColumnSpacing="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Frame Grid.Column="0" Margin="5" CornerRadius="6" BackgroundColor="Black" HasShadow="False" Padding="5" IsClippedToBounds="True">
+                                    <Label Text="{helpers:Translate City}"
+                                           FontSize="14"
+                                           x:Name="label_filter_city"
+                                           VerticalOptions="Center"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"
+                                           TextColor="White"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TAPPED_frame"/>
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                                <Frame Grid.Column="1" IsVisible="false" x:Name="frame_radiusFilter" Margin="5" CornerRadius="6" BackgroundColor="Black" HasShadow="False" Padding="5" IsClippedToBounds="True">
+                                    <Label Text="+5 km"
+                                           FontSize="14"
+                                           x:Name="label_radius_filter"
+                                           VerticalOptions="Center"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"
+                                           TextColor="White"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TAPPED_radius"/>
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                            </Grid>
+                        </ScrollView>
+                    </Frame>
+                </Grid>
+            </StackLayout>
+            <StackLayout Padding="20,10,20,10" IsVisible="false" x:Name="layout_slider">
+                <Slider ValueChanged="Slider_ValueChanged"
+                        Minimum="0"
+                        x:Name="slider_sliderRadius"
+                        Maximum="200"                
+                        Margin="0,10,0,0"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label VerticalOptions="Center" Text="{helpers:Translate Within}"/>
+                    <Label Grid.Column="1"
+                           VerticalOptions="Center"
+                           x:Name="label_radius"
+                           Text="5 km"
+                           />
+                    <Grid Grid.Column="2" ColumnSpacing="10" HorizontalOptions="End">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Clicked="Clicked_AcceptRadius" Text="{helpers:Translate Accept}"/>
+                        <Button Clicked="Clicked_AbortRadius" Grid.Column="1" Text="{helpers:Translate Abort}"/>
+                    </Grid>
+                </Grid>
+            </StackLayout>
+            <Grid>
+                <Label Text="{helpers:Translate DidntFindAnything}"
+                       VerticalOptions="Center"
+                       Margin="50,0,50,0"
+                       x:Name="label_empty"
+                       HorizontalOptions="Center"/>
+                <ListView
+                    VerticalScrollBarVisibility="Never"
+                    SeparatorVisibility="Default"
+                    ItemTapped="listview_mainView_ItemTapped"
+                    ItemAppearing="listview_mainView_ItemAppearing"
+                    Refreshing="listview_mainView_Refreshing"
+                    IsPullToRefreshEnabled="True"
+                    BackgroundColor="Transparent"
+                    HasUnevenRows="True"
+                    x:Name="listview_mainView">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ContentView Margin="0,0,0,0"> <!--still the only way to add an effective divider-->
+                                    <views:CV_MainListLayout/>
+                                </ContentView>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>   
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
+

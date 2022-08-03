@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             x:Name="mainPage"
+             BackgroundColor="{StaticResource MainTheme}"
+             FlowDirection="{x:Static Device.FlowDirection}"
+             xmlns:helpers="clr-namespace:Khaled.Helpers"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Khaled.MainPage">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="40"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height=".8*"/>
+        </Grid.RowDefinitions>
+        <StackLayout Grid.Row="1" VerticalOptions="Center" Grid.Column="1">
+            <Image x:Name="image_logo" Margin="70,10,70,0" Source="img_logo"/>
+            <Grid Margin="0,20,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <CarouselView  x:Name="carouselview"
+                           Grid.Column="1"
+                           Margin="10,0,10,0"
+                           HorizontalOptions="Center"
+                           CurrentItemChanged="carouselview_CurrentItemChanged"
+                           HorizontalScrollBarVisibility="Never"
+                           Loop="True">
+                    <CarouselView.ItemTemplate>
+                       <DataTemplate>
+                           <ContentView Padding="3,0,3,0">
+                               <Label 
+                                   HorizontalOptions="Center" FontSize="40"
+                                   TextColor="Black"
+                                   FontFamily="ExtraBoldText"
+                                   Text="{Binding languageName}"/>
+                           </ContentView> 
+                       </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <Button Text="&lt;" Clicked="Button_Clicked" FontSize="22" x:Name="btn_linguaLeft" HorizontalOptions="Center" Margin="0,2,0,0" VerticalOptions="Start"  Grid.Column="0"/>
+                <Button Text=">" Clicked="Button_Clicked" FontSize="22" x:Name="btn_linguaRight" HorizontalOptions="Center" Margin="0,2,0,0"  VerticalOptions="Start" Grid.Column="2"/>
+            </Grid>
+        </StackLayout>
+        <StackLayout Grid.Row="2" Grid.Column="1">
+             <Label  VerticalOptions="Center"
+                     HorizontalTextAlignment="Center"
+                 HorizontalOptions="Center">
+                  <Label.FormattedText>
+                     <FormattedString>
+                         <Span FontSize="12" Text="{helpers:Translate YouAreHere}" />
+                         <Span Text="&#x0a;"/>
+                         <Span FontSize="20" FontFamily="ExtraBoldText"  x:Name="label_locality" />
+                     </FormattedString>
+                    </Label.FormattedText>
+             </Label>
+            <Button Text="{helpers:Translate TakeMyGpsLocation}"
+                    Clicked="Button_Clicked"
+                    x:Name="btn_useMyLocation"
+                    VerticalOptions="Center"
+                    Padding="10"
+                    Margin="0,20,0,0"
+                    BackgroundColor="White"
+                    HorizontalOptions="Fill"
+                    FontSize="20"/>       
+            <Label Text="{helpers:Translate Or}"
+                   Margin="0,20,0,10"
+                   HorizontalOptions="Center"/>
+            <Button Text="{helpers:Translate PickFromCity}"
+                    Clicked="Button_Clicked"
+                    x:Name="open_cityPicker"
+                    VerticalOptions="Center"
+                    Padding="10"
+                    HorizontalOptions="Fill"                 
+                    BackgroundColor="Transparent"
+                    FontSize="20"/>
+        </StackLayout>
+    </Grid>        
+</ContentPage>
+

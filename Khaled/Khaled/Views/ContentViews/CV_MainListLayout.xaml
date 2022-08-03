@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+    x:Class="Khaled.Views.ContentViews.CV_MainListLayout">
+    <ContentView.Content>
+            <Frame HasShadow="False" Padding="10" BackgroundColor="White">
+                <Grid ColumnSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Frame HasShadow="False"
+                           BackgroundColor="Gainsboro"
+                           BorderColor="Black"
+                           IsClippedToBounds="True"
+                           Padding="0"
+                           CornerRadius="0">
+                        <Image Aspect="Fill" Source="{Binding imageSource_thumbnail}"/>
+                    </Frame>
+                    <StackLayout Grid.Column="1" Margin="10,0,0,0" >
+                        <Label 
+                               Margin="0,0,10,0"
+                               MaxLines="2"
+                               LineBreakMode="TailTruncation"
+                               FlowDirection="{Binding flowDirection}"
+                               FontAttributes="Bold"
+                               Text="{Binding title}" />
+                        <Label 
+                               Margin="0,0,10,0"
+                               MaxLines="3"
+                               FontSize="12"
+                               LineBreakMode="TailTruncation"
+                               FlowDirection="{Binding flowDirection}"
+                               Text="{Binding description}"/>
+                    </StackLayout>
+                    <Grid Grid.Column="2" VerticalOptions="FillAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <controls:TintedImage HeightRequest="30"
+                                       TintColor="{Binding tintColor}"
+                                       WidthRequest="30"
+                                       HorizontalOptions="End"
+                                       VerticalOptions="Start"
+                                       Source="img_fav.png">
+                                    <controls:TintedImage.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Tapped_Fav"/>
+                                    </controls:TintedImage.GestureRecognizers>
+                                </controls:TintedImage>
+                            </Grid>
+                            <Frame IsVisible="{Binding IsDistanceVisible}" HorizontalOptions="End" Grid.Row="1"
+                                   BackgroundColor="{StaticResource MainTheme}" HasShadow="False" CornerRadius="8" Padding="6">
+                                <Label
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"
+                                    FontSize="10"
+                                    FlowDirection="{Binding flowDirection}"
+                                    Text="{Binding distance}"
+                                /> 
+                            </Frame>
+                    </Grid>
+                </Grid>
+            </Frame>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<TabbedPage
+    BarBackgroundColor="{StaticResource MainTheme}"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Khaled.Views.ContentViews"
+    BackgroundColor="White"
+    SelectedTabColor="Black"
+    xmlns:helpers="clr-namespace:Khaled.Helpers"
+    x:Class="Khaled.Views.MainMenu.Page_MainMenuDetail">
+    <!--
+    <ContentPage x:Name="page_news"   Title="" IconImageSource="icon_news">
+        <StackLayout x:Name="layout_container_page1"/>
+    </ContentPage>
+    -->
+    <ContentPage x:Name="page_cats" Title="" IconImageSource="icon_shoppingcart">
+        <StackLayout x:Name="layout_container_page2"/>
+    </ContentPage>
+    <ContentPage Title="" x:Name="page_main"  IconImageSource="icon_home">
+       <StackLayout x:Name="layout_container_page3"/>
+    </ContentPage>
+    <!--
+    <ContentPage Title="" IconImageSource="icon_search">
+    </ContentPage>
+    -->
+        <ContentPage Title=""  x:Name="page_favs" IconImageSource="icon_profile">
+       <StackLayout x:Name="layout_container_page5"/>
+    </ContentPage>
+</TabbedPage>

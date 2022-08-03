@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    BackgroundColor="Transparent"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages1="http://rotorgames.com"
+    x:Class="Khaled.Views.PopUps.PopUp_Template">
+     <pages:PopupPage.Animation>
+        <pages1:MoveAnimation PositionIn="Bottom"
+                PositionOut="Bottom"
+                DurationIn="300"
+                DurationOut="300" />
+    </pages:PopupPage.Animation>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--multiple boxes needed to cancel popup-->
+        <BoxView TranslationY="40" BackgroundColor="Transparent">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="ClickedOnClosed"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
+        <BoxView TranslationY="20" BackgroundColor="Transparent">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="ClickedOnClosed"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
+         <BoxView TranslationY="-10" BackgroundColor="Transparent">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="ClickedOnClosed"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
+        <Frame Grid.Row="1" HasShadow="True" Padding="10" TranslationY="34">
+            <Grid x:Name="layout_mainContent"/>
+        </Frame>
+    </Grid>
+</pages:PopupPage>

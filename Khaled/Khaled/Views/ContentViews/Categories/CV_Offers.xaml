@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:helpers="clr-namespace:Khaled.Helpers"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="Khaled.Views.ContentViews.Categories.CV_Offers">
+    <ContentView.Content>
+        <StackLayout HeightRequest="150">
+           <Label TextColor="White"  Text="{helpers:Translate OFFERS}" FontSize="18" FontFamily="ExtraBoldText"/>
+            <Grid>
+                <Label IsVisible="false" Text="{helpers:Translate NoOffers}" VerticalOptions="Center" HorizontalOptions="Center" x:Name="label_nooffers" HorizontalTextAlignment="Center"  Margin="20" />
+                <CarouselView  x:Name="carouselview"
+                           Loop="False"
+                           HorizontalScrollBarVisibility="Never"
+                           CurrentItemChanged="carouselview_CurrentItemChanged">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <ContentView Padding="3,0,3,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Frame Padding="0" BackgroundColor="Transparent" IsClippedToBounds="True" HasShadow="False">
+                                        <Image Aspect="AspectFill" Source="{Binding thumbnailL}"/>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="left"  Tapped="TapGestureRecognizer_Tapped"/>
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+                                    <Frame Padding="0" BackgroundColor="Transparent" IsClippedToBounds="True" HasShadow="False" Grid.Column="1">
+                                        <Image Aspect="AspectFill" Source="{Binding thumbnailR}"/>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="right"  Tapped="TapGestureRecognizer_Tapped"/>
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+                                </Grid>
+                            </ContentView> 
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+            </Grid>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
+

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Khaled.App">
+    <Application.Resources>
+
+        <!-- Colors -->
+        <Color x:Key="MainTheme">#cccc00</Color>
+        <Color x:Key="LightGray">#999999</Color>
+        <Color x:Key="DarkGray">#666666</Color>
+        <Color x:Key="TextBlack">#333333</Color>
+        <Color x:Key="TabGray">#e6e6e6</Color>
+
+
+        <Style TargetType="Picker">
+            <Setter Property="TextColor" Value="#333333" />
+            <Setter Property="FontFamily" Value="RegText" />
+            <Setter Property="TitleColor" Value="Black" />
+        </Style>
+        <Style TargetType="Entry">
+            <Setter Property="TextColor" Value="#333333" />
+            <Setter Property="FontFamily" Value="RegText" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="#333333" />
+            <Setter Property="FontFamily" Value="RegText" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="TextColor" Value="#333333" />
+            <Setter Property="FontFamily" Value="RegText" />
+        </Style>
+         <Style TargetType="NavigationPage">
+            <Setter Property="BarBackgroundColor" Value="#cccc00"></Setter>
+            <Setter Property="BarTextColor" Value="Black"></Setter>
+        </Style>
+    </Application.Resources>
+</Application>

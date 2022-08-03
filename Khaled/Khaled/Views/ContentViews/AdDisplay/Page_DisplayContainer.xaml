@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:helpers="clr-namespace:Khaled.Helpers"
+    xmlns:views="clr-namespace:Khaled.Views.ContentViews"
+    x:Class="Khaled.Views.ContentViews.AdDisplay.Page_DisplayContainer">
+    <ContentPage.Content>
+        <StackLayout x:Name="layout_container"/>
+    </ContentPage.Content>
+</ContentPage>
+

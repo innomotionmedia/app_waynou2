@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:helpers="clr-namespace:Khaled.Helpers" xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+    x:Class="Khaled.Views.ContentViews.CV_PickCity">
+    <ContentView.Content>
+        <ScrollView>
+            <StackLayout>
+            <Label Text="{helpers:Translate PickArea}"
+                   FontSize="22"
+                   Margin="0,10,0,0"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
+            <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Switch Toggled="Switch_Toggled" x:Name="switch_main"/>
+                <Label Grid.Column="1"
+                       Margin="10,0,0,0"
+                       Text="{helpers:Translate PickFromCity}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start"/>
+            </Grid>
+            <StackLayout Margin="0,20,0,0" x:Name="layout_location">
+                <Label Text="{helpers:Translate YouAreHere}"/>
+                <Grid Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="{helpers:Translate PleaseAllowGPS}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center"/> 
+                    <Frame IsVisible="true" Grid.Column="1" CornerRadius="12" HeightRequest="300">
+                        <maps:Map x:Name="maps_map"  IsShowingUser="True" MapType="Street" />
+                    </Frame>
+                </Grid>
+            </StackLayout>
+            <StackLayout Margin="0,20,0,0" IsVisible="false" x:Name="layout_cityCenter">
+                <Picker  x:Name="picker_pickCity" Title="{helpers:Translate City}"/>
+            </StackLayout>
+            <Button Margin="0,20,0,20"
+                    Clicked="Button_Clicked"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Text="{helpers:Translate Accept}"/>
+        </StackLayout>
+        </ScrollView>
+    </ContentView.Content>
+</ContentView>
