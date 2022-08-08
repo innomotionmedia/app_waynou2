@@ -27,6 +27,15 @@ namespace Khaled.Backend.Helpers
 				centerLongitude = 9.993682,
 				radiusFromCenter = 50
 			};
+			var munich = new SupportedCities
+			{
+				displayName = AppResources.Munich,
+				name = CityNames.munich,
+				thumbnail = ImageSource.FromFile("munich_dummy.jpg"),
+				centerLatitude = 48.137154,
+				centerLongitude = 11.576124,
+				radiusFromCenter = 50
+			};
 			var missing = new SupportedCities
 			{
 				displayName = AppResources.CommingSoon,
@@ -36,9 +45,7 @@ namespace Khaled.Backend.Helpers
 			var returnList = new List<SupportedCities>();
 			returnList.Add(berlin);
 			returnList.Add(hamburg);
-			returnList.Add(missing);
-			returnList.Add(missing);
-			returnList.Add(missing);
+
 			return returnList;
 		}
 	}
@@ -58,7 +65,8 @@ namespace Khaled.Backend.Helpers
     {
 		berlin = 0,
 		hamburg = 1,
-		missing = 2
+		munich = 2,
+		missing = 3
     }
 
 
