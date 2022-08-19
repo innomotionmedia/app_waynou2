@@ -13,16 +13,300 @@
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
 
+
+<data name="NoOffers" xml:space="preserve">
+    <value> لا يوجد  عروض حالياً. ترقّبوا المزيد قريباً</value>
+    </data>
+
+    <data name="SharingText" xml:space="preserve">
+    <value> : Waynou شاهد ماذا وجدت على تطبيق </value>
+    </data>
+
+     <data name="SearchInCat" xml:space="preserve">
+    <value>إبحث في هذه الفئة</value>
+    </data>
+
+    
+
+    <data name="PickASubCat" xml:space="preserve">
+    <value>إختر فئة فرعية</value>
+    </data>
+
+    <data name="PickACategory" xml:space="preserve">
+    <value>إختر فئة</value>
+    </data>
+
+    <data name="MainMenu" xml:space="preserve">
+    <value>القائمة الرئيسيّة</value>
+    </data>
+
+    <data name="Imprint" xml:space="preserve">
+    <value>من نحن</value>
+    </data>
+
+    <data name="TermsOfUse" xml:space="preserve">
+    <value>شروط الإستخدام</value>
+    </data>
+
+    <data name="TermsAndCon" xml:space="preserve">
+    <value>الأحكام والشروط</value>
+    </data>
+
+    <data name="DSGVO" xml:space="preserve">
+    <value>سياسة الخصوصية</value>
+    </data>
+
+   <data name="Okay" xml:space="preserve">
+    <value>موافق</value>
+    </data>
+
+    <data name="GpsDenied" xml:space="preserve">
+    <value> لقد رفضت طلب الموقع. يرجى تمكينه مرة أخرى في إعدادات جهازك</value>
+    </data>
+
+    <data name="Error" xml:space="preserve">
+    <value>خطأ</value>
+    </data>
+
+    <data name="Go" xml:space="preserve">
+    <value>إذهب</value>
+    </data>
+
+     <data name="Or" xml:space="preserve">
+    <value>أو</value>
+    </data>
+
+    <data name="TakeMyGpsLocation" xml:space="preserve">
+    <value> الخاص بي GPS إستخدام موقع ال </value>
+    </data>
+
+    <data name="CommingSoon" xml:space="preserve">
+    <value>آتي قريباً</value>
+    </data>
+
+     <data name="Back" xml:space="preserve">
+    <value>رجوع</value>
+    </data>
+
+     <data name="YourGpsLocation" xml:space="preserve">
+    <value> الخاص بك GPS موقع </value>
+    </data>
+
+     <data name="Germany" xml:space="preserve">
+    <value>ألمانيا</value>
+    </data>
+
+
+    <data name="WhatAreYouLookingFor" xml:space="preserve">
+    <value>عن ماذا تبحث؟</value>
+    </data>
+
+     <data name="Berlin" xml:space="preserve">
+    <value>برلين</value>
+    </data>
+
+    <data name="WhatAreYouLookingFor" xml:space="preserve">
+    <value> عن ماذا تبحث؟</value>
+    </data>
+
+    <data name="RentAndBuyRealEstate" xml:space="preserve">
+    <value> عقارات للبيع و الإيجار</value>
+    </data>
+
+    <data name="Emergencies" xml:space="preserve">
+    <value>حالات طوارئ</value>
+    </data>
+
+    <data name="ReligiousInstitions" xml:space="preserve">
+    <value> مراكز دينية و عبادة</value>
+    </data>
+
+    <data name="AuthoritiesAndEmbassies" xml:space="preserve">
+    <value>سفارات و دوائر رسمية </value>
+    </data>
+
+    <data name="OrganizationsAndAssociations" xml:space="preserve">
+    <value>منظمات وجمعيات</value>
+    </data>
+
+    <data name="EducationalInstitutions" xml:space="preserve">
+    <value>تدريب و تعليم</value>
+    </data>
+
+    <data name="Jobs" xml:space="preserve">
+    <value>وظائف</value>
+    </data>
+
+    <data name="HobbyAndAmusement" xml:space="preserve">
+    <value>هواية وترفيه</value>
+    </data>
+
+    <data name="CultureAndArt" xml:space="preserve">
+    <value>ثقافة وفن</value>
+    </data>
+
+    <data name="HappeningsAndEvents" xml:space="preserve">
+    <value>فعاليات وحفلات </value>
+    </data>
+
+    <data name="SightAndExcursion" xml:space="preserve">
+    <value>معالم سياحية ورحلات</value>
+    </data>
+
+    <data name="Services" xml:space="preserve">
+    <value>خدمات</value>
+    </data>
+
+    <data name="ConstructionAndRepair" xml:space="preserve">
+    <value>أعمال بناء وصيانة</value>
+    </data>
+
+    <data name="TravelAndToursim" xml:space="preserve">
+    <value>سياحة وسفر</value>
+    </data>
+
+    <data name="HotelsAndProperties" xml:space="preserve">
+    <value>فنادق وشقق مفروشة</value>
+    </data>
+
+    <data name="DailyShopping" xml:space="preserve">
+    <value>الإحتياجات اليومية</value>
+    </data>
+
+    <data name="BeautyAndWellness" xml:space="preserve">
+    <value>عناية وجمال</value>
+    </data>
+
+    <data name="CarWorksShop" xml:space="preserve">
+    <value>عالم السيارات</value>
+    </data>
+
+    <data name="LawAndFinance" xml:space="preserve">
+    <value>إستشارت قانونية و مالية</value>
+    </data>
+
+    <data name="Shopping" xml:space="preserve">
+    <value>تسوق</value>
+    </data>
+
+    <data name="HealthAndMed" xml:space="preserve">
+    <value>صحة وطب</value>
+    </data>
+
+    <data name="TOPCATS" xml:space="preserve">
+    <value>فئات مهمة</value>
+    </data>
+
+     <data name="OFFERS" xml:space="preserve">
+    <value>عروض</value>
+    </data>
+
+     <data name="KATEGORIES" xml:space="preserve">
+    <value>فئات</value>
+    </data>
+
+    <data name="Health" xml:space="preserve">
+    <value>صحة</value>
+    </data>
+
+    <data name="FoodAndDrink" xml:space="preserve">
+    <value>مطاعم و مقاهي</value>
+    </data>
+
+    <data name="ACTIONS" xml:space="preserve">
+    <value>إجراءات</value>
+    </data>
+
+    <data name="BOOKSLOT" xml:space="preserve">
+    <value>إحجز موعد</value>
+    </data>
+
+    <data name="DESCRIPTION" xml:space="preserve">
+    <value>تعريف</value>
+    </data>
+
+    <data name="DidntFindAnything" xml:space="preserve">
+    <value> لم نتمكن من العثور على أي شيء هنا. جرب مدينة مختلفة أو وسّع قطر البحث </value>
+    </data>
+
+     <data name="YouCurrentLocation" xml:space="preserve">
+    <value>الموقع الخاص بك</value>
+    </data>
+
+     <data name="Abort" xml:space="preserve">
+    <value>إلغاء</value>
+    </data>
+
+    <data name="Radius" xml:space="preserve">
+    <value>قطر البحث</value>
+    </data>
+
+    <data name="MyPosition" xml:space="preserve">
+    <value>موقعي</value>
+    </data>
+
+    <data name="PleaseAllowGPS" xml:space="preserve">
+    <value> نظام تحديد المواقع العالمي غير مسموح به، يرجى إعادة تثبيت التطبيق، إذا غيرت رأيك </value>
+    </data>
+
+    <data name="PickFromCity" xml:space="preserve">
+    <value>إختر مدينة</value>
+    </data>
+
+    <data name="YouAreHere" xml:space="preserve">
+    <value>أنت هنا:</value>
+    </data>
+
+    <data name="Stuttgart" xml:space="preserve">
+    <value>شتوتغارت</value>
+    </data>
+
+    <data name="Berlin" xml:space="preserve">
+    <value>برلين</value>
+    </data>
+
+	<data name="Munich" xml:space="preserve">
+    <value>ميونخ</value>
+    </data>
+	
+	<data name="Hamburg" xml:space="preserve">
+    <value>هامبورغ</value>
+    </data>
+
+	<data name="Accept" xml:space="preserve">
+    <value>موافق</value>
+    </data>
+
+	<data name="Within" xml:space="preserve">
+    <value>ضمن</value>
+    </data>
+
+	<data name="PickArea" xml:space="preserve">
+    <value>إختر منطقة </value>
+    </data>
+
+	<data name="KM" xml:space="preserve">
+    <value>كلم</value>
+    </data>
+
+	<data name="City" xml:space="preserve">
+    <value>مدينتك</value>
+    </data>
+
+	<data name="ChangeLanguage" xml:space="preserve">
+    <value>إختر لغة</value>
+    </data>
+
 		<data name="YouAreHere" xml:space="preserve">
     <value>أنت هنا: </value>
     </data>
 
-	<data name="Next" xml:space="preserve">
+		<data name="Next" xml:space="preserve">
     <value>التالي</value>
     </data>
 
 	<data name="German" xml:space="preserve">
-    <value>ألمانية</value>
+    <value>Deutsch</value>
     </data>
 
 	<data name="Arabic" xml:space="preserve">
@@ -30,11 +314,12 @@
     </data>
 
 	<data name="English" xml:space="preserve">
-    <value>إنجليزي</value>
+    <value>English</value>
     </data>
 
 	<data name="PickLanguage" xml:space="preserve">
-    <value>اختر لغتك</value>
+    <value>إختر لغة:</value>
     </data>
+
 
 </root>

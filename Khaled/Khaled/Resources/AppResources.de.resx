@@ -13,12 +13,294 @@
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
 
-	<data name="YouAreHere" xml:space="preserve">
-    <value>Du befindest dich hier: </value>
+<data name="NoOffers" xml:space="preserve">
+    <value>Momentan sind leider keine Angebote in deiner Region vorhanden. Dies wird sich bald ändern!</value>
     </data>
 
-	<data name="Next" xml:space="preserve">
-    <value>weiter</value>
+    <data name="SharingText" xml:space="preserve">
+    <value>Das hab ich bei  Waynou gesehen: </value>
+    </data>
+
+     <data name="SearchInCat" xml:space="preserve">
+    <value>Suche innerhalb dieser Kategorie</value>
+    </data>
+
+   
+    <data name="PickASubCat" xml:space="preserve">
+    <value>wähle eine Unterkategorie aus</value>
+    </data>
+
+    <data name="PickACategory" xml:space="preserve">
+    <value>Wähle eine Kategorie aus</value>
+    </data>
+
+    <data name="MainMenu" xml:space="preserve">
+    <value>Hauptmenü</value>
+    </data>
+
+    <data name="Imprint" xml:space="preserve">
+    <value>IImpressum &amp; Kontakt</value>
+    </data>
+
+    <data name="TermsOfUse" xml:space="preserve">
+    <value>Nutzungsbedingungen</value>
+    </data>
+
+    <data name="TermsAndCon" xml:space="preserve">
+    <value>Bedingungen  &amp; Konditionen</value>
+    </data>
+
+    <data name="DSGVO" xml:space="preserve">
+    <value>Datenschutz</value>
+    </data>
+
+   <data name="Okay" xml:space="preserve">
+    <value>OK</value>
+    </data>
+
+    <data name="GpsDenied" xml:space="preserve">
+    <value> Sie haben die Standortanforderung bereits abgelehnt, bitte aktivieren Sie sie wieder in den Einstellungen Ihres Geräts</value>
+    </data>
+
+    <data name="Error" xml:space="preserve">
+    <value>Fehler</value>
+    </data>
+
+    <data name="Go" xml:space="preserve">
+    <value>Go!</value>
+    </data>
+
+     <data name="Or" xml:space="preserve">
+    <value>oder</value>
+    </data>
+
+    <data name="TakeMyGpsLocation" xml:space="preserve">
+    <value>Verwende meinen Standort</value>
+    </data>
+
+    <data name="CommingSoon" xml:space="preserve">
+    <value>Demnächst</value>
+    </data>
+
+     <data name="Back" xml:space="preserve">
+    <value>zurück</value>
+    </data>
+
+     <data name="YourGpsLocation" xml:space="preserve">
+    <value>Dein Standort</value>
+    </data>
+
+     <data name="Germany" xml:space="preserve">
+    <value>Deutschland</value>
+    </data>
+
+
+    <data name="WhatAreYouLookingFor" xml:space="preserve">
+    <value>Wonach suchst du?</value>
+    </data>
+
+     <data name="Berlin" xml:space="preserve">
+    <value>Berlin</value>
+    </data>
+
+    <data name="WhatAreYouLookingFor" xml:space="preserve">
+    <value>Wonach suchst du?</value>
+    </data>
+
+    <data name="RentAndBuyRealEstate" xml:space="preserve">
+    <value>Immobilien mieten &amp; kaufen</value>
+    </data>
+
+    <data name="Emergencies" xml:space="preserve">
+    <value>Notfälle</value>
+    </data>
+
+    <data name="ReligiousInstitions" xml:space="preserve">
+    <value>Religiöse Einrichtungen</value>
+    </data>
+
+    <data name="AuthoritiesAndEmbassies" xml:space="preserve">
+    <value>Botschaften &amp; Behörden</value>
+    </data>
+
+    <data name="OrganizationsAndAssociations" xml:space="preserve">
+    <value>Organisationen &amp; Vereine</value>
+    </data>
+
+    <data name="EducationalInstitutions" xml:space="preserve">
+    <value>Bildungsstätte</value>
+    </data>
+
+    <data name="Jobs" xml:space="preserve">
+    <value>Jobs</value>
+    </data>
+
+    <data name="HobbyAndAmusement" xml:space="preserve">
+    <value>Hobby &amp; Freizeit</value>
+    </data>
+
+    <data name="CultureAndArt" xml:space="preserve">
+    <value>Kultur &amp; Kunst</value>
+    </data>
+
+    <data name="HappeningsAndEvents" xml:space="preserve">
+    <value>Veranstaltungen &amp; Events</value>
+    </data>
+
+    <data name="SightAndExcursion" xml:space="preserve">
+    <value>Sehenswürdigkeiten </value>
+    </data>
+
+    <data name="Services" xml:space="preserve">
+    <value>Dienstleistungen</value>
+    </data>
+
+    <data name="ConstructionAndRepair" xml:space="preserve">
+    <value>Handwerk &amp; Reparatur Service</value>
+    </data>
+
+    <data name="TravelAndToursim" xml:space="preserve">
+    <value>Reise  &amp; Tourismus</value>
+    </data>
+
+    <data name="HotelsAndProperties" xml:space="preserve">
+    <value>Hotels &amp; Unterkünfte</value>
+    </data>
+
+    <data name="DailyShopping" xml:space="preserve">
+    <value>Täglicher Bedarf</value>
+    </data>
+
+    <data name="BeautyAndWellness" xml:space="preserve">
+    <value>Beauty &amp; Wellness</value>
+    </data>
+
+    <data name="CarWorksShop" xml:space="preserve">
+    <value>Autos</value>
+    </data>
+
+    <data name="LawAndFinance" xml:space="preserve">
+    <value>Recht &amp; Finanzen</value>
+    </data>
+
+    <data name="Shopping" xml:space="preserve">
+    <value>Shopping</value>
+    </data>
+
+    <data name="HealthAndMed" xml:space="preserve">
+    <value>Gesundheit &amp; Medizin</value>
+    </data>
+
+    <data name="TOPCATS" xml:space="preserve">
+    <value>TOP KATEGORIEN</value>
+    </data>
+
+     <data name="OFFERS" xml:space="preserve">
+    <value>ANGEBOTE</value>
+    </data>
+
+     <data name="KATEGORIES" xml:space="preserve">
+    <value>KATEGORIEN</value>
+    </data>
+
+    <data name="Health" xml:space="preserve">
+    <value>Gesundheit</value>
+    </data>
+
+    <data name="FoodAndDrink" xml:space="preserve">
+    <value>Essen &amp; Trinken</value>
+    </data>
+
+    <data name="ACTIONS" xml:space="preserve">
+    <value>AKTIONEN</value>
+    </data>
+
+    <data name="BOOKSLOT" xml:space="preserve">
+    <value>TERMIN BUCHEN</value>
+    </data>
+
+    <data name="DESCRIPTION" xml:space="preserve">
+    <value>BESCHREIBUNG</value>
+    </data>
+
+    <data name="DidntFindAnything" xml:space="preserve">
+    <value>Wir konnten hier leider nichts finden. Probiere eine andere Stadt oder erweitere deinen Suchradius.</value>
+    </data>
+
+     <data name="YouCurrentLocation" xml:space="preserve">
+    <value>Dein aktueller Standort</value>
+    </data>
+
+     <data name="Abort" xml:space="preserve">
+    <value>Abbrechen</value>
+    </data>
+
+    <data name="Radius" xml:space="preserve">
+    <value>Radius</value>
+    </data>
+
+    <data name="MyPosition" xml:space="preserve">
+    <value>Meine Position</value>
+    </data>
+
+    <data name="PleaseAllowGPS" xml:space="preserve">
+    <value> Gps nicht erlaubt. Bitte installiere die App neu, wenn du deine Meinung geändert hast.</value>
+    </data>
+
+    <data name="PickFromCity" xml:space="preserve">
+    <value>Wähle eine Stadt aus</value>
+    </data>
+
+    <data name="YouAreHere" xml:space="preserve">
+    <value>Du bist hier:</value>
+    </data>
+
+    <data name="Stuttgart" xml:space="preserve">
+    <value>Stuttgart</value>
+    </data>
+
+    <data name="Berlin" xml:space="preserve">
+    <value>Berlin</value>
+    </data>
+
+	<data name="Munich" xml:space="preserve">
+    <value>München</value>
+    </data>
+	
+	<data name="Hamburg" xml:space="preserve">
+    <value>Hamburg</value>
+    </data>
+
+	<data name="Accept" xml:space="preserve">
+    <value>Akzeptieren</value>
+    </data>
+
+	<data name="Within" xml:space="preserve">
+    <value>innerhalb</value>
+    </data>
+
+	<data name="PickArea" xml:space="preserve">
+    <value>Wähle einen Ort aus</value>
+    </data>
+
+	<data name="KM" xml:space="preserve">
+    <value>km</value>
+    </data>
+
+	<data name="City" xml:space="preserve">
+    <value>Deine Stadt</value>
+    </data>
+
+	<data name="ChangeLanguage" xml:space="preserve">
+    <value>Ändere die Sprache</value>
+    </data>
+
+		<data name="YouAreHere" xml:space="preserve">
+    <value>Du bist hier: </value>
+    </data>
+
+		<data name="Next" xml:space="preserve">
+    <value>Nächstes</value>
     </data>
 
 	<data name="German" xml:space="preserve">
@@ -26,15 +308,16 @@
     </data>
 
 	<data name="Arabic" xml:space="preserve">
-    <value>Arabisch</value>
+    <value> عربي </value>
     </data>
 
 	<data name="English" xml:space="preserve">
-    <value>Englisch</value>
+    <value>English</value>
     </data>
 
 	<data name="PickLanguage" xml:space="preserve">
-    <value>Wähle deine Sprache</value>
+    <value>Wähle eine Sprache aus:</value>
     </data>
+
 
 </root>

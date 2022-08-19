@@ -10,8 +10,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -31,7 +29,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.waynou.waynouios</string>
 	<key>CFBundleVersion</key>
-	<string>1.1019</string>
+	<string>1.1021</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
@@ -42,5 +40,7 @@
 	<string>This app needs access to the photo gallery for saving photos and videos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs access to photos gallery for saving photos and videos.</string>
+	<key>Custom Property</key>
+	<string></string>
 </dict>
 </plist>
