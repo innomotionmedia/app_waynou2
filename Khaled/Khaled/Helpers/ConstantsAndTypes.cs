@@ -16,6 +16,8 @@ namespace Khaled.Helpers
         public static string PREFKEY_CITYLONG= "PREFKEY_CITYLONG";
         public static string PREFKEY_CITYLAT = "PREFKEY_CITYLAT";
         public static string PREFKEY_CITYRAD = "PREFKEY_CITYRAD";
+        public static string CHOSENLANG = "chosen_lang";
+
 
         public static string WebappBaseUrl = "https://waynou.de/webapp/v1/index.html?"; //bsp https://waynou.de/webapp/v1/index.html?adId=5&local=eng
 

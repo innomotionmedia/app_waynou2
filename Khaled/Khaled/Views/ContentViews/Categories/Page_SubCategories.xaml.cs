@@ -62,7 +62,12 @@ namespace Khaled.Views.ContentViews.Categories
 
 		private async void StartUp()
 		{
-			if (CachedUser.cityPicked)
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+            else
+                this.FlowDirection = FlowDirection.LeftToRight;
+
+            if (CachedUser.cityPicked)
 			{
 				radiusValue = CachedUser.pickedCity.radiusFromCenter;
 				startPosLat = CachedUser.pickedCity.centerLatitude;
@@ -171,8 +176,14 @@ namespace Khaled.Views.ContentViews.Categories
 
 			comboBox.BindingContext = list;
 			comboBox.DataSource = list;
-			comboBox.DisplayMemberPath = "title";
-		}
+
+			if (CachedUser.localCode == localCodes.en)
+				comboBox.DisplayMemberPath = "title";
+			else if (CachedUser.localCode == localCodes.de)
+				comboBox.DisplayMemberPath = "titleDe";
+			else
+                comboBox.DisplayMemberPath = "titleAr";
+        }
 
 		async void listview_mainViews_Refreshing(System.Object sender, System.EventArgs e)
 		{

@@ -364,7 +364,7 @@ namespace Khaled.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IImpressum &amp; Kontakt.
+        ///   Looks up a localized string similar to Impressum &amp; Kontakt.
         /// </summary>
         internal static string Imprint {
             get {

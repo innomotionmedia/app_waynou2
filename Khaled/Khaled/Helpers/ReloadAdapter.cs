@@ -137,8 +137,9 @@ namespace Khaled.Helpers
                         break;
                     case localCodes.ar:
                         elem.flowDirection = FlowDirection.RightToLeft;
-                        elem.description = elem.descriptionENG;
                         elem.description = elem.descriptionAR;
+                        if (string.IsNullOrEmpty(elem.description))
+                            elem.description = elem.descriptionENG;
                         elem.title = elem.titleAr;
                         break;
                 }

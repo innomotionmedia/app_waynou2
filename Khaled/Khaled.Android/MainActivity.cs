@@ -10,7 +10,7 @@ using Plugin.CrossPlatformTintedImage.Android;
 
 namespace Khaled.Droid
 {
-    [Activity(Label = "Khaled", Icon = "@mipmap/icon", Theme = "@style/MainTheme", ScreenOrientation = ScreenOrientation.Portrait, MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout  | ConfigChanges.SmallestScreenSize )]
+    [Activity(Label = "Khaled", Icon = "@drawable/icon", Theme = "@style/MainTheme", ScreenOrientation = ScreenOrientation.Portrait, MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout  | ConfigChanges.SmallestScreenSize )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
 
@@ -20,9 +20,11 @@ namespace Khaled.Droid
         {
             base.OnCreate(savedInstanceState);
 
-            Rg.Plugins.Popup.Popup.Init(this);
             Xamarin.FormsMaps.Init(this, savedInstanceState);
             TintedImageRenderer.Init();
+
+            Rg.Plugins.Popup.Popup.Init(this);
+
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

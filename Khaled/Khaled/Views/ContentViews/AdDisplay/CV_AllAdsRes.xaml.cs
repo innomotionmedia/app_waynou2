@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Khaled.Backend.APIs;
 using Khaled.Helpers;
 using Khaled.Resources;
+using Khaled.Views.ContentViews.Categories;
 using Khaled.Views.MainMenu;
 using Khaled.Views.PopUps;
 using Rg.Plugins.Popup.Services;
@@ -71,6 +72,11 @@ namespace Khaled.Views.ContentViews.MainMenuTabs
 
         async void StartUp()
         {
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+            else
+                this.FlowDirection = FlowDirection.LeftToRight;
+
             if (CachedUser.cityPicked)
             {
                 radiusValue = CachedUser.pickedCity.radiusFromCenter;
@@ -143,6 +149,8 @@ namespace Khaled.Views.ContentViews.MainMenuTabs
                     info: info,
                     adsListType: adsListType); 
                 listview_mainView.ItemsSource = mainList;
+
+                CV_TopCats.Instance.LoadDummyData(); // first load
 
             }
             else

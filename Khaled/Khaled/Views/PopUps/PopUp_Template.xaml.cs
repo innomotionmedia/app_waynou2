@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Khaled.Helpers;
 using Khaled.Views.ContentViews;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
@@ -14,6 +15,11 @@ namespace Khaled.Views.PopUps
             InitializeComponent();
             instance = this; 
             LoadContent(PopUpTypes);
+
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+            else
+                this.FlowDirection = FlowDirection.LeftToRight;
         }
 
         private void LoadContent(PopUpTypes PopUpTypes)

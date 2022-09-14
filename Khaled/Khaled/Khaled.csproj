@@ -11,15 +11,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
     <PackageReference Include="Com.Kumulos" Version="6.1.0" />
-    <PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
     <PackageReference Include="Xamarin.Forms.Maps" Version="4.8.0.1821" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.4" />
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="20.2.0.39" />
     <PackageReference Include="Plugin.CrossPlatformTintedImage" Version="1.0.0" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Com.Kumulos" />
@@ -45,6 +45,7 @@
     <None Remove="Resources\Fonts\Raleway-Bold.ttf" />
     <None Remove="Xamarin.CommunityToolkit" />
     <None Remove="Syncfusion.Xamarin.SfComboBox" />
+    <None Remove="Xamarin.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />

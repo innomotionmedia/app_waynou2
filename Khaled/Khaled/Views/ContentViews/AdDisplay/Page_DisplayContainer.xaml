@@ -3,6 +3,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:helpers="clr-namespace:Khaled.Helpers"
+    BackgroundColor="White"
     xmlns:views="clr-namespace:Khaled.Views.ContentViews"
     x:Class="Khaled.Views.ContentViews.AdDisplay.Page_DisplayContainer">
     <ContentPage.Content>

@@ -15,6 +15,7 @@ namespace Khaled.Views.ContentViews.Categories
 	public partial class CV_CategoryList : ContentView
 	{
 		public static CV_CategoryList Instance;
+		static bool canLoad = false; 
 
 		public CV_CategoryList ()
 		{
@@ -22,6 +23,10 @@ namespace Khaled.Views.ContentViews.Categories
 			Instance = this;
 			LoadContent();
 
+			if (CachedUser.localCode == localCodes.ar)
+				this.FlowDirection = FlowDirection.RightToLeft;
+			else
+				this.FlowDirection = FlowDirection.LeftToRight;
 			
 		}
 
@@ -93,7 +98,13 @@ namespace Khaled.Views.ContentViews.Categories
 
 			layout_topCats.Children.Add(new CV_TopCats());
 			layout_offers.Children.Add(new CV_Offers());
-		}
+
+			if (canLoad)
+				CV_TopCats.Instance.LoadDummyData(); // second load
+			else
+				canLoad = true; 
+
+        }
 
         void Button_Clicked(System.Object sender, System.EventArgs e)
         {

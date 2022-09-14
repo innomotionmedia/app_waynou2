@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Khaled.Helpers;
 using Xamarin.Forms;
 
 namespace Khaled.Views.ContentViews.Categories
@@ -9,7 +10,8 @@ namespace Khaled.Views.ContentViews.Categories
 		public CV_CategoriesDetail ()
 		{
 			InitializeComponent ();
-		}
+
+        }
 	}
 }
 

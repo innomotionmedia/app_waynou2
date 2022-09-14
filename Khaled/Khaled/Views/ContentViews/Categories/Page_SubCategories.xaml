@@ -30,7 +30,7 @@
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                       <Entry  x:Name="entry_title"  MaxLength="30" Placeholder="{helpers:Translate SearchInCat}"/>
-                      <Button Clicked="btn_search_Clicked" x:Name="btn_search" Grid.Column="1" Text="Go!"/>
+                      <Button Clicked="btn_search_Clicked" x:Name="btn_search" BackgroundColor="Transparent" Grid.Column="1" Text="Go!"/>
                </Grid>
             </StackLayout>
             <ListView

@@ -39,7 +39,7 @@
     </data>
 
     <data name="Imprint" xml:space="preserve">
-    <value>IImpressum &amp; Kontakt</value>
+    <value>Impressum &amp; Kontakt</value>
     </data>
 
     <data name="TermsOfUse" xml:space="preserve">
@@ -118,7 +118,7 @@
     <data name="ReligiousInstitions" xml:space="preserve">
     <value>Religiöse Einrichtungen</value>
     </data>
-
+    
     <data name="AuthoritiesAndEmbassies" xml:space="preserve">
     <value>Botschaften &amp; Behörden</value>
     </data>

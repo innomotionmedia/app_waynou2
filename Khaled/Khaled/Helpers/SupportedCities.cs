@@ -40,7 +40,7 @@ namespace Khaled.Backend.Helpers
 			{
 				displayName = AppResources.Stuttgart,
 				name = CityNames.stuttgart,
-				thumbnail = ImageSource.FromFile("stuttgart.jpg"),
+				thumbnail = ImageSource.FromFile("stuttgart.png"),
 				centerLatitude = 48.783333,
 				centerLongitude = 9.183333,
 				radiusFromCenter = 50

@@ -16,12 +16,19 @@ namespace Khaled.Views.ContentViews
 
 		public CV_PickYourCity (bool changeLocation)
 		{
-            this.changeLocation = changeLocation; 
-			InitializeComponent ();
-            SetCities();
-            SetPicker();
+            this.changeLocation = changeLocation;
 
-            SetMap();
+		    InitializeComponent ();
+               SetCities();
+               SetPicker();
+               
+               if (CachedUser.localCode == localCodes.ar)
+                   this.FlowDirection = FlowDirection.RightToLeft;
+               else
+                   this.FlowDirection = FlowDirection.LeftToRight;
+
+               // we only have a FREE map on ios available
+               if(Device.RuntimePlatform == Device.iOS) SetMap();
 		}
 
         private void SetCities()
@@ -32,17 +39,22 @@ namespace Khaled.Views.ContentViews
 
         private void SetMap()
         {
+            var map = new Xamarin.Forms.Maps.Map();
+            map.MapType = MapType.Street;
+            map.IsShowingUser = true;
+            gps_grid.Children.Add(map);
+
             // demo values of hamburg city center
             if (CachedUser.lati != 0)
             {
-                maps_map.MoveToRegion(MapSpan.FromCenterAndRadius
+                map.MoveToRegion(MapSpan.FromCenterAndRadius
                       (new Position(CachedUser.lati, CachedUser.longi),
                       Distance.FromMeters(500)));
             }
             else
             {
-                maps_map.IsEnabled = false;
-                maps_map.IsVisible = false;
+                map.IsEnabled = false;
+                map.IsVisible = false;
             }
 
         }
@@ -81,20 +93,28 @@ namespace Khaled.Views.ContentViews
 
         void picker_head_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {
-            var picker = sender as Picker;
-            if (picker.SelectedItem == null)
-                return; 
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                var picker = sender as Picker;
+                if (picker.SelectedItem == null)
+                    return;
 
-            if(picker.SelectedItem.ToString() == AppResources.Germany)
-            {
-                layout_cities.IsVisible = true;
-                layout_gps.IsVisible = false; 
+                if (picker.SelectedItem.ToString() == AppResources.Germany)
+                {
+                    layout_cities.IsVisible = true;
+                    layout_gps.IsVisible = false;
+                }
+                else if (picker.SelectedItem.ToString() == AppResources.YourGpsLocation)
+                {
+                    layout_gps.IsVisible = true;
+                    layout_cities.IsVisible = false;
+                }
             }
-            else if (picker.SelectedItem.ToString() == AppResources.YourGpsLocation)
+            else
             {
-                layout_gps.IsVisible = true;
-                layout_cities.IsVisible = false;
+                PopUp_Template.instance.ClickedOnClosed(null, null);
             }
+
         }
 
         void layout_cities_ItemSelected(System.Object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)

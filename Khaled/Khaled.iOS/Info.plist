@@ -29,7 +29,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.waynou.waynouios</string>
 	<key>CFBundleVersion</key>
-	<string>1.1021</string>
+	<string>1.1025</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>

@@ -29,7 +29,6 @@
                            Grid.Column="1"
                            Margin="10,0,10,0"
                            HorizontalOptions="Center"
-                           CurrentItemChanged="carouselview_CurrentItemChanged"
                            HorizontalScrollBarVisibility="Never"
                            Loop="True">
                     <CarouselView.ItemTemplate>
@@ -44,8 +43,8 @@
                        </DataTemplate>
                     </CarouselView.ItemTemplate>
                 </CarouselView>
-                <Button Text="&lt;" Clicked="Button_Clicked" FontSize="22" x:Name="btn_linguaLeft" HorizontalOptions="Center" Margin="0,2,0,0" VerticalOptions="Start"  Grid.Column="0"/>
-                <Button Text=">" Clicked="Button_Clicked" FontSize="22" x:Name="btn_linguaRight" HorizontalOptions="Center" Margin="0,2,0,0"  VerticalOptions="Start" Grid.Column="2"/>
+                <Button Text="&lt;" Clicked="Button_Clicked" Background="Transparent" FontSize="22" x:Name="btn_linguaLeft" HorizontalOptions="Center" Margin="0,2,0,0" VerticalOptions="Start"  Grid.Column="0"/>
+                <Button Text=">" Clicked="Button_Clicked" Background="Transparent" FontSize="22" x:Name="btn_linguaRight" HorizontalOptions="Center" Margin="0,2,0,0"  VerticalOptions="Start" Grid.Column="2"/>
             </Grid>
         </StackLayout>
         <StackLayout Grid.Row="2" Grid.Column="1">

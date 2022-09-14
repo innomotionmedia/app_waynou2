@@ -179,8 +179,13 @@
             </ScrollView>
             -->
             <Frame x:Name="layout_gps" IsVisible="false" CornerRadius="12" HeightRequest="470">
-                <maps:Map x:Name="maps_map"  IsShowingUser="True" MapType="Street" />
+                <Grid x:Name="gps_grid">
+
+
+                </Grid>
+                <!--<maps:Map x:Name="maps_map"  IsShowingUser="True" MapType="Street" />-->
             </Frame>
+
             <!--
             <StackLayout Padding="0,10,0,10" x:Name="layout_slider">
                 <Slider ValueChanged="Slider_ValueChanged"

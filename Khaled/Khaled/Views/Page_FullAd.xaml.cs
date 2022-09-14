@@ -167,23 +167,23 @@ namespace Khaled.Views
                 if (res != null)
                 {
                     //unfav
-                    img_heart.TintColor = Color.Transparent;
+                    //img_heart.TintColor = Color.Transparent;
                     await App.DatabaseFAV.DeleteMyFav(ad);
 
                 }
                 else
                 {
                     //fav
-                    img_heart.TintColor = Color.Black;
+                    //img_heart.TintColor = Color.Black;
                     await App.DatabaseFAV.SaveClickedOnFav(data[0]);
                 }
             }
             else
             {
-                if (res != null)
-                    img_heart.TintColor = Color.Black;
-                else
-                    img_heart.TintColor = Color.Transparent;
+               // if (res != null)
+               //     img_heart.TintColor = Color.Black;
+               // else
+               //     img_heart.TintColor = Color.Transparent;
             }
 
         }

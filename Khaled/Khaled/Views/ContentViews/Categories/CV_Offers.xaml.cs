@@ -18,8 +18,13 @@ namespace Khaled.Views.ContentViews.Categories
 		{
 			InitializeComponent ();
 			Instance = this;
-			LoadData(true); 
-		}
+			LoadData(true);
+
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+            else
+                this.FlowDirection = FlowDirection.LeftToRight;
+        }
 
 		public async Task LoadData(bool firstLoad)
 		{

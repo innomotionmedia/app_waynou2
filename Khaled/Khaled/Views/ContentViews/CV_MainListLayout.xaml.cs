@@ -12,6 +12,10 @@ namespace Khaled.Views.ContentViews
         public CV_MainListLayout()
         {
             InitializeComponent();
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+            else
+                this.FlowDirection = FlowDirection.LeftToRight;
         }
 
         async void Tapped_Fav(Object sender, EventArgs e)
@@ -21,13 +25,13 @@ namespace Khaled.Views.ContentViews
                 var img = sender as TintedImage;
                 var context = img.BindingContext as FullAdType;
                 var color = Converters.ColorFromResourceKey("MainTheme");
-
+            
                 if (img.TintColor == Color.FromRgba(color.R, color.G, color.B, color.A))
                 {
                     //unfav
                     img.TintColor = Color.Transparent;
                     await App.DatabaseFAV.DeleteMyFav(context);
-
+            
                 }
                 else
                 {

@@ -34,18 +34,43 @@ namespace Khaled
             Instance = this;
             this.comingFromBurger = comingFromBurger;
 
-
-            InitializeComponent();
+             InitializeComponent();
 
             LoadUp();
 
             GetSupportedLanguages();
 
-            LocalizationResourceManager.Instance.SetCulture(CultureInfo.GetCultureInfo("en"));
+            if(Preferences.Get(Constants.CHOSENLANG, "") == "en")
+            {
+                LocalizationResourceManager.Instance.SetCulture(CultureInfo.GetCultureInfo("en"));
+                CachedUser.localCode = localCodes.en;
+            }
+            if (Preferences.Get(Constants.CHOSENLANG, "") == "de")
+            {
+                LocalizationResourceManager.Instance.SetCulture(CultureInfo.GetCultureInfo("de"));
+                CachedUser.localCode = localCodes.de;
+            }
+            if (Preferences.Get(Constants.CHOSENLANG, "") == "ar")
+            {
+                LocalizationResourceManager.Instance.SetCulture(CultureInfo.GetCultureInfo("ar"));
+                CachedUser.localCode = localCodes.ar;
+
+            }
+
             mainPage.FlowDirection = FlowDirection.LeftToRight;
             if (preSelectLingua)
                 SetPreLingua();
 
+            carouselview.CurrentItemChanged += Carouselview_CurrentItemChanged;
+
+
+        }
+
+        private void Carouselview_CurrentItemChanged(object sender, CurrentItemChangedEventArgs e)
+        {
+            var item = e.CurrentItem as Helpers.DisplayedLanguage;
+
+            ChangeLocal(item.languageCode);
         }
 
         private void GetSupportedLanguages()
@@ -161,16 +186,18 @@ namespace Khaled
                 case "german":
                     LocalizationResourceManager.Instance.SetCulture(CultureInfo.GetCultureInfo("de"));
                     CachedUser.localCode = localCodes.de;
+                    Preferences.Set(Constants.CHOSENLANG, "de");
                     break;
                 case "arabic":
                     LocalizationResourceManager.Instance.SetCulture(CultureInfo.GetCultureInfo("ar"));
                     CachedUser.localCode = localCodes.ar;
+                    Preferences.Set(Constants.CHOSENLANG, "ar");
                     break;
                 case "english":
                     LocalizationResourceManager.Instance.SetCulture(CultureInfo.GetCultureInfo("en"));
                     CachedUser.localCode = localCodes.en;
-                    break;
-                    
+                    Preferences.Set(Constants.CHOSENLANG, "en");
+                    break;                  
             }
         }
 
@@ -235,16 +262,10 @@ namespace Khaled
                     carouselview.Position = carouselview.Position + 1;
             }
             else if (btn.Equals(open_cityPicker))
-                PopupNavigation.Instance.PushAsync(new PopUp_Template(PopUpTypes.pickFirstLocation));
+                 PopupNavigation.Instance.PushAsync(new PopUp_Template(PopUpTypes.pickFirstLocation));
 
         }
 
-        void carouselview_CurrentItemChanged(System.Object sender, Xamarin.Forms.CurrentItemChangedEventArgs e)
-        {
-            var item = e.CurrentItem as Helpers.DisplayedLanguage;
-
-            ChangeLocal(item.languageCode);
-        }
     }
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Khaled.Helpers;
 using Khaled.Resources;
 using Xamarin.Forms;
@@ -8,17 +9,28 @@ using Xamarin.Forms;
 namespace Khaled.Views.ContentViews.Categories
 {	
 	public partial class CV_TopCats : ContentView
-	{	
+	{
+		public static CV_TopCats Instance; 
+
 		public CV_TopCats ()
 		{
 			InitializeComponent ();
 
-			LoadDummyData();
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+            else
+                this.FlowDirection = FlowDirection.LeftToRight;
+
+            Instance = this;
+			//LoadDummyData(); 
 		}
 
-        private async void LoadDummyData()
+        public async void LoadDummyData()
         {
-			ObservableCollection<TopCats> data = new ObservableCollection<TopCats>();
+
+            // Called from CV_AllAdsRes.LoadMainContent. If not done, cats wont render first 
+
+            ObservableCollection<TopCats> data = new ObservableCollection<TopCats>();
 
 			var item1 = new TopCats
 			{
@@ -57,6 +69,7 @@ namespace Khaled.Views.ContentViews.Categories
 			data.Add(item2);
 			data.Add(item3);
 
+			//await Task.Delay(10000);// ugly workaround for rendered only upon refresh 
 			carouselview.ItemsSource = data; 
 		}
 
