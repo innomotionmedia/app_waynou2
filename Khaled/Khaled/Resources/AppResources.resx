@@ -26,7 +26,6 @@
      <data name="SearchInCat" xml:space="preserve">
     <value>Search inside this category</value>
     </data>
-
     
 
     <data name="PickASubCat" xml:space="preserve">
@@ -62,7 +61,7 @@
     </data>
 
     <data name="GpsDenied" xml:space="preserve">
-    <value> You already denied the location request, please enable it back in your devices settings</value>
+    <value>You already denied the location request, please enable it back in your devices settings</value>
     </data>
 
     <data name="Error" xml:space="preserve">
@@ -127,7 +126,7 @@
     </data>
 
     <data name="OrganizationsAndAssociations" xml:space="preserve">
-    <value>Organizations &amp; Associations</value>
+    <value>Companies &amp; Associations</value>
     </data>
 
     <data name="EducationalInstitutions" xml:space="preserve">

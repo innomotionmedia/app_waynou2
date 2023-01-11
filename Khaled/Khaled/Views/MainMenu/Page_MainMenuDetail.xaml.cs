@@ -32,10 +32,18 @@ namespace Khaled.Views.MainMenu
 
         private void SetStyling()
         {
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+            else
+                this.FlowDirection = FlowDirection.LeftToRight;
+
             if (Device.RuntimePlatform == Device.iOS)
             {
-                BarBackgroundColor = Converters.ColorFromResourceKey("MainTheme");
-            }         
+                BarBackground = new SolidColorBrush(Converters.ColorFromResourceKey("MainTheme"));//Converters.ColorFromResourceKey("MainTheme");
+                BarBackgroundColor = (Converters.ColorFromResourceKey("MainTheme"));
+            }
+
+
             On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
 
             Xamarin.Forms.Application.Current.On<Xamarin.Forms.PlatformConfiguration.iOS>().SetEnableAccessibilityScalingForNamedFontSizes(false);

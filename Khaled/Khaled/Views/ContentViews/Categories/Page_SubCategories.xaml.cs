@@ -63,7 +63,11 @@ namespace Khaled.Views.ContentViews.Categories
 		private async void StartUp()
 		{
             if (CachedUser.localCode == localCodes.ar)
+			{
                 this.FlowDirection = FlowDirection.RightToLeft;
+				img_backbutton.Rotation = 0; 
+
+            }
             else
                 this.FlowDirection = FlowDirection.LeftToRight;
 

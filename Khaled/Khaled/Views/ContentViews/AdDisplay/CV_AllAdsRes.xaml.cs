@@ -32,6 +32,9 @@ namespace Khaled.Views.ContentViews.MainMenuTabs
 		{
             adsListType = AdsListType.mainView;
 
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+
             InitializeComponent();
 
             this.idList = idList;

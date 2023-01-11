@@ -301,7 +301,7 @@ namespace Khaled.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  You already denied the location request, please enable it back in your devices settings.
+        ///   Looks up a localized string similar to You already denied the location request, please enable it back in your devices settings.
         /// </summary>
         internal static string GpsDenied {
             get {
@@ -481,7 +481,7 @@ namespace Khaled.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Organizations &amp; Associations.
+        ///   Looks up a localized string similar to Companies &amp; Associations.
         /// </summary>
         internal static string OrganizationsAndAssociations {
             get {

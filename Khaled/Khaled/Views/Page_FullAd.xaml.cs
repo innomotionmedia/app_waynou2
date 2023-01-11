@@ -38,6 +38,13 @@ namespace Khaled.Views
         {
             //label_title.Text = Converters.ReturnCorrectLingua(data[0], Helpers.TextType.adTitle);
 
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+
+            //label_description.FlowDirection = FlowDirection.RightToLeft;
+
+
+
             label_description.Text = Converters.ReturnCorrectLingua(data[0], Helpers.TextType.adDescription);
             ad.imageSource_fullPic = Converters.ReturnImageSourceFromString(data[0]?.fullPic);
             label_adresse.Text = data[0]?.adresse;

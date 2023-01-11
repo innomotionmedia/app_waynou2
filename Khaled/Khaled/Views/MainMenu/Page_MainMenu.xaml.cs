@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Khaled.Helpers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +15,10 @@ namespace Khaled.Views.MainMenu
             InitializeComponent();
             instance = this;
 
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+            else
+                this.FlowDirection = FlowDirection.LeftToRight;
 
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
 

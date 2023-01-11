@@ -34,7 +34,7 @@
                                       <ColumnDefinition Width="50"/>
                                   </Grid.ColumnDefinitions>
                                   <Entry  x:Name="entry_title" MaxLength="30" Placeholder="{helpers:Translate WhatAreYouLookingFor}"/>
-                                  <Button Clicked="btn_search_Clicked" x:Name="btn_search" Grid.Column="1" BackgroundColor="Transparent" Text="Go!"/>
+                                  <Button Clicked="btn_search_Clicked" x:Name="btn_search" Grid.Column="1" BackgroundColor="Transparent" Text="{helpers:Translate Go}"/>
                               </Grid>
                                <StackLayout Margin="0,20,0,0" x:Name="layout_offers"/>
                                <StackLayout  HeightRequest="180" Margin="0,20,0,0" x:Name="layout_topCats"/>
@@ -48,7 +48,7 @@
                                   <Frame x:Name="frame_food" Padding="6" HasShadow="False" HeightRequest="130">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_plate"/>
-                                           <Label Text="{helpers:Translate FoodAndDrink}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate FoodAndDrink}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -57,7 +57,7 @@
                                    <Frame x:Name="frame_health" Padding="6" Grid.Column="1" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_heart"/>
-                                           <Label Text="{helpers:Translate HealthAndMed}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate HealthAndMed}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -66,7 +66,7 @@
                                    <Frame x:Name="frame_shopping" Padding="6" Grid.Column="2" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_bags"/>
-                                           <Label Text="{helpers:Translate Shopping}"/>
+                                           <Label HorizontalTextAlignment="Center"  Text="{helpers:Translate Shopping}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -75,7 +75,7 @@
                                    <Frame x:Name="frame_law" Grid.Row="1" Padding="6" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_laywer"/>
-                                           <Label Text="{helpers:Translate LawAndFinance}"/>
+                                           <Label HorizontalTextAlignment="Center"  Text="{helpers:Translate LawAndFinance}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -84,7 +84,7 @@
                                    <Frame x:Name="frame_car" Grid.Row="1" Padding="6" Grid.Column="1" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_car"/>
-                                           <Label Text="{helpers:Translate CarWorksShop}"/>
+                                           <Label HorizontalTextAlignment="Center"  Text="{helpers:Translate CarWorksShop}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -93,7 +93,7 @@
                                    <Frame x:Name="frame_beauty" Grid.Row="1" Padding="8" Grid.Column="2" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_hair"/>
-                                           <Label Text="{helpers:Translate BeautyAndWellness}"/>
+                                           <Label HorizontalTextAlignment="Center"  Text="{helpers:Translate BeautyAndWellness}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -102,7 +102,7 @@
                                    <Frame x:Name="frame_shopping2" Grid.Row="2" Padding="6" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_cart"/>
-                                           <Label Text="{helpers:Translate DailyShopping}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate DailyShopping}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -111,7 +111,7 @@
                                    <Frame x:Name="frame_hotels" Grid.Row="2" Padding="6" Grid.Column="1" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_bed"/>
-                                           <Label Text="{helpers:Translate HotelsAndProperties}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate HotelsAndProperties}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -120,7 +120,7 @@
                                    <Frame x:Name="frame_travel" Grid.Row="2" Padding="6" Grid.Column="2" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_travel"/>
-                                           <Label Text="{helpers:Translate TravelAndToursim}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate TravelAndToursim}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -129,7 +129,7 @@
                                    <Frame x:Name="frame_construction" Grid.Row="3" Padding="6" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_mechanic"/>
-                                           <Label Text="{helpers:Translate ConstructionAndRepair}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate ConstructionAndRepair}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -138,7 +138,7 @@
                                    <Frame x:Name="frame_house" Grid.Row="3" Padding="6" Grid.Column="1" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_house"/>
-                                           <Label Text="{helpers:Translate RentAndBuyRealEstate}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate RentAndBuyRealEstate}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -147,7 +147,7 @@
                                    <Frame x:Name="frame_services" Grid.Row="3" Padding="6" Grid.Column="2" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_cleaning"/>
-                                           <Label Text="{helpers:Translate Services}"/>
+                                           <Label HorizontalTextAlignment="Center"  Text="{helpers:Translate Services}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -156,7 +156,7 @@
                                    <Frame x:Name="frame_sights" Grid.Row="4" Padding="6" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_landmarks"/>
-                                           <Label Text="{helpers:Translate SightAndExcursion}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate SightAndExcursion}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -165,7 +165,7 @@
                                    <Frame x:Name="frame_party" Grid.Row="4" Padding="6" Grid.Column="1" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_party"/>
-                                           <Label Text="{helpers:Translate HappeningsAndEvents}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate HappeningsAndEvents}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -174,7 +174,7 @@
                                    <Frame x:Name="frame_culture" Grid.Row="4" Padding="6" Grid.Column="2" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_bank"/>
-                                           <Label Text="{helpers:Translate CultureAndArt}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate CultureAndArt}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -183,7 +183,7 @@
                                    <Frame x:Name="frame_hobby" Grid.Row="5" Padding="6" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_art"/>
-                                           <Label Text="{helpers:Translate HobbyAndAmusement}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate HobbyAndAmusement}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -192,7 +192,7 @@
                                    <Frame x:Name="frame_jobs" Grid.Row="5" Padding="6" Grid.Column="1" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_paper"/>
-                                           <Label Text="{helpers:Translate Jobs}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate Jobs}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -201,7 +201,7 @@
                                    <Frame x:Name="frame_edu" Grid.Row="5" Padding="6" Grid.Column="2" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_edu"/>
-                                           <Label Text="{helpers:Translate EducationalInstitutions}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate EducationalInstitutions}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -210,7 +210,7 @@
                                    <Frame x:Name="frame_organizations" Grid.Row="6" Padding="6" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_people"/>
-                                           <Label Text="{helpers:Translate OrganizationsAndAssociations}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate OrganizationsAndAssociations}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -219,7 +219,7 @@
                                    <Frame x:Name="frame_authorities" Grid.Row="6" Padding="6" Grid.Column="1" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_flag"/>
-                                           <Label Text="{helpers:Translate AuthoritiesAndEmbassies}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate AuthoritiesAndEmbassies}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -228,7 +228,7 @@
                                    <Frame x:Name="frame_religion" Grid.Row="6" Padding="6" Grid.Column="2" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_religion"/>
-                                           <Label Text="{helpers:Translate ReligiousInstitions}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate ReligiousInstitions}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -237,7 +237,7 @@
                                    <Frame x:Name="frame_emergency" Grid.Row="7" Padding="6" Grid.Column="0" HasShadow="False" HeightRequest="120">
                                        <StackLayout>
                                            <Image HeightRequest="70" Source="cat_emergency"/>
-                                           <Label Text="{helpers:Translate Emergencies}"/>
+                                           <Label HorizontalTextAlignment="Center" Text="{helpers:Translate Emergencies}"/>
                                        </StackLayout>
                                        <Frame.GestureRecognizers>
                                            <TapGestureRecognizer Tapped="Button_Clicked"/>
@@ -267,13 +267,13 @@
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250"/>
+                     <ColumnDefinition Width="40"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
-                <BoxView Grid.Column="1" />
-                <ImageButton Clicked="ImageButton_Clicked" BackgroundColor="Transparent" HorizontalOptions="Start"  Source="img_logo_text"/>
+                <ImageButton Clicked="ImageButton_Clicked" Margin="-40,0,0,0" Grid.Column="1"  BackgroundColor="Transparent" HorizontalOptions="Center"  Source="img_logo_text"/>
                  
-                <Label Margin="5,0,0,0" Text="☰" VerticalOptions="Center" HorizontalOptions="End" FontFamily="ExtraBoldText" FontSize="30" Grid.Column="1">
+                <Label Margin="5,0,0,0" Text="☰" VerticalOptions="Center" HorizontalOptions="End" FontFamily="ExtraBoldText" FontSize="30" Grid.Column="2">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="ImageButton_Clicked"/>
                     </Label.GestureRecognizers>

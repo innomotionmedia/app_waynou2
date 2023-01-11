@@ -6,7 +6,7 @@
     xmlns:helpers="clr-namespace:Khaled.Helpers"
     x:Class="Khaled.Views.ContentViews.MainMenuTabs.CV_AllAdsRes">
     <ContentView.Content>
-        <StackLayout>
+        <StackLayout >
             <StackLayout>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -83,13 +83,14 @@
                        x:Name="label_empty"
                        HorizontalOptions="Center"/>
                 <ListView
+                    BackgroundColor="Transparent"
                     VerticalScrollBarVisibility="Never"
-                    SeparatorVisibility="Default"
+                    SeparatorVisibility="None"                
                     ItemTapped="listview_mainView_ItemTapped"
+                    HeightRequest="750"
                     ItemAppearing="listview_mainView_ItemAppearing"
                     Refreshing="listview_mainView_Refreshing"
                     IsPullToRefreshEnabled="True"
-                    BackgroundColor="Transparent"
                     HasUnevenRows="True"
                     x:Name="listview_mainView">
                     <ListView.ItemTemplate>

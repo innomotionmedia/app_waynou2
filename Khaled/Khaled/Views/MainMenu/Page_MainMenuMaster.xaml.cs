@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Khaled.Helpers;
 using Khaled.Resources;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -18,6 +19,12 @@ namespace Khaled.Views.MainMenu
         public Page_MainMenuMaster()
         {
             InitializeComponent();
+
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+            else
+                this.FlowDirection = FlowDirection.LeftToRight;
+
             Xamarin.Forms.NavigationPage.SetHasNavigationBar(this, true);
 
             BindingContext = new Page_MainMenuMasterViewModel();

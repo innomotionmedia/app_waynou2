@@ -12,22 +12,22 @@
               HasUnevenRows="true"
               ItemsSource="{Binding MenuItems}">
       <ListView.Header>     
-        <Grid BackgroundColor="{StaticResource MainTheme}">
+        <Grid  BackgroundColor="{StaticResource MainTheme}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>           
-            <Grid Grid.Column="1">
+            <Grid  Margin="0,0,0,0" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="200"/>
                 </Grid.RowDefinitions>
-                <Grid>
+                <Grid Margin="0,100,0,0" VerticalOptions="Center" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="80"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                     <Image HorizontalOptions="Start" Margin="10" Grid.Row="1" Source="img_logo_text"/>
+                     <Image HorizontalOptions="Start" Margin="10" VerticalOptions="Center" Grid.Row="1" Source="img_logo_text"/>
                 </Grid>
             </Grid>
         </Grid>       

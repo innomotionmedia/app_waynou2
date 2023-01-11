@@ -23,7 +23,10 @@ namespace Khaled.Views.ContentViews.Categories
 			Instance = this;
 			LoadContent();
 
-			if (CachedUser.localCode == localCodes.ar)
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+
+            if (CachedUser.localCode == localCodes.ar)
 				this.FlowDirection = FlowDirection.RightToLeft;
 			else
 				this.FlowDirection = FlowDirection.LeftToRight;

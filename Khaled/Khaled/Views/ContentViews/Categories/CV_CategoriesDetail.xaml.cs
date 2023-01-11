@@ -11,6 +11,9 @@ namespace Khaled.Views.ContentViews.Categories
 		{
 			InitializeComponent ();
 
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+
         }
 	}
 }

@@ -17,7 +17,7 @@
                         <ColumnDefinition Width="40"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ImageButton Clicked="back_Clicked" VerticalOptions="Center"  Source="icon_back" WidthRequest="20" HorizontalOptions="Start" Rotation="180"/>
+                    <ImageButton Clicked="back_Clicked" VerticalOptions="Center" x:Name="img_backbutton"  Source="icon_back" WidthRequest="20" HorizontalOptions="Start" Rotation="180"/>
                     <Label x:Name="text_pickCat" VerticalOptions="Center"  FontSize="25" FontFamily="ExtraBoldText" Grid.Column="1" Margin="0,0,0,0" />
                 </Grid>
                 <combobox:SfComboBox HeightRequest="40" WatermarkColor="#bbbbbb" Watermark="{helpers:Translate PickASubCat}" Margin="0,-5,0,0" BackgroundColor="White" x:Name="comboBox" SelectionChanged="comboBox_SelectionChanged"/>
@@ -30,7 +30,7 @@
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                       <Entry  x:Name="entry_title"  MaxLength="30" Placeholder="{helpers:Translate SearchInCat}"/>
-                      <Button Clicked="btn_search_Clicked" x:Name="btn_search" BackgroundColor="Transparent" Grid.Column="1" Text="Go!"/>
+                      <Button Clicked="btn_search_Clicked" x:Name="btn_search" BackgroundColor="Transparent" Grid.Column="1" Text="{helpers:Translate Go}"/>
                </Grid>
             </StackLayout>
             <ListView

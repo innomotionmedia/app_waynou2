@@ -124,11 +124,11 @@
     </data>
 
     <data name="OrganizationsAndAssociations" xml:space="preserve">
-    <value>Organisationen &amp; Vereine</value>
+    <value>Firmen &amp; Vereine</value>
     </data>
 
     <data name="EducationalInstitutions" xml:space="preserve">
-    <value>Bildungsstätte</value>
+    <value>Bildung &amp; Schulen</value>
     </data>
 
     <data name="Jobs" xml:space="preserve">
@@ -144,15 +144,15 @@
     </data>
 
     <data name="HappeningsAndEvents" xml:space="preserve">
-    <value>Veranstaltungen &amp; Events</value>
+    <value>Partys &amp; Events</value>
     </data>
 
     <data name="SightAndExcursion" xml:space="preserve">
-    <value>Sehenswürdigkeiten </value>
+    <value>Interessante Orte </value>
     </data>
 
     <data name="Services" xml:space="preserve">
-    <value>Dienstleistungen</value>
+    <value>Services</value>
     </data>
 
     <data name="ConstructionAndRepair" xml:space="preserve">

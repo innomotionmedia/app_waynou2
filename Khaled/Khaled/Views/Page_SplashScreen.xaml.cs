@@ -21,7 +21,7 @@ namespace Khaled.Views
 			image_logo.Opacity = 0;
 			image_logo.IsVisible = true; 
 			await image_logo.FadeTo(1, 4000);
-			Application.Current.MainPage = new MainPage(false, false);
+			Application.Current.MainPage = new MainPage(true, false);
 		}
     }
 }

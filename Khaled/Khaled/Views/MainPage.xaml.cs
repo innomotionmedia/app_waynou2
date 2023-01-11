@@ -36,7 +36,6 @@ namespace Khaled
 
              InitializeComponent();
 
-            LoadUp();
 
             GetSupportedLanguages();
 
@@ -57,7 +56,12 @@ namespace Khaled
 
             }
 
-            mainPage.FlowDirection = FlowDirection.LeftToRight;
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+            else
+                this.FlowDirection = FlowDirection.LeftToRight;
+
+
             if (preSelectLingua)
                 SetPreLingua();
 
@@ -84,10 +88,13 @@ namespace Khaled
             switch (CachedUser.localCode)
             {
                 case localCodes.en:
+                    carouselview.Position = 1;
                     break;
                 case localCodes.ar:
+                    carouselview.Position = 2;
                     break;
                 case localCodes.de:
+                    carouselview.Position = 0;
                     break;
             }
         }
@@ -199,6 +206,9 @@ namespace Khaled
                     Preferences.Set(Constants.CHOSENLANG, "en");
                     break;                  
             }
+
+            LoadUp();
+
         }
 
         public void GoToMainPage()

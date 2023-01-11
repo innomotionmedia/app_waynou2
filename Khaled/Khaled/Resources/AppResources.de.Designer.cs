@@ -229,7 +229,7 @@ namespace Khaled.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bildungsstätte.
+        ///   Looks up a localized string similar to Bildung &amp; Schulen.
         /// </summary>
         internal static string EducationalInstitutions {
             get {
@@ -319,7 +319,7 @@ namespace Khaled.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Veranstaltungen &amp; Events.
+        ///   Looks up a localized string similar to Partys &amp; Events.
         /// </summary>
         internal static string HappeningsAndEvents {
             get {
@@ -481,7 +481,7 @@ namespace Khaled.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Organisationen &amp; Vereine.
+        ///   Looks up a localized string similar to Firmen &amp; Vereine.
         /// </summary>
         internal static string OrganizationsAndAssociations {
             get {
@@ -580,7 +580,7 @@ namespace Khaled.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dienstleistungen.
+        ///   Looks up a localized string similar to Services.
         /// </summary>
         internal static string Services {
             get {
@@ -607,7 +607,7 @@ namespace Khaled.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sehenswürdigkeiten .
+        ///   Looks up a localized string similar to Interessante Orte .
         /// </summary>
         internal static string SightAndExcursion {
             get {
