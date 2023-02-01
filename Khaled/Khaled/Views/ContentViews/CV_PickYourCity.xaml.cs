@@ -144,6 +144,14 @@ namespace Khaled.Views.ContentViews
             }
 
         }
+
+        void btn_acceptLoction_Clicked(System.Object sender, System.EventArgs e)
+        {
+            CachedUser.cityPicked = false; 
+            Preferences.Set(Constants.PREFKEY_CITYPICKED, false);
+            PopUp_Template.instance.ClickedOnClosed(null, null);
+            MainPage.Instance.GoToMainPage();
+        }
     }
 }
 

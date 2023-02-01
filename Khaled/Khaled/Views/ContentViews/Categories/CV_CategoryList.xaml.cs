@@ -103,8 +103,11 @@ namespace Khaled.Views.ContentViews.Categories
 			layout_offers.Children.Add(new CV_Offers());
 
 			if (canLoad)
-				CV_TopCats.Instance.LoadDummyData(); // second load
-			else
+			{
+				await Task.Delay(100); // if not done, content wont render
+                CV_TopCats.Instance.LoadDummyData(); // second load
+            }
+            else
 				canLoad = true; 
 
         }

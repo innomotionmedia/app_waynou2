@@ -292,7 +292,7 @@ namespace Khaled.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to إذهب‚.
+        ///   Looks up a localized string similar to إذهب.
         /// </summary>
         internal static string Go {
             get {

@@ -211,20 +211,29 @@ namespace Khaled
 
         }
 
-        public void GoToMainPage()
+        public async void GoToMainPage()
         {
             if(gpsGranted)
                 Preferences.Set("GPSFOUND", true);
 
-            if(Preferences.Get(Constants.PREFKEY_CITYPICKED, false))
-            {
-                var lat = Preferences.Get(Constants.PREFKEY_CITYLAT, "");
-                var longi = Preferences.Get(Constants.PREFKEY_CITYLONG, "");
+            string lat ="", longi ="";
 
-                CachedUser.lati = Double.Parse(lat);
-                CachedUser.longi = Double.Parse(longi);
-                CachedUser.radius = Preferences.Get(Constants.PREFKEY_CITYRAD, 0);
+
+            if (Preferences.Get(Constants.PREFKEY_CITYPICKED, false))
+            {
+                lat = Preferences.Get(Constants.PREFKEY_CITYLAT, "");
+                longi = Preferences.Get(Constants.PREFKEY_CITYLONG, "");           
             }
+            else
+            {
+                await GetCurrentDeviceLocation();
+                lat = CachedUser.lati.ToString();
+                longi = CachedUser.longi.ToString();
+            }
+
+            CachedUser.lati = Double.Parse(lat);
+            CachedUser.longi = Double.Parse(longi);
+            CachedUser.radius = Preferences.Get(Constants.PREFKEY_CITYRAD, 0);
 
             Application.Current.MainPage = new Page_MainMenu();
         }

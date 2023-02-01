@@ -178,13 +178,14 @@
                 </Grid>
             </ScrollView>
             -->
-            <Frame x:Name="layout_gps" IsVisible="false" CornerRadius="12" HeightRequest="470">
-                <Grid x:Name="gps_grid">
-
-
-                </Grid>
+            <StackLayout>
+                 <Frame x:Name="layout_gps" IsVisible="false" CornerRadius="12" HeightRequest="470">
+                    <Grid x:Name="gps_grid"/>
                 <!--<maps:Map x:Name="maps_map"  IsShowingUser="True" MapType="Street" />-->
-            </Frame>
+                </Frame>
+                <Button Clicked="btn_acceptLoction_Clicked" Text="{helpers:Translate Okay}" x:Name="btn_acceptLoction"/>
+            </StackLayout>
+
 
             <!--
             <StackLayout Padding="0,10,0,10" x:Name="layout_slider">
