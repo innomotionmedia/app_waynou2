@@ -25,18 +25,20 @@ namespace Khaled.Views.ContentViews
                 var img = sender as TintedImage;
                 var context = img.BindingContext as FullAdType;
                 var color = Converters.ColorFromResourceKey("MainTheme");
-            
-                if (img.TintColor == Color.FromRgba(color.R, color.G, color.B, color.A))
+
+                var Source = ImageSource.FromFile("img_fav.png");
+
+                if (img.Source.ToString() != Source.ToString())
                 {
                     //unfav
-                    img.TintColor = Color.Transparent;
+                    img.Source = "img_fav.png";
                     await App.DatabaseFAV.DeleteMyFav(context);
             
                 }
                 else
                 {
                     //fav
-                    img.TintColor = Color.FromRgba(color.R, color.G, color.B, color.A);
+                    img.Source = "img_fav_selected.png";
                     await App.DatabaseFAV.SaveClickedOnFav(context);
                 }
             }

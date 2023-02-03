@@ -166,9 +166,8 @@ namespace Khaled.Helpers
                 if (dbElem != null)
                 {
                     // set fav
-                    var color = Converters.ColorFromResourceKey("MainTheme");
-                    elem.tintColor = Color.FromRgba(color.R, color.G, color.B, color.A).ToHex();
-                }
+                    elem.FaveImageSource = ImageSource.FromFile("img_fav_selected.png");
+                } else elem.FaveImageSource = ImageSource.FromFile("img_fav.png"); // unselected
 
                 res.Add(elem);
             }

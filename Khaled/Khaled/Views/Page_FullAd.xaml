@@ -14,7 +14,7 @@
         <RefreshView IsRefreshing="False" x:Name="refreshview_view" Refreshing="RefreshView_Refreshing">
            <ScrollView>
                 <StackLayout Spacing="0">
-                    <Image Aspect="AspectFill" x:Name="img_mainPic"/>
+                    <Image Aspect="AspectFill" VerticalOptions="FillAndExpand" x:Name="img_mainPic"/>
                     <BoxView HeightRequest="1" BackgroundColor="{StaticResource LightGray}"/>
                     <Grid HeightRequest="50">
                         <Grid.ColumnDefinitions>
@@ -48,7 +48,7 @@
                                 <TapGestureRecognizer Tapped="Tapped_Quicks"/>
                             </Frame.GestureRecognizers>
                         </Frame>
-                        <Frame BackgroundColor="{StaticResource MainTheme}" CornerRadius="0" x:Name="frame_heart" Grid.Column="4" Padding="10"  HasShadow="False">
+                        <Frame  CornerRadius="0" x:Name="frame_heart" Grid.Column="4" Padding="10"  HasShadow="False">
                             <abstractions:TintedImage TintColor="Transparent"
                                                       VerticalOptions="Center"
                                                       HorizontalOptions="Center"

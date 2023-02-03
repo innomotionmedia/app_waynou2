@@ -167,7 +167,9 @@ namespace Khaled.Backend.APIs
 
         public string description { get; set; }
 
-        public string tintColor { get; set; } = "Transparent";
+        //public string tintColor { get; set; } = "Transparent";
+
+        public ImageSource FaveImageSource { get; set; }
 
         public int tblAdID { get; set; }
         public long UnixCreated { get; set; }

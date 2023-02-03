@@ -46,11 +46,11 @@
                             </Grid.RowDefinitions>
                             <Grid>
                                 <controls:TintedImage HeightRequest="30"
-                                       TintColor="{Binding tintColor}"
                                        WidthRequest="30"
+                                       TintColor="Transparent"
                                        HorizontalOptions="End"
                                        VerticalOptions="Start"
-                                       Source="img_fav.png">
+                                       Source="{Binding FaveImageSource}">
                                     <controls:TintedImage.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="Tapped_Fav"/>
                                     </controls:TintedImage.GestureRecognizers>

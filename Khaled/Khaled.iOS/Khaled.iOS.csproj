@@ -199,6 +199,7 @@
     <BundleResource Include="Resources\icon_back.png" />
     <BundleResource Include="Resources\munich_dummy.jpg" />
     <BundleResource Include="Resources\stuttgart.png" />
+    <BundleResource Include="Resources\img_fav_selected.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

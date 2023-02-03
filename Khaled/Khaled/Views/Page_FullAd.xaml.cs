@@ -38,9 +38,11 @@ namespace Khaled.Views
         {
             //label_title.Text = Converters.ReturnCorrectLingua(data[0], Helpers.TextType.adTitle);
 
-            if (CachedUser.localCode == localCodes.ar)
-                this.FlowDirection = FlowDirection.RightToLeft;
+            this.FlowDirection = FlowDirection.LeftToRight;
 
+          // if (CachedUser.localCode == localCodes.ar)
+          //     this.FlowDirection = FlowDirection.RightToLeft;
+          //
             //label_description.FlowDirection = FlowDirection.RightToLeft;
 
 
@@ -52,6 +54,7 @@ namespace Khaled.Views
             label_hours.Text = data[0]?.hours;
             label_telephone.Text = data[0]?.telephone;
             label_web.Text = data[0]?.web;
+
             img_mainPic.Source = ad.imageSource_fullPic;
         }
 
@@ -175,6 +178,7 @@ namespace Khaled.Views
                 {
                     //unfav
                     //img_heart.TintColor = Color.Transparent;
+                    img_heart.Source = "img_fav.png";
                     await App.DatabaseFAV.DeleteMyFav(ad);
 
                 }
@@ -182,15 +186,16 @@ namespace Khaled.Views
                 {
                     //fav
                     //img_heart.TintColor = Color.Black;
+                    img_heart.Source = "img_fav_selected.png";
                     await App.DatabaseFAV.SaveClickedOnFav(data[0]);
                 }
             }
             else
             {
-               // if (res != null)
-               //     img_heart.TintColor = Color.Black;
-               // else
-               //     img_heart.TintColor = Color.Transparent;
+                if (res != null)
+                    img_heart.Source = "img_fav_selected.png";
+                else
+                    img_heart.Source = "img_fav.png";
             }
 
         }
