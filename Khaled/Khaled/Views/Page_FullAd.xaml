@@ -14,6 +14,7 @@
         <RefreshView IsRefreshing="False" x:Name="refreshview_view" Refreshing="RefreshView_Refreshing">
            <ScrollView>
                 <StackLayout Spacing="0">
+
                     <Image Aspect="AspectFill" VerticalOptions="FillAndExpand" x:Name="img_mainPic"/>
                     <BoxView HeightRequest="1" BackgroundColor="{StaticResource LightGray}"/>
                     <Grid HeightRequest="50">

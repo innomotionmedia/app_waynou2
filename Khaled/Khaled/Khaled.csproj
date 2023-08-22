@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <BuildWithMSBuildOnMono>true</BuildWithMSBuildOnMono>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -103,4 +104,7 @@
     </Compile>
   </ItemGroup>
    
+  <ItemGroup>
+    <ProjectReference Include="..\TodoApp.Data\TodoApp.Data.csproj" />
+  </ItemGroup>
 </Project>
