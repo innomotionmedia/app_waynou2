@@ -25,7 +25,13 @@ namespace Khaled.Helpers
         public static string urlImprint = "https://waynou.de/imprint.html";
         public static string urlToS = "https://waynou.de/termsofuse.html";
 
-
+        public static string GetConnectionString()
+        {
+            var res = "Server=tcp:db-waynoudbserver.database.windows.net,1433;Database=db_waynou;User ID=serveradmin@db-waynoudbserver;Password={XXX};Trusted_Connection=False;Encrypt=True;";
+            var mySecret = "30sajdiuan2sad2AAG";//UserSecretsManager.Settings["con"]; //TODO LOLL U KNOW WHAT
+            var secret = mySecret.Replace("1", "!");
+            return res.Replace("{XXX}", secret);
+        }
 
         public static int[] appPath = new int[3];
     }
@@ -40,6 +46,9 @@ namespace Khaled.Helpers
         public static bool cityPicked = false; 
         
     }
+
+
+
 
     public enum CategoriesEnum
     {
