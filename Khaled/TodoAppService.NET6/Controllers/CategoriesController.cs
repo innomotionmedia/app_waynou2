@@ -9,7 +9,7 @@ using TodoAppService.NET6.Db;
 
 namespace TodoAppService.NET6.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("tables/tblcategories")]
     public class CategoriesController : TableController<tblCategories>
     {
