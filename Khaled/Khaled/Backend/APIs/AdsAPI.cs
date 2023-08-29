@@ -1,162 +1,522 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Com.Kumulos;
 using Com.Kumulos.Abstractions;
 using Khaled.Helpers;
+using Khaled.Views;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using static SQLite.SQLite3;
 
 namespace Khaled.Backend.APIs
 {
     public class AdsAPI
     {
-        public static List<FullAdType> Deserialize(ApiResponse response)
-        {
-            List<FullAdType> ad = new List<FullAdType>();
-            var array = (Newtonsoft.Json.Linq.JArray)response.payload;
-            foreach (var item in array)
-            {
-                FullAdType x = (FullAdType)(item.ToObject(typeof(FullAdType)));        
-                ad.Add(x);       
-            }       
-            return ad;
-        }
 
-        public static List<FullAdType> DeserializeFullAd(ApiResponse response)
+
+        public static async Task<FullAdType> GetFullAdInfo(string tblAdID)
         {
-            List<FullAdType> ad = new List<FullAdType>();
-            var array = (Newtonsoft.Json.Linq.JArray)response.payload;
-            foreach (var item in array)
+
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
             {
-                FullAdType x = (FullAdType)(item.ToObject(typeof(FullAdType)));
-                ad.Add(x);
+                await connection.OpenAsync();
+
+                string query = @"
+                    SELECT *
+                    FROM [Ads]
+                    WHERE tblAdID = @tblAdID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@tblAdID", tblAdID);
+
+                    FullAdType res = new FullAdType();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                            // var thumb = reader.GetValue(reader.GetOrdinal("thumbnail"));
+                            // byte[] thumbnail = { };
+                            // if (!string.IsNullOrEmpty(thumb.ToString())) thumbnail = (byte[])thumb;
+
+                            var x = new FullAdType
+                            {
+                                title = Convert.ToString(reader[reader.GetOrdinal("title")]),
+                                titleDe = Convert.ToString(reader[reader.GetOrdinal("titleDe")]),
+                                description = Convert.ToString(reader[reader.GetOrdinal("description")]),
+                                descriptionAR = Convert.ToString(reader[reader.GetOrdinal("descriptionAR")]),
+                                descriptionGER = Convert.ToString(reader[reader.GetOrdinal("descriptionGER")]),
+                                adresse = Convert.ToString(reader[reader.GetOrdinal("adresse")]),
+                                tblAdID = Convert.ToString(reader[reader.GetOrdinal("tblAdID")]),
+                                email = Convert.ToString(reader[reader.GetOrdinal("email")]),
+                                hours = Convert.ToString(reader[reader.GetOrdinal("hours")]),
+                                descriptionENG = Convert.ToString(reader[reader.GetOrdinal("descriptionENG")]),
+                                titleAr = Convert.ToString(reader[reader.GetOrdinal("titleAr")]),
+                                telephone = Convert.ToString(reader[reader.GetOrdinal("telephone")]),
+                                web = Convert.ToString(reader[reader.GetOrdinal("web")]),
+                                distance = Convert.ToString(reader[reader.GetOrdinal("Distance")]),
+                                fullPic = Convert.ToString(reader.GetValue(reader.GetOrdinal("fullPic"))),
+                                //UnixCreated = DateTime.Convert.ToString(reader.GetValue(reader.GetOrdinal("UnixCreated"))),
+
+                            };
+                            res = x; 
+                        }
+                        return res;
+                    }
+                }
             }
-            return ad;
         }
 
-        public static async Task<ApiResponse> GetFullAdInfo(int tblAdID)
+        public static async Task<List<FullAdType>> GetAdsByTitle(string title, int start, int count)
         {
-            var parameters = new List<KeyValuePair<string, string>>
+            List<FullAdType> ads = new List<FullAdType>();
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
             {
-                new KeyValuePair<string, string>("tblAdID", tblAdID.ToString()),
-            };
-            return await Kumulos.Current.Build.CallAPI("tblAds_getFullAdInfo", parameters).ConfigureAwait(false);
+                await connection.OpenAsync();
+
+                string query = @"
+                    SELECT title, titleDe, description, descriptionAR, descriptionGER, adresse, tblAdID, email, hours, descriptionENG, titleAr, telephone, web, distance, thumbnail, UnixCreated,
+                    FROM [Ads]
+                    WHERE title LIKE '%@title%'
+                    OFFSET @Start ROWS FETCH NEXT @Count ROWS ONLY;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@title", title);
+                    command.Parameters.AddWithValue("@Start", start);
+                    command.Parameters.AddWithValue("@Count", count);
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                            // var thumb = reader.GetValue(reader.GetOrdinal("thumbnail"));
+                            // byte[] thumbnail = { };
+                            // if (!string.IsNullOrEmpty(thumb.ToString())) thumbnail = (byte[])thumb;
+
+                            var x = new FullAdType
+                            {
+                                title = Convert.ToString(reader[reader.GetOrdinal("title")]),
+                                titleDe = Convert.ToString(reader[reader.GetOrdinal("titleDe")]),
+                                description = Convert.ToString(reader[reader.GetOrdinal("description")]),
+                                descriptionAR = Convert.ToString(reader[reader.GetOrdinal("descriptionAR")]),
+                                descriptionGER = Convert.ToString(reader[reader.GetOrdinal("descriptionGER")]),
+                                adresse = Convert.ToString(reader[reader.GetOrdinal("adresse")]),
+                                tblAdID = Convert.ToString(reader[reader.GetOrdinal("tblAdID")]),
+                                email = Convert.ToString(reader[reader.GetOrdinal("email")]),
+                                hours = Convert.ToString(reader[reader.GetOrdinal("hours")]),
+                                descriptionENG = Convert.ToString(reader[reader.GetOrdinal("descriptionENG")]),
+                                titleAr = Convert.ToString(reader[reader.GetOrdinal("titleAr")]),
+                                telephone = Convert.ToString(reader[reader.GetOrdinal("telephone")]),
+                                web = Convert.ToString(reader[reader.GetOrdinal("web")]),
+                                distance = Convert.ToString(reader[reader.GetOrdinal("Distance")]),
+                                thumbnail = Convert.ToString(reader.GetValue(reader.GetOrdinal("thumbnail"))),
+                                //UnixCreated = DateTime.Convert.ToString(reader.GetValue(reader.GetOrdinal("UnixCreated"))),
+
+                            };
+                            ads.Add(x);
+                        }
+
+                        return ads;
+                    }
+                }
+            }
         }
 
-        public static async Task<ApiResponse> GetAdsByTitle(string title, int start, int count)
+        public static async Task<List<FullAdType>> GetAdsByTitleCat1(string title, int start, int count, string belongsToMain)
         {
-            var parameters = new List<KeyValuePair<string, string>>
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
             {
-                new KeyValuePair<string, string>("title", title),
-                new KeyValuePair<string, string>("start", start.ToString()),
-                new KeyValuePair<string, string>("count", count.ToString()),
-            };
-            var x =  await Kumulos.Current.Build.CallAPI("tblAds_getAdsByTitle", parameters).ConfigureAwait(false);
-            return x; 
+                await connection.OpenAsync();
+                List<FullAdType> ads = new List<FullAdType>();
+
+                string query = @"
+                    SELECT title, titleDe, description, descriptionAR, descriptionGER, adresse, tblAdID, email, hours, descriptionENG, titleAr, telephone, web, distance, thumbnail, UnixCreated,
+                    FROM [Ads]
+                    WHERE title LIKE '%@title%'
+                    AND Category = @category
+                    OFFSET @Start ROWS FETCH NEXT @Count ROWS ONLY;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@title", title);
+                    command.Parameters.AddWithValue("@Start", start);
+                    command.Parameters.AddWithValue("@Count", count);
+                    command.Parameters.AddWithValue("@category", belongsToMain);
+
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                            // var thumb = reader.GetValue(reader.GetOrdinal("thumbnail"));
+                            // byte[] thumbnail = { };
+                            // if (!string.IsNullOrEmpty(thumb.ToString())) thumbnail = (byte[])thumb;
+
+                            var x = new FullAdType
+                            {
+                                title = Convert.ToString(reader[reader.GetOrdinal("title")]),
+                                titleDe = Convert.ToString(reader[reader.GetOrdinal("titleDe")]),
+                                description = Convert.ToString(reader[reader.GetOrdinal("description")]),
+                                descriptionAR = Convert.ToString(reader[reader.GetOrdinal("descriptionAR")]),
+                                descriptionGER = Convert.ToString(reader[reader.GetOrdinal("descriptionGER")]),
+                                adresse = Convert.ToString(reader[reader.GetOrdinal("adresse")]),
+                                tblAdID = Convert.ToString(reader[reader.GetOrdinal("tblAdID")]),
+                                email = Convert.ToString(reader[reader.GetOrdinal("email")]),
+                                hours = Convert.ToString(reader[reader.GetOrdinal("hours")]),
+                                descriptionENG = Convert.ToString(reader[reader.GetOrdinal("descriptionENG")]),
+                                titleAr = Convert.ToString(reader[reader.GetOrdinal("titleAr")]),
+                                telephone = Convert.ToString(reader[reader.GetOrdinal("telephone")]),
+                                web = Convert.ToString(reader[reader.GetOrdinal("web")]),
+                                distance = Convert.ToString(reader[reader.GetOrdinal("Distance")]),
+                                thumbnail = Convert.ToString(reader.GetValue(reader.GetOrdinal("thumbnail"))),
+                                //UnixCreated = DateTime.Convert.ToString(reader.GetValue(reader.GetOrdinal("UnixCreated"))),
+
+                            };
+                            ads.Add(x);
+                        }
+
+                        return ads;
+                    }
+                }
+            }
         }
 
-        public static async Task<ApiResponse> GetAdsByTitleCat1(string title, int start, int count, string belongsToMain)
+        public static async Task<List<FullAdType>> GetAdsByTitleCat2(string title, int start, int count, string subcategory)
         {
-            var parameters = new List<KeyValuePair<string, string>>
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
             {
-                new KeyValuePair<string, string>("title", title),
-                new KeyValuePair<string, string>("start", start.ToString()),
-                new KeyValuePair<string, string>("count", count.ToString()),
-                new KeyValuePair<string, string>("belongsToMain", belongsToMain),
+                await connection.OpenAsync();
 
-            };
-            var x = await Kumulos.Current.Build.CallAPI("tblAds_getAdsByTitleInCat1", parameters).ConfigureAwait(false);
-            return x;
+                string query = @"
+                    SELECT title, titleDe, description, descriptionAR, descriptionGER, adresse, tblAdID, email, hours, descriptionENG, titleAr, telephone, web, distance, thumbnail, UnixCreated,
+                    FROM [Ads]
+                    WHERE title LIKE '%@title%'
+                    AND Category = @subcategory
+                    OFFSET @Start ROWS FETCH NEXT @Count ROWS ONLY;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@title", title);
+                    command.Parameters.AddWithValue("@Start", start);
+                    command.Parameters.AddWithValue("@Count", count);
+                    command.Parameters.AddWithValue("@subcategory", subcategory);
+
+                    List<FullAdType> ads = new List<FullAdType>();
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                            // var thumb = reader.GetValue(reader.GetOrdinal("thumbnail"));
+                            // byte[] thumbnail = { };
+                            // if (!string.IsNullOrEmpty(thumb.ToString())) thumbnail = (byte[])thumb;
+
+                            var x = new FullAdType
+                            {
+                                title = Convert.ToString(reader[reader.GetOrdinal("title")]),
+                                titleDe = Convert.ToString(reader[reader.GetOrdinal("titleDe")]),
+                                description = Convert.ToString(reader[reader.GetOrdinal("description")]),
+                                descriptionAR = Convert.ToString(reader[reader.GetOrdinal("descriptionAR")]),
+                                descriptionGER = Convert.ToString(reader[reader.GetOrdinal("descriptionGER")]),
+                                adresse = Convert.ToString(reader[reader.GetOrdinal("adresse")]),
+                                tblAdID = Convert.ToString(reader[reader.GetOrdinal("tblAdID")]),
+                                email = Convert.ToString(reader[reader.GetOrdinal("email")]),
+                                hours = Convert.ToString(reader[reader.GetOrdinal("hours")]),
+                                descriptionENG = Convert.ToString(reader[reader.GetOrdinal("descriptionENG")]),
+                                titleAr = Convert.ToString(reader[reader.GetOrdinal("titleAr")]),
+                                telephone = Convert.ToString(reader[reader.GetOrdinal("telephone")]),
+                                web = Convert.ToString(reader[reader.GetOrdinal("web")]),
+                                distance = Convert.ToString(reader[reader.GetOrdinal("Distance")]),
+                                thumbnail = Convert.ToString(reader.GetValue(reader.GetOrdinal("thumbnail"))),
+                                //UnixCreated = DateTime.Convert.ToString(reader.GetValue(reader.GetOrdinal("UnixCreated"))),
+
+                            };
+                            ads.Add(x);
+                        }
+
+                        return ads;
+                    }
+                }
+            }
         }
 
-        public static async Task<ApiResponse> GetAdsByTitleCat2(string title, int start, int count, string belongsToMain)
-        {
-            var parameters = new List<KeyValuePair<string, string>>
-            {
-                new KeyValuePair<string, string>("title", title),
-                new KeyValuePair<string, string>("start", start.ToString()),
-                new KeyValuePair<string, string>("count", count.ToString()),
-                new KeyValuePair<string, string>("belongsToSub1", belongsToMain),
-
-            };
-            var x = await Kumulos.Current.Build.CallAPI("tblAds_getAdsByTitleInCat2", parameters).ConfigureAwait(false);
-            return x;
-        }
-
-        public static async Task<ApiResponse> GetAllAds(int start, int count, int maxKmRadius, double inputLat, double inputLong, int categoryId, string title)
+        public static async Task<List<FullAdType>> GetAllAds(int start, int count, int maxKmRadius, double inputLat, double inputLong, int categoryId, string title)
         {
             var lat = Converters.TurnCommaIntoDot(inputLat.ToString());
             var longi = Converters.TurnCommaIntoDot(inputLong.ToString());
 
-            var parameters = new List<KeyValuePair<string, string>>
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
             {
-                new KeyValuePair<string, string>("start", start.ToString()),
-                new KeyValuePair<string, string>("count", count.ToString()),
-                new KeyValuePair<string, string>("inputLat", lat),
-                new KeyValuePair<string, string>("inputLong", longi),
-                new KeyValuePair<string, string>("categoryId", categoryId.ToString()),
-                new KeyValuePair<string, string>("maxKmRadius", maxKmRadius.ToString()),
-                new KeyValuePair<string, string>("title", title),
+                await connection.OpenAsync();
 
-            };
+                string query = @"
+                    SELECT title, titleDe, description, descriptionAR, descriptionGER, adresse, tblAdID, email, hours, descriptionENG, titleAr, telephone, web, distance, thumbnail, UnixCreated,
+                        (6371 * ACOS(
+                            COS(RADIANS(@InputLat)) * COS(RADIANS(latitude)) * COS(RADIANS(longitude) - RADIANS(@InputLong)) +
+                            SIN(RADIANS(@InputLat)) * SIN(RADIANS(latitude))
+                        )) AS Distance
+                    FROM [Ads]
+                    WHERE
+                        (6371 * ACOS(
+                            COS(RADIANS(@InputLat)) * COS(RADIANS(latitude)) * COS(RADIANS(longitude) - RADIANS(@InputLong)) +
+                            SIN(RADIANS(@InputLat)) * SIN(RADIANS(latitude))
+                        )) <= @MaxKmRadius
+                    ORDER BY tblAdID
+                    OFFSET @Start ROWS FETCH NEXT @Count ROWS ONLY;";
 
-            var x = await Kumulos.Current.Build.CallAPI("tblAds_getAllAds", parameters).ConfigureAwait(false);
-            return x;
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@InputLat", lat);
+                    command.Parameters.AddWithValue("@InputLong", longi);
+                    command.Parameters.AddWithValue("@MaxKmRadius", maxKmRadius);
+                    command.Parameters.AddWithValue("@Start", start);
+                    command.Parameters.AddWithValue("@Count", count);
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {                    
+                        List<FullAdType> ads = new List<FullAdType>();
+                        while (reader.Read())
+                        {
+                           // var thumb = reader.GetValue(reader.GetOrdinal("thumbnail"));
+                           // byte[] thumbnail = { };
+                           // if (!string.IsNullOrEmpty(thumb.ToString())) thumbnail = (byte[])thumb;
+
+                            var x = new FullAdType
+                            {
+                                title = Convert.ToString(reader[reader.GetOrdinal("title")]),
+                                titleDe = Convert.ToString(reader[reader.GetOrdinal("titleDe")]),
+                                description = Convert.ToString(reader[reader.GetOrdinal("description")]),
+                                descriptionAR = Convert.ToString(reader[reader.GetOrdinal("descriptionAR")]),
+                                descriptionGER = Convert.ToString(reader[reader.GetOrdinal("descriptionGER")]),
+                                adresse = Convert.ToString(reader[reader.GetOrdinal("adresse")]),
+                                tblAdID = Convert.ToString(reader[reader.GetOrdinal("tblAdID")]),
+                                email = Convert.ToString(reader[reader.GetOrdinal("email")]),
+                                hours = Convert.ToString(reader[reader.GetOrdinal("hours")]),
+                                descriptionENG = Convert.ToString(reader[reader.GetOrdinal("descriptionENG")]),
+                                titleAr = Convert.ToString(reader[reader.GetOrdinal("titleAr")]),
+                                telephone = Convert.ToString(reader[reader.GetOrdinal("telephone")]),
+                                web = Convert.ToString(reader[reader.GetOrdinal("web")]),
+                                distance = Convert.ToString(reader[reader.GetOrdinal("Distance")]),
+                                thumbnail = Convert.ToString(reader.GetValue(reader.GetOrdinal("thumbnail"))),
+                                //UnixCreated = DateTime.Convert.ToString(reader.GetValue(reader.GetOrdinal("UnixCreated"))),
+
+                            };
+                            ads.Add(x);
+                        }
+
+                        return ads;
+                    }
+                }
+            }
         }
 
-        public static async Task<ApiResponse> GetAllAds_Cat1(int start, int count, int maxKmRadius, double inputLat, double inputLong, int categoryId, string title)
+        public static async Task<List<FullAdType>> GetAllAds_Cat1(int start, int count, int maxKmRadius, double inputLat, double inputLong, int categoryId, string title)
         {
             var lat = Converters.TurnCommaIntoDot(inputLat.ToString());
             var longi = Converters.TurnCommaIntoDot(inputLong.ToString());
 
-            var parameters = new List<KeyValuePair<string, string>>
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
             {
-                new KeyValuePair<string, string>("start", start.ToString()),
-                new KeyValuePair<string, string>("count", count.ToString()),
-                new KeyValuePair<string, string>("inputLat", lat),
-                new KeyValuePair<string, string>("inputLong", longi),
-                new KeyValuePair<string, string>("categoryId", categoryId.ToString()),
-                new KeyValuePair<string, string>("maxKmRadius", maxKmRadius.ToString()),
-                new KeyValuePair<string, string>("title", title),
+                await connection.OpenAsync();
 
-            };
+                string query = @"
+                    SELECT title, titleDe, description, descriptionAR, descriptionGER, adresse, tblAdID, email, hours, descriptionENG, titleAr, telephone, web, distance, thumbnail, UnixCreated,
+                        (6371 * ACOS(
+                            COS(RADIANS(@InputLat)) * COS(RADIANS(latitude)) * COS(RADIANS(longitude) - RADIANS(@InputLong)) +
+                            SIN(RADIANS(@InputLat)) * SIN(RADIANS(latitude))
+                        )) AS Distance
+                    FROM [Ads]
+                    WHERE
+                    category = @category
+                    AND
+                        (6371 * ACOS(
+                            COS(RADIANS(@InputLat)) * COS(RADIANS(latitude)) * COS(RADIANS(longitude) - RADIANS(@InputLong)) +
+                            SIN(RADIANS(@InputLat)) * SIN(RADIANS(latitude))
+                        )) <= @MaxKmRadius
+                    ORDER BY tblAdID
+                    OFFSET @Start ROWS FETCH NEXT @Count ROWS ONLY;";
 
-            var x = await Kumulos.Current.Build.CallAPI("tblAds_getAllAds_Cat1", parameters).ConfigureAwait(false);
-            return x;
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@InputLat", lat);
+                    command.Parameters.AddWithValue("@InputLong", longi);
+                    command.Parameters.AddWithValue("@MaxKmRadius", maxKmRadius);
+                    command.Parameters.AddWithValue("@Start", start);
+                    command.Parameters.AddWithValue("@Count", count);
+                    command.Parameters.AddWithValue("@category", categoryId);
+
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        List<FullAdType> ads = new List<FullAdType>();
+                        while (reader.Read())
+                        {
+                            // var thumb = reader.GetValue(reader.GetOrdinal("thumbnail"));
+                            // byte[] thumbnail = { };
+                            // if (!string.IsNullOrEmpty(thumb.ToString())) thumbnail = (byte[])thumb;
+
+                            var x = new FullAdType
+                            {
+                                title = Convert.ToString(reader[reader.GetOrdinal("title")]),
+                                titleDe = Convert.ToString(reader[reader.GetOrdinal("titleDe")]),
+                                description = Convert.ToString(reader[reader.GetOrdinal("description")]),
+                                descriptionAR = Convert.ToString(reader[reader.GetOrdinal("descriptionAR")]),
+                                descriptionGER = Convert.ToString(reader[reader.GetOrdinal("descriptionGER")]),
+                                adresse = Convert.ToString(reader[reader.GetOrdinal("adresse")]),
+                                tblAdID = Convert.ToString(reader[reader.GetOrdinal("tblAdID")]),
+                                email = Convert.ToString(reader[reader.GetOrdinal("email")]),
+                                hours = Convert.ToString(reader[reader.GetOrdinal("hours")]),
+                                descriptionENG = Convert.ToString(reader[reader.GetOrdinal("descriptionENG")]),
+                                titleAr = Convert.ToString(reader[reader.GetOrdinal("titleAr")]),
+                                telephone = Convert.ToString(reader[reader.GetOrdinal("telephone")]),
+                                web = Convert.ToString(reader[reader.GetOrdinal("web")]),
+                                distance = Convert.ToString(reader[reader.GetOrdinal("Distance")]),
+                                thumbnail = Convert.ToString(reader.GetValue(reader.GetOrdinal("thumbnail"))),
+                                //UnixCreated = DateTime.Convert.ToString(reader.GetValue(reader.GetOrdinal("UnixCreated"))),
+
+                            };
+                            ads.Add(x);
+                        }
+
+                        return ads;
+                    }
+                }
+
+            }
         }
 
-        public static async Task<ApiResponse> GetAllAds_Cat2(int start, int count, int maxKmRadius, double inputLat, double inputLong, int categoryId, int categoryId2, string title)
+        public static async Task<List<FullAdType>> GetAllAds_Cat2(int start, int count, int maxKmRadius, double inputLat, double inputLong, int subcategory, int subsubcategory, string title)
         {
             var lat = Converters.TurnCommaIntoDot(inputLat.ToString());
             var longi = Converters.TurnCommaIntoDot(inputLong.ToString());
 
-            var parameters = new List<KeyValuePair<string, string>>
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
             {
-                new KeyValuePair<string, string>("start", start.ToString()),
-                new KeyValuePair<string, string>("count", count.ToString()),
-                new KeyValuePair<string, string>("inputLat", lat),
-                new KeyValuePair<string, string>("inputLong", longi),
-                new KeyValuePair<string, string>("categoryId", categoryId.ToString()),
-                new KeyValuePair<string, string>("categoryId2", categoryId2.ToString()),
-                new KeyValuePair<string, string>("maxKmRadius", maxKmRadius.ToString()),
-                new KeyValuePair<string, string>("title", title),
+                await connection.OpenAsync();
 
-            };
+                string query = @"
+                    SELECT title, titleDe, description, descriptionAR, descriptionGER, adresse, tblAdID, email, hours, descriptionENG, titleAr, telephone, web, distance, thumbnail, UnixCreated,
+                        (6371 * ACOS(
+                            COS(RADIANS(@InputLat)) * COS(RADIANS(latitude)) * COS(RADIANS(longitude) - RADIANS(@InputLong)) +
+                            SIN(RADIANS(@InputLat)) * SIN(RADIANS(latitude))
+                        )) AS Distance
+                    FROM [Ads]
+                    WHERE
+                    subcategory = @subcategory
+                    AND
+                    subsubcategory = @subsubcategory
+                    AND
+                        (6371 * ACOS(
+                            COS(RADIANS(@InputLat)) * COS(RADIANS(latitude)) * COS(RADIANS(longitude) - RADIANS(@InputLong)) +
+                            SIN(RADIANS(@InputLat)) * SIN(RADIANS(latitude))
+                        )) <= @MaxKmRadius
+                    ORDER BY tblAdID
+                    OFFSET @Start ROWS FETCH NEXT @Count ROWS ONLY;";
 
-            var x = await Kumulos.Current.Build.CallAPI("tblAds_getAllAds_Cat2", parameters).ConfigureAwait(false);
-            return x;
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@InputLat", lat);
+                    command.Parameters.AddWithValue("@InputLong", longi);
+                    command.Parameters.AddWithValue("@MaxKmRadius", maxKmRadius);
+                    command.Parameters.AddWithValue("@Start", start);
+                    command.Parameters.AddWithValue("@Count", count);
+                    command.Parameters.AddWithValue("@subcategory", subcategory);
+                    command.Parameters.AddWithValue("@subsubcategory", subsubcategory);
+
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        List<FullAdType> ads = new List<FullAdType>();
+                        while (reader.Read())
+                        {
+                            // var thumb = reader.GetValue(reader.GetOrdinal("thumbnail"));
+                            // byte[] thumbnail = { };
+                            // if (!string.IsNullOrEmpty(thumb.ToString())) thumbnail = (byte[])thumb;
+
+                            var x = new FullAdType
+                            {
+                                title = Convert.ToString(reader[reader.GetOrdinal("title")]),
+                                titleDe = Convert.ToString(reader[reader.GetOrdinal("titleDe")]),
+                                description = Convert.ToString(reader[reader.GetOrdinal("description")]),
+                                descriptionAR = Convert.ToString(reader[reader.GetOrdinal("descriptionAR")]),
+                                descriptionGER = Convert.ToString(reader[reader.GetOrdinal("descriptionGER")]),
+                                adresse = Convert.ToString(reader[reader.GetOrdinal("adresse")]),
+                                tblAdID = Convert.ToString(reader[reader.GetOrdinal("tblAdID")]),
+                                email = Convert.ToString(reader[reader.GetOrdinal("email")]),
+                                hours = Convert.ToString(reader[reader.GetOrdinal("hours")]),
+                                descriptionENG = Convert.ToString(reader[reader.GetOrdinal("descriptionENG")]),
+                                titleAr = Convert.ToString(reader[reader.GetOrdinal("titleAr")]),
+                                telephone = Convert.ToString(reader[reader.GetOrdinal("telephone")]),
+                                web = Convert.ToString(reader[reader.GetOrdinal("web")]),
+                                distance = Convert.ToString(reader[reader.GetOrdinal("Distance")]),
+                                thumbnail = Convert.ToString(reader.GetValue(reader.GetOrdinal("thumbnail"))),
+                                //UnixCreated = DateTime.Convert.ToString(reader.GetValue(reader.GetOrdinal("UnixCreated"))),
+
+                            };
+                            ads.Add(x);
+                        }
+
+                        return ads;
+                    }
+                }
+
+            }
         }
 
-        public static async Task<ApiResponse> GetFullPic(int tblAdID)
+        public static async Task<FullAdType> GetFullPic(int tblAdID)
         {
-            var parameters = new List<KeyValuePair<string, string>>
+            List<FullAdType> ads = new List<FullAdType>();
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
             {
-                new KeyValuePair<string, string>("tblAdID", tblAdID.ToString()),
-            };
+                await connection.OpenAsync();
 
-            var x = await Kumulos.Current.Build.CallAPI("tblAds_getFullPic", parameters).ConfigureAwait(false);
-            return x;
-        }
+                string query = @"
+                    SELECT fullPic
+                    FROM [Ads]
+                    WHERE tblAdID LIKE '%@tblAdID%'
+                    OFFSET @Start ROWS FETCH NEXT @Count ROWS ONLY;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@tblAdID", tblAdID);
+
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                            // var thumb = reader.GetValue(reader.GetOrdinal("thumbnail"));
+                            // byte[] thumbnail = { };
+                            // if (!string.IsNullOrEmpty(thumb.ToString())) thumbnail = (byte[])thumb;
+
+                            var x = new FullAdType
+                            {
+
+                                fullPic = Convert.ToString(reader.GetValue(reader.GetOrdinal("fullPic"))),
+
+                            };
+                            return x;
+                        }
+
+                        return new FullAdType();
+                    }
+                }
+            }
+    }
+
     }
 
     public class AdsType
@@ -171,7 +531,7 @@ namespace Khaled.Backend.APIs
 
         public ImageSource FaveImageSource { get; set; }
 
-        public int tblAdID { get; set; }
+        public string tblAdID { get; set; }
         public long UnixCreated { get; set; }
         public ImageSource imageSource_thumbnail { get; set; }
         public string thumbnail { get; set; }

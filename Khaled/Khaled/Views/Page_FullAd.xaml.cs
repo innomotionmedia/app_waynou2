@@ -13,7 +13,7 @@ namespace Khaled.Views
     {
         AdsType ad;
         bool isBusy;
-        List<FullAdType> data;
+        List<FullAdType> data = new List<FullAdType>();
         public Page_FullAd(AdsType ad)
         {
             InitializeComponent();
@@ -23,10 +23,14 @@ namespace Khaled.Views
 
         private async Task DownloadRemainingAdData()
         {
-            data = AdsAPI.DeserializeFullAd(await AdsAPI.GetFullAdInfo(ad.tblAdID));
+            var x= await AdsAPI.GetFullAdInfo(ad.tblAdID);
 
-            if (data == null)
+
+            if (x == null)
                 return;
+
+            data.Add(x);
+
 
             await SetLike(true);
 

@@ -105,7 +105,7 @@ namespace Khaled.Backend.Databases
         [PrimaryKey, AutoIncrement]
         public int noteID { get; set; }
 
-        public int tblAdId { get; set; }
+        public string tblAdId { get; set; }
 
         public string title { get; set; }
         public string titleDe { get; set; }

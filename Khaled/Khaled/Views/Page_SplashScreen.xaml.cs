@@ -19,12 +19,12 @@ namespace Khaled.Views
         private async void StartFade()
         {
 
-            var test = await CheckIfWeSpokeBefore();
-           //await System.Threading.Tasks.Task.Delay(200);
-           //image_logo.Opacity = 0;
-           //image_logo.IsVisible = true;
-           //await image_logo.FadeTo(1, 4000);
-           //Application.Current.MainPage = new MainPage(true, false);
+            //var test = await CheckIfWeSpokeBefore();
+            await System.Threading.Tasks.Task.Delay(200);
+            image_logo.Opacity = 0;
+            image_logo.IsVisible = true;
+            await image_logo.FadeTo(1, 4000);
+            Application.Current.MainPage = new MainPage(true, false);
         }
 
         public static async Task<List<Testtype>> CheckIfWeSpokeBefore()

@@ -105,8 +105,7 @@ namespace Khaled
 
             if (!comingFromBurger)
             {
-                await CreateKumulosContext();
-                if (Preferences.Get("GPSFOUND", false))
+                 if (Preferences.Get("GPSFOUND", false))
                     GoToMainPage();
             }
 
@@ -178,12 +177,7 @@ namespace Khaled
             label_locality.Text = placemark.Locality;
         }
 
-        private async Task CreateKumulosContext()
-        {
-            var current = Connectivity.NetworkAccess;
-            if (current == NetworkAccess.Internet)
-                await KumulosHelper.InitKumulos();            
-        }
+
 
         private void ChangeLocal(string v)
         {
