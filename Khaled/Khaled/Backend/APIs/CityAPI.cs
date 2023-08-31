@@ -1,32 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Com.Kumulos;
 using Com.Kumulos.Abstractions;
+using Khaled.Helpers;
 
 namespace Khaled.Backend.APIs
 {
     public class CityAPI
     {
-        public static List<CitiesType> Deserialize(ApiResponse response)
-        {
-            List<CitiesType> ad = new List<CitiesType>();
-            var array = (Newtonsoft.Json.Linq.JArray)response.payload;
-            foreach (var item in array)
-            {
-                CitiesType x = (CitiesType)(item.ToObject(typeof(CitiesType)));
-                ad.Add(x);
-            }
-            return ad;
-        }
 
-        public static async Task<ApiResponse> GetAllCities()
+
+        public static async Task<List<CitiesType>> GetAllCities()
         {
-            var parameters = new List<KeyValuePair<string, string>>
+            List<CitiesType> res = new List<CitiesType>();
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
             {
-                //new KeyValuePair<string, string>("tblAdID", tblAdID.ToString()),
-            };
-            return await Kumulos.Current.Build.CallAPI("getAllCities", parameters).ConfigureAwait(false);
+                await connection.OpenAsync();
+
+                string query = @"
+                    SELECT *
+                    FROM [Ads]
+                    WHERE tblAdID = @tblAdID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                            // var thumb = reader.GetValue(reader.GetOrdinal("thumbnail"));
+                            // byte[] thumbnail = { };
+                            // if (!string.IsNullOrEmpty(thumb.ToString())) thumbnail = (byte[])thumb;
+
+                            var y = new CitiesType
+                            {
+                                //title = Convert.ToString(reader[reader.GetOrdinal("title")]),
+                                //UnixCreated = DateTime.Convert.ToString(reader.GetValue(reader.GetOrdinal("UnixCreated"))),
+
+                            };
+                            res.Add(y);
+                        }
+                        return res;
+                    }
+                }
+            }
         }
     }
 

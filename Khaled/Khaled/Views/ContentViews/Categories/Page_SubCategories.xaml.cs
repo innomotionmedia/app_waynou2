@@ -104,7 +104,7 @@ namespace Khaled.Views.ContentViews.Categories
 			else
 				currentType = AdsListType.inCat2;
 
-			int loadId = 0;
+			string loadId = "";
 			if (idList != null && idList.Count != 0)
 				loadId = idList[0].tblCategoryIdID; // primary key to load Ids with
 
@@ -115,7 +115,7 @@ namespace Khaled.Views.ContentViews.Categories
 					radius: radiusValue,
 					inputLat: startPosLat,
 					inputLong: startPosLong,
-					categoryId: (int)cat,
+					categoryId: ((int)cat).ToString(),
 					info: info,
 					adsListType: currentType,
 					categoryId2: belongsToCat1Id,
@@ -130,7 +130,7 @@ namespace Khaled.Views.ContentViews.Categories
 					radius: radiusValue,
 					inputLat: startPosLat,
 					inputLong: startPosLong,
-					categoryId: (int)cat,
+					categoryId: ((int)cat).ToString(),
 					info: info,
 					adsListType: currentType,
 					categoryId2: belongsToCat1Id,
@@ -200,8 +200,8 @@ namespace Khaled.Views.ContentViews.Categories
 
 		private async void GetResultsFromPath()
 		{
-			var res = CategoryAPI.DeserializePath(await CategoryAPI.GetPrimaryKeyOfPath
-				(Constants.appPath[0], Constants.appPath[1], Constants.appPath[2]));
+			var res = await CategoryAPI.GetPrimaryKeyOfPath
+				(Constants.appPath[0], Constants.appPath[1], Constants.appPath[2]);
 
 			await Navigation.PushAsync(new Page_DisplayContainer(res));
 		}

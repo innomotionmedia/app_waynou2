@@ -138,12 +138,17 @@ namespace Khaled.Backend.APIs
                 await connection.OpenAsync();
                 List<FullAdType> ads = new List<FullAdType>();
 
+                var local = CachedUser.localCode;
+                string table = "title";
+                if (local == localCodes.de) table = "titleDe";
+                if (local == localCodes.ar) table = "titleAr";
+
+
                 string query = @"
-                    SELECT title, titleDe, description, descriptionAR, descriptionGER, adresse, tblAdID, email, hours, descriptionENG, titleAr, telephone, web, distance, thumbnail, UnixCreated,
-                    FROM [Ads]
-                    WHERE title LIKE '%@title%'
-                    AND Category = @category
-                    OFFSET @Start ROWS FETCH NEXT @Count ROWS ONLY;";
+                SELECT title, titleDe, description, descriptionAR, descriptionGER, adresse, tblAdID, email, hours, descriptionENG, titleAr, telephone, web, distance, thumbnail, UnixCreated
+                FROM [Ads]
+                WHERE "+ table + " LIKE '%' + @title + '%' AND Category = @category ORDER BY UnixCreated OFFSET @Start ROWS FETCH NEXT @Count ROWS ONLY;";
+
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -249,7 +254,7 @@ namespace Khaled.Backend.APIs
             }
         }
 
-        public static async Task<List<FullAdType>> GetAllAds(int start, int count, int maxKmRadius, double inputLat, double inputLong, int categoryId, string title)
+        public static async Task<List<FullAdType>> GetAllAds(int start, int count, int maxKmRadius, double inputLat, double inputLong, string categoryId, string title)
         {
             var lat = Converters.TurnCommaIntoDot(inputLat.ToString());
             var longi = Converters.TurnCommaIntoDot(inputLong.ToString());
@@ -320,7 +325,7 @@ namespace Khaled.Backend.APIs
             }
         }
 
-        public static async Task<List<FullAdType>> GetAllAds_Cat1(int start, int count, int maxKmRadius, double inputLat, double inputLong, int categoryId, string title)
+        public static async Task<List<FullAdType>> GetAllAds_Cat1(int start, int count, int maxKmRadius, double inputLat, double inputLong, string categoryId, string title)
         {
             var lat = Converters.TurnCommaIntoDot(inputLat.ToString());
             var longi = Converters.TurnCommaIntoDot(inputLong.ToString());

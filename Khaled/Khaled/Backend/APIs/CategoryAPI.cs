@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Drawing;
 using System.Threading.Tasks;
 using Com.Kumulos;
 using Com.Kumulos.Abstractions;
+using Khaled.Helpers;
 using Xamarin.Forms;
 
 namespace Khaled.Backend.APIs
@@ -33,33 +36,133 @@ namespace Khaled.Backend.APIs
             return ad;
         }
 
-        public static async Task<ApiResponse> GetSubCats1(int belongsToMain)
+        public static async Task<List<SubCatType>> GetSubCats1(int belongsToMain)
         {
-            var parameters = new List<KeyValuePair<string, string>>
+            List<SubCatType> res = new List<SubCatType>();
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
             {
-                new KeyValuePair<string, string>("belongsToMain", belongsToMain.ToString()),
-            };
-            return await Kumulos.Current.Build.CallAPI("getSubCats1", parameters).ConfigureAwait(false);
+                await connection.OpenAsync();
+
+                string query = @"
+                    SELECT *
+                    FROM [SubCategories]
+                    WHERE belongsToMainCat = @belongsToMain";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@belongsToMain", belongsToMain);
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                            // var thumb = reader.GetValue(reader.GetOrdinal("thumbnail"));
+                            // byte[] thumbnail = { };
+                            // if (!string.IsNullOrEmpty(thumb.ToString())) thumbnail = (byte[])thumb;
+
+                            var y = new SubCatType
+                            {
+                                title = Convert.ToString(reader[reader.GetOrdinal("titleEng")]),
+                                titleAr = Convert.ToString(reader[reader.GetOrdinal("titleAr")]),
+                                titleDe = Convert.ToString(reader[reader.GetOrdinal("titleGer")]),
+                                belongsToMain = Convert.ToInt32(reader[reader.GetOrdinal("belongsToMainCat")]),
+                                belongsToSubCat = Convert.ToInt32(reader[reader.GetOrdinal("belongsToSubCat")]),
+                                belongsToSubSubCat = Convert.ToInt32(reader[reader.GetOrdinal("belongsToSubSubCat")]),
+
+                                //UnixCreated = DateTime.Convert.ToString(reader.GetValue(reader.GetOrdinal("UnixCreated"))),
+
+                            };
+                            res.Add(y);
+                        }
+                        return res;
+                    }
+                }
+            }
         }
 
-        public static async Task<ApiResponse> GetSubCats2(int belongsToSubCat0)
+        public static async Task<List<SubCatType>> GetSubCats2(int belongsToSubCat0)
         {
-            var parameters = new List<KeyValuePair<string, string>>
+            List<SubCatType> res = new List<SubCatType>();
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
             {
-                new KeyValuePair<string, string>("belongsToSubCat0", belongsToSubCat0.ToString()),
-            };
-            return await Kumulos.Current.Build.CallAPI("getSubCats2", parameters).ConfigureAwait(false);
+                await connection.OpenAsync();
+
+                string query = @"
+                    SELECT *
+                    FROM [SubCategories]
+                    WHERE belongsToSubCat = @belongsToSubCat";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@belongsToSubCat", belongsToSubCat0);
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                            // var thumb = reader.GetValue(reader.GetOrdinal("thumbnail"));
+                            // byte[] thumbnail = { };
+                            // if (!string.IsNullOrEmpty(thumb.ToString())) thumbnail = (byte[])thumb;
+
+                            var y = new SubCatType
+                            {
+                                title = Convert.ToString(reader[reader.GetOrdinal("titleEng")]),
+                                titleAr = Convert.ToString(reader[reader.GetOrdinal("titleAr")]),
+                                titleDe = Convert.ToString(reader[reader.GetOrdinal("titleGer")]),
+                                belongsToMain = Convert.ToInt32(reader[reader.GetOrdinal("belongsToMainCat")]),
+                                belongsToSubCat = Convert.ToInt32(reader[reader.GetOrdinal("belongsToSubCat")]),
+                                belongsToSubSubCat = Convert.ToInt32(reader[reader.GetOrdinal("belongsToSubSubCat")]),
+
+                                //UnixCreated = DateTime.Convert.ToString(reader.GetValue(reader.GetOrdinal("UnixCreated"))),
+
+                            };
+                            res.Add(y);
+                        }
+                        return res;
+                    }
+                }
+            }
         }
 
-        public static async Task<ApiResponse> GetPrimaryKeyOfPath(int mainCat, int subCat1, int subCat2)
+        public static async Task<List<CategoryIds>> GetPrimaryKeyOfPath(int mainCat, int subCat1, int subCat2)
         {
-            var parameters = new List<KeyValuePair<string, string>>
+            List<CategoryIds> res = new List<CategoryIds>();
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
             {
-                new KeyValuePair<string, string>("mainCat", mainCat.ToString()),
-                new KeyValuePair<string, string>("subCat1", subCat1.ToString()),
-                new KeyValuePair<string, string>("subCat2", subCat2.ToString()),
-            };
-            return await Kumulos.Current.Build.CallAPI("getPrimaryKeyOfPath", parameters).ConfigureAwait(false);
+                await connection.OpenAsync();
+
+                string query = @"
+                    SELECT *
+                    FROM [SubCategories]
+                    WHERE belongsToSubCat = @belongsToSubCat
+                    AND belongsToMainCat = @belongsToMainCat
+                    AND belongsToSubSubCat = @belongsToSubSubCat";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@belongsToMainCat", mainCat);
+                    command.Parameters.AddWithValue("@belongsToSubCat", subCat1);
+                    command.Parameters.AddWithValue("@belongsToSubSubCat", subCat2);
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+
+                            var y = new CategoryIds
+                            {
+                                tblCategoryIdID = Convert.ToString(reader[reader.GetOrdinal("id")]),
+                                mainCat = Convert.ToInt32(reader[reader.GetOrdinal("belongsToMainCat")]),
+                                subCat1 = Convert.ToInt32(reader[reader.GetOrdinal("belongsToSubCat")]),
+                                subCat2 = Convert.ToInt32(reader[reader.GetOrdinal("belongsToSubSubCat")]),
+                            };
+                            res.Add(y);
+                        }
+                        return res;
+                    }
+                }
+            }
         }
     }
 
@@ -71,13 +174,19 @@ namespace Khaled.Backend.APIs
         public string titleDe { get; set; }
         public string picture { get; set; }
         public int tblSubCat1ID { get; set; } // the id to get to the next layer. 0 means, no more layers
-        public int tblSubCat2ID { get; set; } // the id to get to the next layer. 0 means, no more layers        
+        public int tblSubCat2ID { get; set; } // the id to get to the next layer. 0 means, no more layers
+
+        public int belongsToMain { get; set; }
+        public int belongsToSubCat { get; set; }
+
+        public int belongsToSubSubCat { get; set; }
+
         public FlowDirection flowDirection { get; set; } = FlowDirection.LeftToRight;
     }
 
     public class CategoryIds
     {
-        public int tblCategoryIdID { get; set; }
+        public string tblCategoryIdID { get; set; }
         public int mainCat { get; set; }
         public int subCat1 { get; set; }
         public int subCat2 { get; set; }

@@ -23,7 +23,7 @@ namespace Khaled.Helpers
             return await FormatAd(x);
         }
 
-        public async static Task<ObservableCollection<AdsType>> LoadAllAds(int start, int count, int radius, double inputLat, double inputLong, int categoryId, string info, AdsListType adsListType, string info2 = "", int categoryId2 = 0, int prevCat = 0)
+        public async static Task<ObservableCollection<AdsType>> LoadAllAds(int start, int count, int radius, double inputLat, double inputLong, string categoryId, string info, AdsListType adsListType, string info2 = "", int categoryId2 = 0, int prevCat = 0)
         {
             ObservableCollection<AdsType> res = new ObservableCollection<AdsType>();
 
@@ -75,9 +75,9 @@ namespace Khaled.Helpers
             List<SubCatType> x = new List<SubCatType>();
 
             if(layer == LayerEnum.subCat1)
-                 x = CategoryAPI.Deserialize(await CategoryAPI.GetSubCats1(belongsTo));
+                 x = await CategoryAPI.GetSubCats1(belongsTo);
             else
-                 x = CategoryAPI.Deserialize(await CategoryAPI.GetSubCats2(belongsTo));
+                 x = await CategoryAPI.GetSubCats2(belongsTo);
 
 
             foreach (var elem in x)
@@ -104,7 +104,7 @@ namespace Khaled.Helpers
             List<OfferType> list = new List<OfferType>();
             ObservableCollection<OfferType> res = new ObservableCollection<OfferType>(); 
 
-            list = OfferAPI.Deserialize(await OfferAPI.GetOffers(start, count));
+            list = await OfferAPI.GetOffers(start, count);
 
             foreach(var elem in list)
             {

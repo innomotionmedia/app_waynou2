@@ -136,7 +136,7 @@ namespace Khaled.Views.ContentViews.MainMenuTabs
 
         private async Task LoadMainContent(bool loadMore)
         {
-            int loadId = 0;
+            string loadId = "";
             if (idList != null && idList.Count != 0)
                 loadId = idList[0].tblCategoryIdID; // primary key to load Ids with
 
