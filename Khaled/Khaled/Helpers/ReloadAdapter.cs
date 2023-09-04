@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Khaled.Backend.APIs;
 using Khaled.Views.ContentViews.MainMenuTabs;
+using TodoApp.Data;
 using Xamarin.Forms;
 
 namespace Khaled.Helpers
@@ -104,7 +105,7 @@ namespace Khaled.Helpers
             List<OfferType> list = new List<OfferType>();
             ObservableCollection<OfferType> res = new ObservableCollection<OfferType>(); 
 
-            list = await OfferAPI.GetOffers(start, count);
+            list = await Khaled.Backend.APIs.OfferAPI.GetOffers(start, count);
 
             foreach(var elem in list)
             {

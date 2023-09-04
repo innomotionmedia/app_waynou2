@@ -1,5 +1,4 @@
 ﻿
-using Khaled.Backend.APIs;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,49 +6,12 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using TodoApp.Data;
-using TextType = TodoApp.Data.TextType;
 
 namespace Khaled.Helpers
 {
     public class Converters
     {
-        public static string ReturnCorrectLingua(FullAdType input, TextType type)
-        {
-            switch (CachedUser.localCode)
-            {
-                case localCodes.en:
-                    switch (type)
-                    {
-                        case TextType.adDescription:
-                            return input.descriptionENG;
-                        case TextType.adTitle:
-                            return input.title;
-                        default: return "";
-                    }
-                case localCodes.de:
-                    switch (type)
-                    {
-                        case TextType.adDescription:
-                            return input.descriptionGER;
-                        case TextType.adTitle:
-                            return input.titleDe;
-                        default: return "";
-
-                    }
-                case localCodes.ar:
-                    switch (type)
-                    {
-                        case TextType.adDescription:
-                            return input.descriptionAR;
-                        case TextType.adTitle:
-                            return input.titleAr;
-                        default: return "";
-
-                    }
-                default:
-                    return "";
-            }
-        }
+       
 
         public static string FormatPhoneNumber(string input, string areaCode)
         {

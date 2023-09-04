@@ -16,8 +16,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "dotnetRunMessages": true,
-      "sqlDebugging": true
+      "sqlDebugging": true,
+      "dotnetRunMessages": true
     },
     "IIS Express": {
       "commandName": "IISExpress",

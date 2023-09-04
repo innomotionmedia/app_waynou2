@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+
 using Khaled.Helpers;
 using TodoApp.Data;
 
@@ -44,7 +45,7 @@ namespace Khaled.Backend.APIs
                             {
                                 title = Convert.ToString(reader[reader.GetOrdinal("title")]),
                                 extraInformation = Convert.ToString(reader[reader.GetOrdinal("extraInformation")]),
-                                type = Convert.ToString(reader[reader.GetOrdinal("type")]),                    
+                                type = Convert.ToString(reader[reader.GetOrdinal("type")]),
                                 thumbnail = Convert.ToString(reader.GetValue(reader.GetOrdinal("thumbnail"))),
                             };
                             ads.Add(x);
@@ -69,11 +70,10 @@ namespace Khaled.Backend.APIs
         public string title { get; set; }
         public string id { get; set; }
         public string thumbnail { get; set; }
-      //  public ImageSource thumbnailImage { get; set; }
+        //public ImageSource thumbnailImage { get; set; }
         public int order { get; set; }
         public string type { get; set; }
         public string extraInformation { get; set; }
 
     }
 }
-

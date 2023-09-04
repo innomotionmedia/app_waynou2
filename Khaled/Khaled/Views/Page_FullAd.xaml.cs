@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 using Khaled.Backend.APIs;
 using Khaled.Helpers;
 using Khaled.Resources;
+using TodoApp.Data;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using TextType = TodoApp.Data.TextType;
 
 namespace Khaled.Views
 {
@@ -51,7 +53,7 @@ namespace Khaled.Views
 
 
 
-            label_description.Text = Converters.ReturnCorrectLingua(data[0], Helpers.TextType.adDescription);
+            label_description.Text = Converters.ReturnCorrectLingua(data[0], TextType.adDescription);
             ad.imageSource_fullPic = Converters.ReturnImageSourceFromString(data[0]?.fullPic);
             label_adresse.Text = data[0]?.adresse;
             label_email.Text = data[0]?.email;

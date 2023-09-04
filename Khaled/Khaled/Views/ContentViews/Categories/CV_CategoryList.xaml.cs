@@ -8,6 +8,7 @@ using Khaled.Resources;
 using Khaled.Views.ContentViews.AdDisplay;
 using Khaled.Views.ContentViews.MainMenuTabs;
 using Khaled.Views.MainMenu;
+using TodoApp.Data;
 using Xamarin.Forms;
 
 namespace Khaled.Views.ContentViews.Categories
@@ -122,49 +123,49 @@ namespace Khaled.Views.ContentViews.Categories
 
 			#region cats
 			if (btn.Equals(frame_food))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.food, AppResources.FoodAndDrink));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.food, AppResources.FoodAndDrink));
 			else if (btn.Equals(frame_health))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.health, AppResources.Health));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.health, AppResources.Health));
 			else if (btn.Equals(frame_shopping))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.shopping, AppResources.Shopping));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.shopping, AppResources.Shopping));
 			else if (btn.Equals(frame_law))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.law, AppResources.LawAndFinance));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.law, AppResources.LawAndFinance));
 			else if (btn.Equals(frame_car))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.car, AppResources.CarWorksShop));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.car, AppResources.CarWorksShop));
 			else if (btn.Equals(frame_beauty))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.beauty, AppResources.BeautyAndWellness));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.beauty, AppResources.BeautyAndWellness));
 			else if (btn.Equals(frame_shopping2))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.dailyShopping, AppResources.DailyShopping));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.dailyShopping, AppResources.DailyShopping));
 			else if (btn.Equals(frame_hotels))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.hotels, AppResources.HotelsAndProperties));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.hotels, AppResources.HotelsAndProperties));
 			else if (btn.Equals(frame_travel))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.travel, AppResources.TravelAndToursim));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.travel, AppResources.TravelAndToursim));
 			else if (btn.Equals(frame_construction))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.construction, AppResources.ConstructionAndRepair));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.construction, AppResources.ConstructionAndRepair));
 			else if (btn.Equals(frame_house))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.rentHouse, AppResources.RentAndBuyRealEstate));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.rentHouse, AppResources.RentAndBuyRealEstate));
 			else if (btn.Equals(frame_services))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.services, AppResources.Services));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.services, AppResources.Services));
 			else if (btn.Equals(frame_sights))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.sights, AppResources.SightAndExcursion));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.sights, AppResources.SightAndExcursion));
 			else if (btn.Equals(frame_party))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.happenings, AppResources.HappeningsAndEvents));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.happenings, AppResources.HappeningsAndEvents));
 			else if (btn.Equals(frame_culture))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.culture, AppResources.CultureAndArt));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.culture, AppResources.CultureAndArt));
 			else if (btn.Equals(frame_hobby))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.hobby, AppResources.HobbyAndAmusement));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.hobby, AppResources.HobbyAndAmusement));
 			else if (btn.Equals(frame_jobs))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.jobs, AppResources.Jobs));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.jobs, AppResources.Jobs));
 			else if (btn.Equals(frame_edu))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.edu, AppResources.EducationalInstitutions));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.edu, AppResources.EducationalInstitutions));
 			else if (btn.Equals(frame_organizations))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.orgas, AppResources.OrganizationsAndAssociations));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.orgas, AppResources.OrganizationsAndAssociations));
 			else if (btn.Equals(frame_authorities))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.authorities, AppResources.AuthoritiesAndEmbassies));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.authorities, AppResources.AuthoritiesAndEmbassies));
 			else if (btn.Equals(frame_religion))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.religion, AppResources.ReligiousInstitions));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.religion, AppResources.ReligiousInstitions));
 			else if (btn.Equals(frame_emergency))
-				stacklayout_layout2.Children.Add(new Page_SubCategories(Helpers.CategoriesEnum.emergenices, AppResources.Emergencies));
+				stacklayout_layout2.Children.Add(new Page_SubCategories(CategoriesEnum.emergenices, AppResources.Emergencies));
 			#endregion
 
 			//move to page 2

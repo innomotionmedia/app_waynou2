@@ -15,4 +15,10 @@
     <ProjectReference Include="..\Khaled\TodoApp.Data\TodoApp.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="APIs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="APIs\" />
+  </ItemGroup>
 </Project>

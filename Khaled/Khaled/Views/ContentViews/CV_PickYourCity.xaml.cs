@@ -4,9 +4,11 @@ using Khaled.Backend.Helpers;
 using Khaled.Helpers;
 using Khaled.Resources;
 using Khaled.Views.PopUps;
+using TodoApp.Data;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
+using SupportedCities = TodoApp.Data.SupportedCities;
 
 namespace Khaled.Views.ContentViews
 {	

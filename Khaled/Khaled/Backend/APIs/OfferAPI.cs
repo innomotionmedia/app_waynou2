@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Com.Kumulos;
 using Com.Kumulos.Abstractions;
 using Khaled.Helpers;
+using TodoApp.Data;
 using Xamarin.Forms;
 
 namespace Khaled.Backend.APIs
@@ -46,7 +47,7 @@ namespace Khaled.Backend.APIs
                             {
                                 title = Convert.ToString(reader[reader.GetOrdinal("title")]),
                                 extraInformation = Convert.ToString(reader[reader.GetOrdinal("extraInformation")]),
-                                type = Convert.ToString(reader[reader.GetOrdinal("type")]),                    
+                                type = Convert.ToString(reader[reader.GetOrdinal("type")]),
                                 thumbnail = Convert.ToString(reader.GetValue(reader.GetOrdinal("thumbnail"))),
                             };
                             ads.Add(x);
@@ -78,4 +79,3 @@ namespace Khaled.Backend.APIs
 
     }
 }
-

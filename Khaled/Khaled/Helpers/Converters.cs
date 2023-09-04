@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using TodoApp.Data;
 using Xamarin.Forms;
+using TextType = TodoApp.Data.TextType;
 
 namespace Khaled.Helpers
 {
