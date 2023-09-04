@@ -1,18 +1,12 @@
-﻿using System;
+﻿using Khaled.Helpers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Com.Kumulos;
-using Com.Kumulos.Abstractions;
-using Khaled.Helpers;
-using Khaled.Views;
 using TodoApp.Data;
-using Xamarin.Essentials;
-using Xamarin.Forms;
-using static SQLite.SQLite3;
 
 namespace Khaled.Backend.APIs
 {
@@ -535,18 +529,18 @@ namespace Khaled.Backend.APIs
 
         //public string tintColor { get; set; } = "Transparent";
 
-        public ImageSource FaveImageSource { get; set; }
+        //public ImageSource FaveImageSource { get; set; }
 
         public string tblAdID { get; set; }
         public long UnixCreated { get; set; }
-        public ImageSource imageSource_thumbnail { get; set; }
+        //public ImageSource imageSource_thumbnail { get; set; }
         public string thumbnail { get; set; }
-        public ImageSource imageSource_fullPic { get; set; }
+       // public ImageSource imageSource_fullPic { get; set; }
         public string fullPic { get; set; }
 
         public string distance { get; set; }
 
-        public FlowDirection flowDirection { get; set; } = FlowDirection.LeftToRight;
+        //public FlowDirection flowDirection { get; set; } = FlowDirection.LeftToRight;
 
         public bool IsDistanceVisible { get; set; } = true; 
 

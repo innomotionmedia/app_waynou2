@@ -3,39 +3,14 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Threading.Tasks;
-using Com.Kumulos;
-using Com.Kumulos.Abstractions;
 using Khaled.Helpers;
 using TodoApp.Data;
-using Xamarin.Forms;
 
 namespace Khaled.Backend.APIs
 {
     public class CategoryAPI
     {
-        public static List<SubCatType> Deserialize(ApiResponse response)
-        {
-            List<SubCatType> ad = new List<SubCatType>();
-            var array = (Newtonsoft.Json.Linq.JArray)response.payload;
-            foreach (var item in array)
-            {
-                SubCatType x = (SubCatType)(item.ToObject(typeof(SubCatType)));
-                ad.Add(x);
-            }
-            return ad;
-        }
 
-        public static List<CategoryIds> DeserializePath(ApiResponse response)
-        {
-            List<CategoryIds> ad = new List<CategoryIds>();
-            var array = (Newtonsoft.Json.Linq.JArray)response.payload;
-            foreach (var item in array)
-            {
-                CategoryIds x = (CategoryIds)(item.ToObject(typeof(CategoryIds)));
-                ad.Add(x);
-            }
-            return ad;
-        }
 
         public static async Task<List<SubCatType>> GetSubCats1(int belongsToMain)
         {
@@ -182,7 +157,7 @@ namespace Khaled.Backend.APIs
 
         public int belongsToSubSubCat { get; set; }
 
-        public FlowDirection flowDirection { get; set; } = FlowDirection.LeftToRight;
+        //public FlowDirection flowDirection { get; set; } = FlowDirection.LeftToRight;
     }
 
     public class CategoryIds
