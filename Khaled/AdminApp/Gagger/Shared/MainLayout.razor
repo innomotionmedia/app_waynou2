@@ -1,0 +1,60 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>Freedom Gagger</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <div >
+                <table style="width: 100%; ">
+                    <tr>
+
+                        <td>
+                            @{
+
+                            }
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+<style>
+    .container {
+        padding: 20px;
+        display: flex;
+        justify-content: center; /* Horizontally center content */
+        align-items: center; /* Vertically center content */
+    }
+
+    .imagecontainer {
+        width: 40px;
+        height: 40px;
+        overflow: hidden;
+        border-radius: 50%;
+        border: 2px solid black; /* You can customize the width, style, and color */
+
+        position: relative; /* Ensure positioning works properly */
+    }
+
+        .imagecontainer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Maintain aspect ratio and cover container */
+            object-position: center center; /* Center the cropped area */
+            position: absolute; /* Position the image within the container */
+        }
+</style>
+
+

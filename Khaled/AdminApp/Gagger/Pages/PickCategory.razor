@@ -1,0 +1,235 @@
+﻿@page "/pickCat"
+@using System.Collections.ObjectModel;
+@using Gagger.Helpers;
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavManager
+
+
+<PageTitle>Main</PageTitle>
+
+<body class="yolo">
+    <div style="overflow:scroll; height: 91vh; overflow-x: hidden;" class="mainDiv">
+        <table style="padding: 20px;" class="maintable">
+            <tr>
+                <td class="equalSize">
+                </td>
+                <td>
+                    <div align="center" style="padding: 20px;" class="centerDiv">
+                        <table width="80%">
+                            <tr>
+                                <td align="center" style="padding-top: 20px;">
+                                    <strong style="font-size: 25px;">Kategorien Bearbeiten</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" style="padding-top: 20px;">
+                                    <strong style="font-size: 18px;">#Hauptkategorie</strong>
+                                </td>
+                            </tr>
+                           <tr >
+                                <td style="padding-top: 20px;">
+                                    <div>
+                                        <label for="dropdown">Bitte wählen:</label>
+                                        <select id="dropdown"  @onchange="HandleDropdownChange">
+                                            @{
+                                                foreach (var elem in enums)
+                                                {
+                                                    var id = (int)elem;
+                                                    <option value="@id">@elem</option>
+                                                }
+                                            }    
+                                        </select>
+                                    </div>
+                               </td>
+                           </tr>
+                            <tr>
+                                <td style="padding-top: 20px;">
+                                    @{
+                                        foreach(var elem in Cats)
+                                        {
+                                            <table style="width: 50%">
+                                                 <tr>
+                                                     <td>
+                                                        <div class="singleCat">@elem.titleGer</div>
+                                                     </td>
+                                                     <td>
+                                                        <button class="delete" @onclick="() => DeleteCat(elem.Id)">X</button>
+
+                                                     </td>
+                                                 </tr>
+
+                                            </table>
+
+                                        }
+                                        if (Cats.Count == 0)
+                                        {
+                                            <strong>Hier gibt es noch nichts. Erstelle einfach eine Kategorie.</strong>
+                                        }
+
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="padding-top: 20px; ">
+                                                Hinzufügen zu <strong>@KategorieTitel</strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-top: 20px; ">
+                                                <input maxlength="100" type="text" @bind="@TitleGerSubCat" placeholder="Deutscher Titel" />
+                                            </td>
+                                            <td style="padding-top: 20px; ">
+                                                <input maxlength="100" type="text" @bind="@TitleEngSubCat" placeholder="Englischer Titel" />
+                                            </td>
+                                            <td style="padding-top: 20px; ">
+                                                <input maxlength="100" type="text" @bind="@TitleArSubCat" placeholder="Arabischer Titel" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-top: 10px; ">
+                                            </td>
+                                            <td style="padding-top: 10px; ">
+                                                <button class="goodButton" style="margin-top: 10px;" @onclick="LogInClicked">Subkategorie Erstellen</button>
+                                            </td>
+                                            <td style="padding-top: 10px; ">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                            </tr>
+                        </table>
+                     
+                    </div>
+                </td>
+                <td class="equalSize">
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+
+<style>
+
+    .delete {
+        margin-top: 10px; 
+        margin-left: 10px; 
+        border-radius: 10px;
+    }
+    
+    .singleCat {
+        margin-top: 10px; 
+        color: white; 
+        padding: 5px 10px 5px 10px;
+        background-color: #7c7fe6;
+        border-radius: 15px;
+    }
+
+    .selects {
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+
+    .yolo {
+        background-image: linear-gradient(to right, #ff512f, #f09819);
+    }
+
+
+
+    .mainDiv {
+        display: grid;
+        height: 55vh;
+        place-items: center;
+    }
+
+    .centerDiv {
+        margin-top: 40px;
+        border-radius: 10px;
+        width: 100%;
+        background-color: white;
+        box-shadow: 10px 10px #262626;
+    }
+
+    .maintable {
+        width: 100%;
+    }
+
+
+    .spacer {
+        height: 40px;
+    }
+
+    .equalSize {
+        width: 25%;
+    }
+</style>
+
+
+@code {
+    TodoApp.Data.CategoriesEnum[] enums = (TodoApp.Data.CategoriesEnum[])Enum.GetValues(typeof(TodoApp.Data.CategoriesEnum));
+
+    private string KategorieTitel = "food";
+    private string selectedOption = "";
+    private string TitleGerSubCat = "";
+    private string TitleArSubCat = "";
+    private string TitleEngSubCat = "";
+
+
+    private List<Data.Api.Category.CategoryType> Cats = new List<Data.Api.Category.CategoryType>();
+
+    protected override async void OnInitialized()
+    {
+        base.OnInitialized();
+        Cats = await Data.Api.Category.GetSubCatsInMainCat("1");
+        StateHasChanged();
+    }
+
+    private async void HandleDropdownChange(ChangeEventArgs e)
+    {
+        selectedOption = e.Value.ToString();
+        string picked = Enum.GetName(typeof(TodoApp.Data.CategoriesEnum), Int32.Parse(selectedOption));
+        KategorieTitel = picked; 
+        Cats = await Data.Api.Category.GetSubCatsInMainCat(selectedOption);
+        StateHasChanged();
+    }
+
+    private async void DeleteCat(string id)
+    {
+        // Handle your logic here
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Sicher? Das kann nicht rückgängig gemacht werden."); // Confirm
+
+        if (confirmed)
+        {
+            // User clicked OK
+            await Data.Api.Category.DeleteCatbyId(id);
+            Cats.Remove(Cats.Find(x => x.Id == id));
+            StateHasChanged();
+        }
+        else
+        {
+            // User clicked Cancel
+        }
+    }
+
+
+
+    private async void LogInClicked()
+    {
+        var pic = ImagePicker.ImageResult;
+
+        if (string.IsNullOrEmpty(pic))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "Anzeigenbild fehlt.");
+            return;
+        }
+
+
+    }
+
+
+}
+

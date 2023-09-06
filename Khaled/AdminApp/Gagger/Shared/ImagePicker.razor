@@ -1,0 +1,120 @@
+﻿<InputFile OnChange="HandleFileChange" />
+<div class="container">
+    @{
+        //only one can ever be true
+        bool profilePicVisible = false;
+        bool memePicVisible = false;
+
+
+
+
+        <div hidden="@memePicVisible" class="container2">
+            @*-- MEME PIC --*@
+            <div class="image-container">
+                <img src="@imageDataUrl">
+            </div>
+        </div>
+
+    }
+
+</div>
+
+
+<style>
+
+    .container {
+        padding: 20px; 
+        display: flex;
+        justify-content: center; /* Horizontally center content */
+        align-items: center; /* Vertically center content */
+    }
+
+    .imagecontainer {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        border-radius: 50%;
+        border: 5px solid black; /* You can customize the width, style, and color */
+
+        position: relative; /* Ensure positioning works properly */
+    }
+
+     .imagecontainer img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover; /* Maintain aspect ratio and cover container */
+         object-position: center center; /* Center the cropped area */
+         position: absolute; /* Position the image within the container */
+     }
+
+    .imagecontainer_meme {
+        margin-top: 10px;
+        width: 100%;
+        max-width: 300px;
+        max-height: 500px; 
+        padding: 10px;
+        border: 2px solid #000;
+        background-color: black;
+        border-radius: 15px;
+        -moz-border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .container2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 300px; /* Adjust to your desired container height */
+    }
+
+    .image-container {
+        max-width: 300px;
+        text-align: center;
+    }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            padding: 10px;
+            border: 2px solid #000;
+            background-color: black;
+            border-radius: 15px;
+            -moz-border-radius: 10px;
+        }
+</style>
+
+@code {
+
+    [Parameter]
+    public ImageType ImgType { get; set; }
+
+
+    private string imageDataUrl;
+
+    public static string ImageResult = "";
+
+    private async Task HandleFileChange(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        if (file != null)
+        {
+            using var stream = file.OpenReadStream();
+            var buffer = new byte[file.Size];
+            await stream.ReadAsync(buffer, 0, (int)file.Size);
+
+            // Convert the image bytes to a base64 data URL
+            imageDataUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+
+            var res = Convert.ToBase64String(buffer);
+            ImageResult = res; 
+        }
+    }
+
+    public enum ImageType
+    {
+        AnzeigenBild,
+    }
+
+}

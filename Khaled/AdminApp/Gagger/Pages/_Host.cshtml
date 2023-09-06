@@ -1,0 +1,68 @@
+﻿@page "/"
+@namespace Gagger.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
+
+<script>
+    window.isScrollAtBottom = function (container) {
+        console.log("scrollheight: " + container.scrollHeight  +"   clientHeight: " + container.clientHeight + "    container.scrollTop: " + container.scrollTop)
+        //console.log("RESULT: " + (container.scrollHeight - container.scrollTop))
+        if( container.scrollHeight - container.scrollTop <= container.clientHeight){
+            //console.log("TRUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            return true;
+        }
+        else return false;
+    };
+
+    var scrollYPosition = 0;
+
+    function storeScrollPosition() {
+        scrollYPosition = window.scrollY;
+    }
+
+    window.addEventListener("popstate", function (event) {
+        // Restore the scroll position when navigating back
+        window.scrollTo(0, scrollYPosition);
+    });
+
+
+    const otherRadio = document.getElementById("other");
+    const otherSelect = document.getElementById("selectothergender");
+
+    otherRadio.addEventListener("change", function () {
+        alert("asd")
+        if (this.checked) {
+            otherSelect.disabled = false;
+        } else {
+            otherSelect.disabled = true;
+        }
+    });
+
+    // for spoiler button
+    function HandleCheckboxChange() {
+        var checkbox = document.querySelector('input[type="checkbox"]');
+        var hideMeElements = document.querySelectorAll('.thehider');
+
+        for (var i = 0; i < hideMeElements.length; i++) {
+            if (checkbox.checked) {
+                hideMeElements[i].style.display = 'none'; // Hide spoilers
+            } else {
+                hideMeElements[i].style.display = ''; // Show spoilers
+            }
+        }
+    }
+
+
+    function reloadPage() {
+        location.reload();
+    }
+
+</script>
+
+
+
+
+
+<component type="typeof(App)" render-mode="ServerPrerendered" />
