@@ -1,4 +1,4 @@
-﻿@page "/pickCat"
+﻿@page "/subcat/"
 @using System.Collections.ObjectModel;
 @using Gagger.Helpers;
 @inject IJSRuntime JsRuntime
@@ -18,30 +18,19 @@
                         <table width="80%">
                             <tr>
                                 <td align="center" style="padding-top: 20px;">
-                                    <strong style="font-size: 25px;">Kategorien Bearbeiten</strong>
+                                    <strong style="font-size: 25px;">Subssubs Bearbeiten</strong>
                                 </td>
                             </tr>
                             <tr>
-                                <td align="left" style="padding-top: 20px;">
-                                    <strong style="font-size: 18px;">#Hauptkategorie (@Cats.Count)</strong>
+                                <td align="center" >
+                                    <p style="font-size: 14px;">Pfad: '@titleMain' - '@titleSub</p>
                                 </td>
                             </tr>
-                           <tr >
-                                <td style="padding-top: 20px;">
-                                    <div>
-                                        <label for="dropdown">Bitte wählen:</label>
-                                        <select id="dropdown"  @onchange="HandleDropdownChange">
-                                            @{
-                                                foreach (var elem in enums)
-                                                {
-                                                    var id = (int)elem;
-                                                    <option value="@id">@elem</option>
-                                                }
-                                            }    
-                                        </select>
-                                    </div>
-                               </td>
-                           </tr>
+                            <tr>
+                                <td align="left" style="padding-top: 10px;" >
+                                    <strong  style="font-size: 18px;">#Subsubkategorien: (@Cats.Count)</strong>
+                                </td>
+                            </tr>
                             <tr>
                                 <td style="padding-top: 20px;">
                                     @{
@@ -53,18 +42,8 @@
                                                         <div class="singleCat">@elem.titleGer</div>
                                                      </td>
                                                     <td>
-                                                        @{
-                                                            int catId = elem.belongsToMainCat;
-                                                            string subCatId = elem.Id;
-                                                            string res = "location.href='/subcat?catid=" + catId + "&subcatId=" + subCatId + " &titleMain=" + KategorieTitel + "&titleSub=" + elem.titleGer + "'";
-                                                            <button class="delete" onclick="@res">+</button>
-                                                    }
-
-                                                    </td>
-                                                     <td>
                                                         <button class="delete" @onclick="() => DeleteCat(elem.Id)">X</button>
-                                                     </td>
-
+                                                    </td>
                                                  </tr>
 
                                             </table>
@@ -83,7 +62,7 @@
                                     <table>
                                         <tr>
                                             <td style="padding-top: 100px; ">
-                                                Hinzufügen zu <strong>@KategorieTitel:</strong>
+                                                Hinzufügen zu <strong>@titleSub:</strong>
                                             </td>
                                         </tr>
                                         <tr>
@@ -101,7 +80,7 @@
                                             <td style="padding-top: 10px; ">
                                             </td>
                                             <td style="padding-top: 10px; ">
-                                                <button class="goodButton" style="margin-top: 10px;" @onclick="CreateSubCat">Subkategorie Erstellen</button>
+                                                <button class="goodButton" style="margin-top: 10px;" @onclick="CreateSubSubCat">Subsub hinzufügen</button>
                                             </td>
                                             <td style="padding-top: 10px; ">
                                             </td>
@@ -131,13 +110,14 @@
     }
     
     .singleCat {
-        margin-top: 10px; 
-        color: white; 
+        margin-top: 10px;
+        color: white;
         padding: 5px 10px 5px 10px;
         background-color: #7c7fe6;
-        width: 250px; 
+        width: 250px;
         border-radius: 15px;
     }
+
 
     .selects {
         margin-left: 10px;
@@ -180,44 +160,62 @@
 
 
 @code {
-    TodoApp.Data.CategoriesEnum[] enums = (TodoApp.Data.CategoriesEnum[])Enum.GetValues(typeof(TodoApp.Data.CategoriesEnum));
 
-    private  string KategorieTitel = "food";      //defaults, dont change
-    private  string selectedOption = "1";         //defaults, dont change
+    private string catId;
+    private string subCatId;
+    private string titleMain;
+    private string titleSub;
+
+    
+
     private string TitleGerSubCat = "";
     private string TitleArSubCat = "";
     private string TitleEngSubCat = "";
-
+    
 
     private List<Data.Api.Category.CategoryType> Cats = new List<Data.Api.Category.CategoryType>();
 
     protected override async void OnInitialized()
     {
+      var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+      if (Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query).TryGetValue("catId", out var _catId))
+      {
+          catId = _catId;
+      }
+      if (Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query).TryGetValue("subCatId", out var _subCatId))
+      {
+          subCatId = _subCatId;
+      }
+      if (Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query).TryGetValue("titleMain", out var _titleMain))
+      {
+            titleMain = _titleMain;
+      }
+        if (Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query).TryGetValue("titleSub", out var _titleSub))
+        {
+            titleSub = _titleSub;
+        }
+
+        GetSubCats();
         base.OnInitialized();
-        Cats = await Data.Api.Category.GetSubCatsInMainCat("1");
+
+    }
+
+    async void GetSubCats()
+    {
+        Cats = await Data.Api.Category.GetSubSubCatsInSubCat(subCatId);
         StateHasChanged();
     }
 
-    private async void HandleDropdownChange(ChangeEventArgs e)
-    {
-        selectedOption = e.Value.ToString();
-        string picked = Enum.GetName(typeof(TodoApp.Data.CategoriesEnum), Int32.Parse(selectedOption));
-        KategorieTitel = picked; 
-        Cats = await Data.Api.Category.GetSubCatsInMainCat(selectedOption);
-        StateHasChanged();
-    }
 
     private async void DeleteCat(string id)
     {
         // Handle your logic here
-        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Sicher? Wenn hier Subsubcategorien mit bei sind, werden diese auch gelöscht."); // Confirm
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Sicher? Das kann nicht rückgängig gemacht werden."); // Confirm
 
         if (confirmed)
         {
             // User clicked OK
             await Data.Api.Category.DeleteCatbyId(id);
-            await Data.Api.Category.DeleteSubCatbyId(id);
-
             Cats.Remove(Cats.Find(x => x.Id == id));
             StateHasChanged();
         }
@@ -227,9 +225,7 @@
         }
     }
 
-
-
-    private async void CreateSubCat()
+    private async void CreateSubSubCat()
     {
 
         if (string.IsNullOrEmpty(TitleGerSubCat))
@@ -247,27 +243,23 @@
             await JsRuntime.InvokeVoidAsync("alert", "Arabischer Titel fehlt.");
             return;
         }
-        if (string.IsNullOrEmpty(selectedOption))
-        {
-            await JsRuntime.InvokeVoidAsync("alert", "Keine Kategorie gewählt.");
-            return;
-        }
 
-        var cat = new Data.Api.Category.CategoryType
-            {
-                belongsToMainCat = Int32.Parse(selectedOption),
-                titleAr = TitleArSubCat,
-                titleEng = TitleEngSubCat,
-                titleGer = TitleGerSubCat,
-                belongsToSubCat = "0",
-                Id = Helpers.Converters.ReturnRandomString(Helpers.Constants.IDLENGTH)
-            };
 
-        await Data.Api.Category.CreateCategory(cat);
-
-        await JsRuntime.InvokeVoidAsync("alert", "Kategorie erstellt!");
-        Cats = await Data.Api.Category.GetSubCatsInMainCat(selectedOption);
-        StateHasChanged();
+         var cat = new Data.Api.Category.CategoryType
+             {
+                 belongsToMainCat = 0, // doesnt belong to a main anymore, needs to be a 0 or null value
+                 titleAr = TitleArSubCat,
+                 titleEng = TitleEngSubCat,
+                 titleGer = TitleGerSubCat,
+                 belongsToSubCat = subCatId,
+                 Id = Helpers.Converters.ReturnRandomString(Helpers.Constants.IDLENGTH)
+             };
+        
+         await Data.Api.Category.CreateCategory(cat);
+        
+         await JsRuntime.InvokeVoidAsync("alert", "Subsubkategorie erstellt!");
+         Cats = await Data.Api.Category.GetSubSubCatsInSubCat(subCatId);
+         StateHasChanged();
 
     }
 

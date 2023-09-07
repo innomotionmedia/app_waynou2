@@ -92,7 +92,8 @@ namespace Gagger.Data.Api
                     [longitude],
                     [category],
                     [subcategory],
-                    [subsubcategory]
+                    [subsubcategory],
+                    [description]
                 )
                 VALUES (
                     @title,
@@ -114,7 +115,8 @@ namespace Gagger.Data.Api
                     @longitude,
                     @category,
                     @subcategory,
-                    @subsubcategory
+                    @subsubcategory,
+                    @description
                 );
             ";
                 try
@@ -141,6 +143,7 @@ namespace Gagger.Data.Api
                         command.Parameters.AddWithValue("@category", ad.category);
                         command.Parameters.AddWithValue("@subcategory", ad.subcategory);
                         command.Parameters.AddWithValue("@subsubcategory", ad.subsubcategory);
+                        command.Parameters.AddWithValue("@description", ad.description);
 
 
                         using (SqlDataReader reader = await command.ExecuteReaderAsync())
@@ -205,8 +208,8 @@ namespace Gagger.Data.Api
             public float longitude { get; set; }
 
             public int category { get; set; }
-            public int subcategory { get; set; }
-            public int subsubcategory { get; set; }
+            public string subcategory { get; set; }
+            public string subsubcategory { get; set; }
 
             public string adresse { get; set; }
             public string telephone { get; set; }

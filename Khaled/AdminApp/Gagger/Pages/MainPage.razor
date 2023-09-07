@@ -93,6 +93,64 @@
                             </tr>
                             <tr>
                                 <td style="padding: 50px 0px 0px 60px">
+                                    <strong style="font-size: 20px;">#Kategorie</strong>
+                                </td>
+                            </tr>
+                            <tr >
+                                <td style="padding: 10px 60px 0px 60px">
+                                    <table> 
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <label style="width:130px;" for="dropdown">Hauptkategorie:</label>
+                                                    <select id="dropdown" @onchange="HandleDropdownChange">
+                                                        @{
+                                                            foreach (var elem in enums)
+                                                            {
+                                                                var id = (int)elem;
+                                                                <option value="@id">@elem</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-top: 5px;">
+                                                <div>
+                                                    <label style="width:130px;" for="dropdown">Subkategorie:</label>
+                                                    <select id="dropdown" @onchange="HandleDropdownChangeSub">
+                                                        @{
+                                                            foreach (var elem in SubCats)
+                                                            {
+                                                                <option value="@elem.Id">@elem.titleGer</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-top: 5px;">
+                                                <div>
+                                                    <label style="width:130px;" for="dropdown">Subsubkategorie:</label>
+                                                    <select id="dropdown" @onchange="HandleDropdownChangeSubSub">
+                                                        @{
+                                                            foreach (var elem in SubSubCats)
+                                                            {
+                                                                <option value="@elem.Id">@elem.titleGer</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="padding: 50px 0px 0px 60px">
                                     <strong style="font-size: 20px;">#Koordinaten</strong>
                                     (Getrennt durch ein Kommata)
                                 </td>
@@ -124,7 +182,6 @@
                             <tr>
 
                             </tr>
-
                             <tr>
                                 <td style="padding: 20px 60px 0px 60px">
                                     <strong style="font-size: 15px;">Anzeigen Bild (1)</strong>
@@ -192,6 +249,11 @@
 
 
 @code {
+    TodoApp.Data.CategoriesEnum[] enums = (TodoApp.Data.CategoriesEnum[])Enum.GetValues(typeof(TodoApp.Data.CategoriesEnum));
+    private List<Data.Api.Category.CategoryType> SubCats = new List<Data.Api.Category.CategoryType>();
+    private List<Data.Api.Category.CategoryType> SubSubCats = new List<Data.Api.Category.CategoryType>();
+
+
     private string TitleDeutsch = "";
     private string TitleEnglisch = "";
     private string TitleArabisch = "";
@@ -211,7 +273,81 @@
     private int subcategory = 0;
     private int subsubcategory = 0;
 
+    string selectedMainCat = "1";
+    string selectedSubCat = "";
+    string selectedSubSubCat = "";
 
+    protected async override void OnInitialized()
+    {
+        // add null element
+        var none = new Data.Api.Category.CategoryType
+            {
+                belongsToMainCat = 0,
+                Id = "",
+                belongsToSubCat = "",
+                titleGer = "keine"
+            };
+
+        SubCats.Add(none);
+        SubCats.AddRange(await Data.Api.Category.GetSubCatsInMainCat(selectedMainCat));
+        StateHasChanged();
+
+        base.OnInitialized();
+    }
+
+
+    private async void HandleDropdownChange(ChangeEventArgs e)
+    {
+        selectedMainCat = "";      // reset value
+        selectedSubCat = "";       // reset value
+        selectedSubSubCat = "";    // reset value
+
+        selectedMainCat = e.Value.ToString();
+        SubCats.Clear(); 
+
+        // add null element
+        var none = new Data.Api.Category.CategoryType
+            {
+                belongsToMainCat = 0,
+                Id = "",
+                belongsToSubCat = "",
+                titleGer = "keine"
+            };
+
+        SubCats.Add(none);
+        SubCats.AddRange(await Data.Api.Category.GetSubCatsInMainCat(selectedMainCat));
+        StateHasChanged();
+    }
+
+    private async void HandleDropdownChangeSub(ChangeEventArgs e)
+    {
+
+        selectedSubCat = "";        // reset value
+        selectedSubSubCat = "";     // reset value
+
+        selectedSubCat = e.Value.ToString();
+        SubSubCats.Clear();
+
+        // add null element
+        var none = new Data.Api.Category.CategoryType
+            {
+                belongsToMainCat = 0,
+                Id = "",
+                belongsToSubCat = "",
+                titleGer = "keine"
+            };
+
+        SubSubCats.Add(none);
+        SubSubCats.AddRange(await Data.Api.Category.GetSubSubCatsInSubCat(selectedSubCat));
+        StateHasChanged();
+    }
+
+    private async void HandleDropdownChangeSubSub(ChangeEventArgs e)
+    {
+        selectedSubSubCat = ""; // reset value
+        selectedSubSubCat = e.Value.ToString();
+    }
+  
     private async void LogInClicked()
     {
         var pic = ImagePicker.ImageResult;
@@ -286,9 +422,9 @@
             {
                 tblAdID = Converters.ReturnRandomString(Constants.IDLENGTH),
                 adresse = Adresse,
-                category = 0, //todo,
-                subcategory = 0, //todo,
-                subsubcategory = 0, // todo
+                category = Int32.Parse(selectedMainCat),
+                subcategory = selectedSubCat,
+                subsubcategory = selectedSubSubCat,
                 title = TitleEnglisch,
                 titleAr = TitleArabisch,
                 titleDe = TitleDeutsch,
@@ -304,6 +440,7 @@
                 telephone = Telephone,
                 UnixCreated = DateTime.Now,
                 web  = Web,
+                description = DescriptionEnglisch
             };
 
         var update = await Data.Api.AdsApi.CreateAd(ad);
