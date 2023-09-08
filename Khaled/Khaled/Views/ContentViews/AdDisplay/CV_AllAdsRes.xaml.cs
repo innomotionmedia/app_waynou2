@@ -21,15 +21,17 @@ namespace Khaled.Views.ContentViews.MainMenuTabs
         public static CV_AllAdsRes instance;
         string info, info2;
         public Label filterCity;
-        List<CategoryIds> idList;
+        string lastId;
         AdsListType adsListType;
 
         //filter values
         public int radiusValue = Constants.sliderBaseValue;
         public double startPosLong = 0;
         public double startPosLat = 0;
+        WhatPositionAmIOnRightNow currentPos;
+        string searchPhrase = "", catId = ""; 
 
-        public CV_AllAdsRes (List<CategoryIds> idList)
+        public CV_AllAdsRes (string lastId)
 		{
             adsListType = AdsListType.mainView;
 
@@ -38,12 +40,29 @@ namespace Khaled.Views.ContentViews.MainMenuTabs
 
             InitializeComponent();
 
-            this.idList = idList;
+            this.lastId = lastId;
             instance = this;
             filterCity = label_filter_city;
 
             StartUp();
 
+        }
+
+        public CV_AllAdsRes(WhatPositionAmIOnRightNow currentPos, string searchphrase, string catid)
+        {
+            // titlesearch in categories
+            if (currentPos == WhatPositionAmIOnRightNow.IamInJustIntoMainCategories) adsListType = AdsListType.titleIncat1;
+            else if (currentPos == WhatPositionAmIOnRightNow.IamInTheSubCategorie) adsListType = AdsListType.titleIncat2;
+
+            this.searchPhrase = searchphrase;
+            this.catId = catid;
+            this.currentPos = currentPos;
+
+            InitializeComponent();
+
+            instance = this;
+            filterCity = label_filter_city;
+            StartUp();
         }
 
         public CV_AllAdsRes(AdsListType adsListType, string info)
@@ -115,7 +134,9 @@ namespace Khaled.Views.ContentViews.MainMenuTabs
 
             frame_radiusFilter.IsVisible = true;
 
-            await LoadMainContent(false);
+
+             await LoadMainContent(false);
+            
         } 
 
         public async Task SetCityFilter(bool reset, double posLong, double posLat)
@@ -138,19 +159,24 @@ namespace Khaled.Views.ContentViews.MainMenuTabs
         private async Task LoadMainContent(bool loadMore)
         {
             string loadId = "";
-            if (idList != null && idList.Count != 0)
-                loadId = idList[0].tblCategoryIdID; // primary key to load Ids with
+            if (!String.IsNullOrEmpty(lastId))
+            {
+                loadId = lastId; // primary key to load Ids with
+                adsListType = AdsListType.finalCat;
+            }
+            if (adsListType == AdsListType.titleIncat1 || adsListType == AdsListType.titleIncat2)
+                lastId = catId;
 
-            if (!loadMore)
+             if (!loadMore)
             {
                 mainList = await ReloadAdapter.LoadAllAds(start: 0,
                     count: Constants.AdsToLoadAtOnce,
                     radius: radiusValue,
                     inputLat: startPosLat,
                     inputLong: startPosLong,
-                    categoryId: loadId,
-                    info2: info2,
-                    info: info,
+                    categoryId: searchPhrase,
+                    info2:lastId,
+                    info: lastId,
                     adsListType: adsListType); 
                 listview_mainView.ItemsSource = mainList;
 
@@ -164,9 +190,9 @@ namespace Khaled.Views.ContentViews.MainMenuTabs
                     radius: radiusValue,
                     inputLat: startPosLat,
                     inputLong: startPosLong,
-                    categoryId: loadId,
-                    info: info,
-                    info2: info2,
+                    categoryId: searchPhrase,
+                    info: lastId,
+                    info2: lastId,
                     adsListType: adsListType); ;
                 foreach (var item in x)
                     mainList.Add(item);
@@ -288,7 +314,8 @@ namespace Khaled.Views.ContentViews.MainMenuTabs
         inCat1 = 3,
         inCat2 = 4,
         titleIncat1 = 5,
-        titleIncat2 = 6
+        titleIncat2 = 6,
+        finalCat = 7
     }
 }
 

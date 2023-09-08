@@ -1,4 +1,5 @@
 ﻿
+
 namespace TodoApp.Data
 {
     public static class Constants
@@ -24,6 +25,10 @@ namespace TodoApp.Data
         public static string urlImprint = "https://waynou.de/imprint.html";
         public static string urlToS = "https://waynou.de/termsofuse.html";
 
+        //to keep track of where we at in cats
+        public static WhatPositionAmIOnRightNow WhatPositionAmIOnRightNow = WhatPositionAmIOnRightNow.IAmNoWhereInsideACategory;
+        public static SubCatToLoadType CurrentCatWeWantToLoad = new SubCatToLoadType(); 
+
         public static string GetConnectionString()
         {
             var res = "Server=tcp:db-waynoudbserver.database.windows.net,1433;Database=db_waynou;User ID=serveradmin@db-waynoudbserver;Password={XXX};Trusted_Connection=False;Encrypt=True;";
@@ -32,7 +37,6 @@ namespace TodoApp.Data
             return res.Replace("{XXX}", secret);
         }
 
-        public static int[] appPath = new int[3];
     }
 
     public class CachedUser
@@ -46,6 +50,12 @@ namespace TodoApp.Data
 
     }
 
+    public class SubCatToLoadType
+    {
+        public string name { get; set; }
+        public string id { get; set; }
+    }
+
 
     public class SupportedCities
     {
@@ -56,6 +66,14 @@ namespace TodoApp.Data
         //public ImageSource thumbnail { get; set; }
         public int radiusFromCenter { get; set; }
 
+    }
+
+    public enum WhatPositionAmIOnRightNow
+    {
+        IAmNoWhereInsideACategory = 0,
+        IamInJustIntoMainCategories = 1,
+        IamInTheSubCategorie = 2,
+        IamInSubSubThatIsTheEnd = 3
     }
 
     public enum CityNames

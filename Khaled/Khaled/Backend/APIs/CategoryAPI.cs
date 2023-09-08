@@ -13,31 +13,7 @@ namespace Khaled.Backend.APIs
 {
     public class CategoryAPI
     {
-        public static List<SubCatType> Deserialize(ApiResponse response)
-        {
-            List<SubCatType> ad = new List<SubCatType>();
-            var array = (Newtonsoft.Json.Linq.JArray)response.payload;
-            foreach (var item in array)
-            {
-                SubCatType x = (SubCatType)(item.ToObject(typeof(SubCatType)));
-                ad.Add(x);
-            }
-            return ad;
-        }
-
-        public static List<CategoryIds> DeserializePath(ApiResponse response)
-        {
-            List<CategoryIds> ad = new List<CategoryIds>();
-            var array = (Newtonsoft.Json.Linq.JArray)response.payload;
-            foreach (var item in array)
-            {
-                CategoryIds x = (CategoryIds)(item.ToObject(typeof(CategoryIds)));
-                ad.Add(x);
-            }
-            return ad;
-        }
-
-        public static async Task<List<SubCatType>> GetSubCats1(int belongsToMain)
+        public static async Task<List<SubCatType>> GetSubCats1(string belongsToMain)
         {
             List<SubCatType> res = new List<SubCatType>();
             var sr = Constants.GetConnectionString();
@@ -67,8 +43,9 @@ namespace Khaled.Backend.APIs
                                 titleAr = Convert.ToString(reader[reader.GetOrdinal("titleAr")]),
                                 titleDe = Convert.ToString(reader[reader.GetOrdinal("titleGer")]),
                                 belongsToMain = Convert.ToInt32(reader[reader.GetOrdinal("belongsToMainCat")]),
-                                belongsToSubCat = Convert.ToInt32(reader[reader.GetOrdinal("belongsToSubCat")]),
-                                belongsToSubSubCat = Convert.ToInt32(reader[reader.GetOrdinal("belongsToSubSubCat")]),
+                                belongsToSubCat = Convert.ToString(reader[reader.GetOrdinal("belongsToSubCat")]),
+                                Id = Convert.ToString(reader[reader.GetOrdinal("id")]),
+
 
                                 //UnixCreated = DateTime.Convert.ToString(reader.GetValue(reader.GetOrdinal("UnixCreated"))),
 
@@ -81,7 +58,7 @@ namespace Khaled.Backend.APIs
             }
         }
 
-        public static async Task<List<SubCatType>> GetSubCats2(int belongsToSubCat0)
+        public static async Task<List<SubCatType>> GetSubCats2(string belongsToSubCat0)
         {
             List<SubCatType> res = new List<SubCatType>();
             var sr = Constants.GetConnectionString();
@@ -111,8 +88,8 @@ namespace Khaled.Backend.APIs
                                 titleAr = Convert.ToString(reader[reader.GetOrdinal("titleAr")]),
                                 titleDe = Convert.ToString(reader[reader.GetOrdinal("titleGer")]),
                                 belongsToMain = Convert.ToInt32(reader[reader.GetOrdinal("belongsToMainCat")]),
-                                belongsToSubCat = Convert.ToInt32(reader[reader.GetOrdinal("belongsToSubCat")]),
-                                belongsToSubSubCat = Convert.ToInt32(reader[reader.GetOrdinal("belongsToSubSubCat")]),
+                                belongsToSubCat = Convert.ToString(reader[reader.GetOrdinal("belongsToSubCat")]),
+                                Id = Convert.ToString(reader[reader.GetOrdinal("id")]),
 
                                 //UnixCreated = DateTime.Convert.ToString(reader.GetValue(reader.GetOrdinal("UnixCreated"))),
 
@@ -125,7 +102,7 @@ namespace Khaled.Backend.APIs
             }
         }
 
-        public static async Task<List<CategoryIds>> GetPrimaryKeyOfPath(int mainCat, int subCat1, int subCat2)
+        public static async Task<List<CategoryIds>> GetPrimaryKeyOfPath(int mainCat, int subCat1)
         {
             List<CategoryIds> res = new List<CategoryIds>();
             var sr = Constants.GetConnectionString();
@@ -137,14 +114,12 @@ namespace Khaled.Backend.APIs
                     SELECT *
                     FROM [SubCategories]
                     WHERE belongsToSubCat = @belongsToSubCat
-                    AND belongsToMainCat = @belongsToMainCat
-                    AND belongsToSubSubCat = @belongsToSubSubCat";
+                    AND belongsToMainCat = @belongsToMainCat";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@belongsToMainCat", mainCat);
                     command.Parameters.AddWithValue("@belongsToSubCat", subCat1);
-                    command.Parameters.AddWithValue("@belongsToSubSubCat", subCat2);
 
                     using (SqlDataReader reader = await command.ExecuteReaderAsync())
                     {
@@ -156,7 +131,6 @@ namespace Khaled.Backend.APIs
                                 tblCategoryIdID = Convert.ToString(reader[reader.GetOrdinal("id")]),
                                 mainCat = Convert.ToInt32(reader[reader.GetOrdinal("belongsToMainCat")]),
                                 subCat1 = Convert.ToInt32(reader[reader.GetOrdinal("belongsToSubCat")]),
-                                subCat2 = Convert.ToInt32(reader[reader.GetOrdinal("belongsToSubSubCat")]),
                             };
                             res.Add(y);
                         }
@@ -174,13 +148,10 @@ namespace Khaled.Backend.APIs
         public string titleAr { get; set; }
         public string titleDe { get; set; }
         public string picture { get; set; }
-        public int tblSubCat1ID { get; set; } // the id to get to the next layer. 0 means, no more layers
-        public int tblSubCat2ID { get; set; } // the id to get to the next layer. 0 means, no more layers
-
+        public string Id { get; set; }
         public int belongsToMain { get; set; }
-        public int belongsToSubCat { get; set; }
+        public string belongsToSubCat { get; set; }
 
-        public int belongsToSubSubCat { get; set; }
 
         public FlowDirection flowDirection { get; set; } = FlowDirection.LeftToRight;
     }

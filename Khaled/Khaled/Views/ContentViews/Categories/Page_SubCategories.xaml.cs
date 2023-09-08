@@ -29,10 +29,6 @@ namespace Khaled.Views.ContentViews.Categories
 		public int radiusValue = Constants.sliderBaseValue;
 		public double startPosLong = 0;
 		public double startPosLat = 0;
-
-		CategoriesEnum cat;
-		LayerEnum layer = LayerEnum.subCat1; // default is layer 1
-		public int belongsToCat1Id = 0;
 		int prevCat = 0;
 
 		ObservableCollection<SubCatType> list = new ObservableCollection<SubCatType>();
@@ -40,24 +36,20 @@ namespace Khaled.Views.ContentViews.Categories
 		public Page_SubCategories(CategoriesEnum cat, string title)
 		{
 			InitializeComponent();
-
-			// first contructor
-			Constants.appPath[0] = (int)cat;
-			this.cat = cat;
+			Constants.CurrentCatWeWantToLoad.name = cat.ToString();
+            Constants.CurrentCatWeWantToLoad.id = ((int)cat).ToString();
+			Constants.WhatPositionAmIOnRightNow = WhatPositionAmIOnRightNow.IamInJustIntoMainCategories;
 			text_pickCat.Text = title;
 			StartUp();
 		}
 
-		public Page_SubCategories(LayerEnum layer, int belongsToCat1Id, string title, CategoriesEnum cat)
+		public Page_SubCategories(SubCatType item)
 		{
 			InitializeComponent();
-			this.belongsToCat1Id = belongsToCat1Id;
-			prevCat = (int)cat;
-			// second layer 
-			this.layer = layer;
-			Constants.appPath[1] = belongsToCat1Id;
-			text_pickCat.Text = title;
-
+			Constants.CurrentCatWeWantToLoad.name = item.title;
+			Constants.CurrentCatWeWantToLoad.id = item.Id;
+			Constants.WhatPositionAmIOnRightNow = WhatPositionAmIOnRightNow.IamInTheSubCategorie;
+			text_pickCat.Text = item.titleDe;
 			StartUp();
 		}
 
@@ -75,52 +67,46 @@ namespace Khaled.Views.ContentViews.Categories
             if (CachedUser.cityPicked)
 			{
 				radiusValue = CachedUser.pickedCity.radiusFromCenter;
-				startPosLat = CachedUser.pickedCity.centerLatitude;
+                radiusValue = CachedUser.radius;
+                if (radiusValue == 0) radiusValue = 1;
+                startPosLat = CachedUser.pickedCity.centerLatitude;
 				startPosLong = CachedUser.pickedCity.centerLongitude;
 			}
 			else
 			{
+
 				radiusValue = CachedUser.radius;
+				if (radiusValue == 0) radiusValue = 1;
 				startPosLat = CachedUser.lati;
 				startPosLong = CachedUser.longi;
 			}
 
 
 			await GetCats();
-			await GetAds();
+            await LoadMainContent(false);
 
-		}
+        }
 
-		private async Task GetAds()
-		{
-			await LoadMainContent(false);
-		}
 
 		private async Task LoadMainContent(bool loadMore)
 		{
 			AdsListType currentType = 0;
 
-			if (belongsToCat1Id == 0)
+			if (Constants.WhatPositionAmIOnRightNow == WhatPositionAmIOnRightNow.IamInJustIntoMainCategories)
 				currentType = AdsListType.inCat1;
-			else
-				currentType = AdsListType.inCat2;
+			else if (Constants.WhatPositionAmIOnRightNow == WhatPositionAmIOnRightNow.IamInTheSubCategorie)
+                currentType = AdsListType.inCat2;
 
-			string loadId = "";
-			if (idList != null && idList.Count != 0)
-				loadId = idList[0].tblCategoryIdID; // primary key to load Ids with
-
-			if (!loadMore)
+            if (!loadMore)
 			{
 				mainList = await ReloadAdapter.LoadAllAds(start: 0,
 					count: Constants.AdsToLoadAtOnce,
 					radius: radiusValue,
 					inputLat: startPosLat,
 					inputLong: startPosLong,
-					categoryId: ((int)cat).ToString(),
-					info: info,
-					adsListType: currentType,
-					categoryId2: belongsToCat1Id,
-					prevCat: prevCat);
+					categoryId: "",
+					info: Constants.CurrentCatWeWantToLoad.id,
+					adsListType: currentType);
 				listview_mainViews.ItemsSource = mainList;
 
 			}
@@ -131,10 +117,9 @@ namespace Khaled.Views.ContentViews.Categories
 					radius: radiusValue,
 					inputLat: startPosLat,
 					inputLong: startPosLong,
-					categoryId: ((int)cat).ToString(),
-					info: info,
+					categoryId: "",
+					info: Constants.CurrentCatWeWantToLoad.id,
 					adsListType: currentType,
-					categoryId2: belongsToCat1Id,
 					prevCat: prevCat);
 				foreach (var item in x)
 					mainList.Add(item);
@@ -174,10 +159,9 @@ namespace Khaled.Views.ContentViews.Categories
 		private async Task GetCats()
 		{
 			list.Clear();
-			if (layer == LayerEnum.subCat1)
-				list = await ReloadAdapter.LoadSubCategories(layer, (int)cat);
-			else
-				list = await ReloadAdapter.LoadSubCategories(layer, belongsToCat1Id);
+
+			list = await ReloadAdapter.LoadSubCategories(Constants.CurrentCatWeWantToLoad.id);
+
 
 			comboBox.BindingContext = list;
 			comboBox.DataSource = list;
@@ -195,68 +179,63 @@ namespace Khaled.Views.ContentViews.Categories
 			listview_mainViews.IsRefreshing = true;
 			list.Clear();
 			await GetCats();
-			await GetAds();
-			listview_mainViews.IsRefreshing = false;
-		}
-
-		private async void GetResultsFromPath()
-		{
-			var res = await CategoryAPI.GetPrimaryKeyOfPath
-				(Constants.appPath[0], Constants.appPath[1], Constants.appPath[2]);
-
-			await Navigation.PushAsync(new Page_DisplayContainer(res));
+            await LoadMainContent(false);
+            listview_mainViews.IsRefreshing = false;
 		}
 
 		void back_Clicked(System.Object sender, System.EventArgs e)
 		{
 			Device.BeginInvokeOnMainThread(() =>
 			{
-				if (belongsToCat1Id == 0)
-					CV_CategoryList.Instance.RemoveLayout(0);
-				else
-					CV_CategoryList.Instance.RemoveLayout(1);
-			
-			});
+                if (Constants.WhatPositionAmIOnRightNow == WhatPositionAmIOnRightNow.IamInJustIntoMainCategories)
+                {
+                    CV_CategoryList.Instance.RemoveLayout(0);
+                }
+                else if (Constants.WhatPositionAmIOnRightNow == WhatPositionAmIOnRightNow.IamInTheSubCategorie)
+                {
+                    CV_CategoryList.Instance.RemoveLayout(1);
+                }
+				else if(Constants.WhatPositionAmIOnRightNow == WhatPositionAmIOnRightNow.IamInSubSubThatIsTheEnd)
+				{
+                    // since the backbutton is visible on the last layout. but back here is clicked, we assume that we acually werent here but instead one further. so we remove in the other class
+                    CV_CategoryList.Instance.RemoveLayout(1);
+                }
+            });
 		}
 
-		void comboBox_SelectionChanged(System.Object sender, Syncfusion.XForms.ComboBox.SelectionChangedEventArgs e)
+		async void comboBox_SelectionChanged(System.Object sender, Syncfusion.XForms.ComboBox.SelectionChangedEventArgs e)
 		{
             try
             {
 				var item = list[comboBox.SelectedIndex];
 
-				if (item.tblSubCat1ID != 0)
+				if (Constants.WhatPositionAmIOnRightNow == WhatPositionAmIOnRightNow.IamInJustIntoMainCategories)
 				{
-					Device.BeginInvokeOnMainThread(() =>
-					{
-						CV_CategoryList.Instance.GoToPage3(item, cat);
-					}
-					);
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        CV_CategoryList.Instance.GoToNextPage(item);
+                    });
 				}
-				else
+				else 
 				{
-					Constants.appPath[2] = item.tblSubCat2ID;
-					GetResultsFromPath();
-				}
+					Constants.WhatPositionAmIOnRightNow = WhatPositionAmIOnRightNow.IamInSubSubThatIsTheEnd;
+					Constants.CurrentCatWeWantToLoad.id = item.Id;
+					Constants.CurrentCatWeWantToLoad.name = item.title;
+                    await Navigation.PushAsync(new Page_DisplayContainer(item.Id));
+                }
+
             }
             catch { }
 
-
+			comboBox.SelectedItem = null; 
 		}
 
         async void btn_search_Clicked(System.Object sender, System.EventArgs e)
         {
 
-			if (belongsToCat1Id == 0)
-			{
-				if (!string.IsNullOrEmpty(entry_title.Text))
-					await Navigation.PushAsync(new Page_DisplayContainer(AdsListType.titleIncat1, entry_title.Text, Constants.appPath[0].ToString()));
-			}
-			else
-			{
-				if (!string.IsNullOrEmpty(entry_title.Text))
-					await Navigation.PushAsync(new Page_DisplayContainer(AdsListType.titleIncat2, entry_title.Text, belongsToCat1Id.ToString()));
-			}
+
+			await Navigation.PushAsync(new Page_DisplayContainer(Constants.WhatPositionAmIOnRightNow, entry_title.Text, Constants.CurrentCatWeWantToLoad.id));
+			
 			
 
 		}

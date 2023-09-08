@@ -24,7 +24,7 @@ namespace Khaled.Helpers
             return await FormatAd(x);
         }
 
-        public async static Task<ObservableCollection<AdsType>> LoadAllAds(int start, int count, int radius, double inputLat, double inputLong, string categoryId, string info, AdsListType adsListType, string info2 = "", int categoryId2 = 0, int prevCat = 0)
+        public async static Task<ObservableCollection<AdsType>> LoadAllAds(int start, int count, int radius, double inputLat, double inputLong, string categoryId, string info, AdsListType adsListType, string info2 = "", int categoryId2 = 0, int prevCat = 0, string subcategoryId = "")
         {
             ObservableCollection<AdsType> res = new ObservableCollection<AdsType>();
 
@@ -33,15 +33,17 @@ namespace Khaled.Helpers
             if (adsListType == AdsListType.mainView)
                 x = await AdsAPI.GetAllAds(start, count, radius, inputLat, inputLong, categoryId, info);
             else if (adsListType == AdsListType.inCat1)
-                x = await AdsAPI.GetAllAds_Cat1(start, count, radius, inputLat, inputLong, categoryId, info);
+                x = await AdsAPI.GetAllAds_Cat1(start, count, radius, inputLat, inputLong, info);
             else if (adsListType == AdsListType.title)
                 x = await AdsAPI.GetAdsByTitle(info, start, count);
             else if (adsListType == AdsListType.inCat2)
-                x = await AdsAPI.GetAllAds_Cat2(start, count, radius, inputLat, inputLong, prevCat, categoryId2, info);
+                x = await AdsAPI.GetAllAds_Cat2(start, count, radius, inputLat, inputLong, info);
             else if (adsListType == AdsListType.titleIncat1)
-                x = await AdsAPI.GetAdsByTitleCat1(info, start, count, info2);
-            else if (adsListType == AdsListType.titleIncat1)
-                x = await AdsAPI.GetAdsByTitleCat2(info, start, count, info2);
+                x = await AdsAPI.GetAdsByTitleCat1(info, start, count, categoryId);
+            else if (adsListType == AdsListType.titleIncat2)
+                x = await AdsAPI.GetAdsByTitleCat2(info, start, count, categoryId);
+            else if (adsListType == AdsListType.finalCat)
+                x = await AdsAPI.GetAdsByFinalCat(start, count, radius, inputLat, inputLong, info);
             else if (adsListType == AdsListType.favorites)
             {
                 var favs = await App.DatabaseFAV.GetAllMyFavs();
@@ -70,15 +72,14 @@ namespace Khaled.Helpers
             return await FormatAd(x);
         }
 
-        public async static Task<ObservableCollection<SubCatType>> LoadSubCategories(LayerEnum layer, int belongsTo)
+        public async static Task<ObservableCollection<SubCatType>> LoadSubCategories(string belongsTo)
         {
             ObservableCollection<SubCatType> res = new ObservableCollection<SubCatType>();
             List<SubCatType> x = new List<SubCatType>();
 
-            if(layer == LayerEnum.subCat1)
-                 x = await CategoryAPI.GetSubCats1(belongsTo);
-            else
-                 x = await CategoryAPI.GetSubCats2(belongsTo);
+            if(Constants.WhatPositionAmIOnRightNow == WhatPositionAmIOnRightNow.IamInJustIntoMainCategories)
+            x = await CategoryAPI.GetSubCats1(belongsTo);
+            else x = await CategoryAPI.GetSubCats2(belongsTo);
 
 
             foreach (var elem in x)

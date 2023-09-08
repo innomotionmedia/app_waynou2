@@ -20,7 +20,20 @@ namespace Khaled.Views.ContentViews.AdDisplay
             layout_container.Children.Add(new CV_AllAdsRes(adsListType, info));
 		}
 
-		public Page_DisplayContainer(AdsListType adsListType, string info, string info2)
+        public Page_DisplayContainer(WhatPositionAmIOnRightNow currentPos, string searchphrase, string catid)
+        {
+            // for title search
+            InitializeComponent();
+            if (CachedUser.localCode == localCodes.ar)
+                this.FlowDirection = FlowDirection.RightToLeft;
+            else
+                this.FlowDirection = FlowDirection.LeftToRight;
+
+            layout_container.Children.Add(new CV_AllAdsRes( currentPos,  searchphrase,  catid));
+        }
+
+
+        public Page_DisplayContainer(AdsListType adsListType, string info, string info2)
 		{
 			InitializeComponent();
             if (CachedUser.localCode == localCodes.ar)
@@ -30,14 +43,14 @@ namespace Khaled.Views.ContentViews.AdDisplay
             layout_container.Children.Add(new CV_AllAdsRes(adsListType, info, info2));
 		}
 
-		public Page_DisplayContainer(List<CategoryIds> idList)
+		public Page_DisplayContainer(string lastId)
 		{
 			InitializeComponent();
             if (CachedUser.localCode == localCodes.ar)
                 this.FlowDirection = FlowDirection.RightToLeft;
             else
                 this.FlowDirection = FlowDirection.LeftToRight;
-            layout_container.Children.Add(new CV_AllAdsRes(idList));
+            layout_container.Children.Add(new CV_AllAdsRes(lastId));
 		}
 
 	}

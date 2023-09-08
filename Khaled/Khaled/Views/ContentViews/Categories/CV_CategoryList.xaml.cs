@@ -49,15 +49,16 @@ namespace Khaled.Views.ContentViews.Categories
 			if (pageIndex == 1)
 			{
 				await Task.Delay(500);
-				stacklayout_layout3.Children.Clear();
+				Constants.WhatPositionAmIOnRightNow = WhatPositionAmIOnRightNow.IamInJustIntoMainCategories;
+                stacklayout_layout3.Children.Clear();
 			}
 
 
 		}
 
-		public async void GoToPage3(SubCatType item, CategoriesEnum prevCat)
+		public async void GoToNextPage(SubCatType item)
 		{
-			stacklayout_layout3.Children.Add(new Page_SubCategories(LayerEnum.subCat2, item.tblSubCat1ID, item.title, prevCat));
+			stacklayout_layout3.Children.Add(new Page_SubCategories(item));
 		
 			MethodInfo dynMethod = tabbedPageView.GetType().GetMethod("UpdateSelectedIndex", BindingFlags.NonPublic | BindingFlags.Instance);
 			dynMethod?.Invoke(tabbedPageView, new object[] { 2, false });
