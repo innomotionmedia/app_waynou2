@@ -8,6 +8,61 @@ namespace Gagger.Data.Api
 {
     public static class AdsApi
     {
+        public static async Task<List<FullAdType>> GetAllAds(int start, int count)
+        {
+
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
+            {
+                await connection.OpenAsync();
+
+                string query = @"
+                    SELECT title, titleDe, description, descriptionAR, descriptionGER, adresse, tblAdID, email, hours, descriptionENG, titleAr, telephone, web, distance, thumbnail
+                    FROM [Ads]     
+                    ORDER BY datecreated DESC
+                    OFFSET @Start ROWS FETCH NEXT @Count ROWS ONLY;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+
+                    command.Parameters.AddWithValue("@Start", start);
+                    command.Parameters.AddWithValue("@Count", count);
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        List<FullAdType> ads = new List<FullAdType>();
+                        while (reader.Read())
+                        {
+                            // var thumb = reader.GetValue(reader.GetOrdinal("thumbnail"));
+                            // byte[] thumbnail = { };
+                            // if (!string.IsNullOrEmpty(thumb.ToString())) thumbnail = (byte[])thumb;
+
+                            var x = new FullAdType
+                            {
+                                title = Convert.ToString(reader[reader.GetOrdinal("title")]),
+                                titleDe = Convert.ToString(reader[reader.GetOrdinal("titleDe")]),
+                                description = Convert.ToString(reader[reader.GetOrdinal("description")]),
+                                descriptionAR = Convert.ToString(reader[reader.GetOrdinal("descriptionAR")]),
+                                descriptionGER = Convert.ToString(reader[reader.GetOrdinal("descriptionGER")]),
+                                adresse = Convert.ToString(reader[reader.GetOrdinal("adresse")]),
+                                tblAdID = Convert.ToString(reader[reader.GetOrdinal("tblAdID")]),
+                                email = Convert.ToString(reader[reader.GetOrdinal("email")]),
+                                hours = Convert.ToString(reader[reader.GetOrdinal("hours")]),
+                                descriptionENG = Convert.ToString(reader[reader.GetOrdinal("descriptionENG")]),
+                                titleAr = Convert.ToString(reader[reader.GetOrdinal("titleAr")]),
+                                telephone = Convert.ToString(reader[reader.GetOrdinal("telephone")]),
+                                web = Convert.ToString(reader[reader.GetOrdinal("web")]),
+                                distance = Convert.ToString(reader[reader.GetOrdinal("Distance")]),
+                                thumbnail = Convert.ToString(reader.GetValue(reader.GetOrdinal("thumbnail"))),
+                            };
+                            ads.Add(x);
+                        }
+
+                        return ads;
+                    }
+                }
+            }
+        }
 
         public static async Task<FullAdType> GetFullAdInfo(string tblAdID)
         {
@@ -92,8 +147,7 @@ namespace Gagger.Data.Api
                     [longitude],
                     [category],
                     [subcategory],
-                    [subsubcategory],
-                    [description]
+                    [subsubcategory]
                 )
                 VALUES (
                     @title,
@@ -115,8 +169,7 @@ namespace Gagger.Data.Api
                     @longitude,
                     @category,
                     @subcategory,
-                    @subsubcategory,
-                    @description
+                    @subsubcategory
                 );
             ";
                 try
@@ -143,7 +196,6 @@ namespace Gagger.Data.Api
                         command.Parameters.AddWithValue("@category", ad.category);
                         command.Parameters.AddWithValue("@subcategory", ad.subcategory);
                         command.Parameters.AddWithValue("@subsubcategory", ad.subsubcategory);
-                        command.Parameters.AddWithValue("@description", ad.description);
 
 
                         using (SqlDataReader reader = await command.ExecuteReaderAsync())
@@ -163,7 +215,32 @@ namespace Gagger.Data.Api
             }
         }
 
+        public static async Task DeleteAdById(string Id)
+        {
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
+            {
+                await connection.OpenAsync();
 
+                string query = @"
+                    DELETE
+                    FROM [Ads]
+                    WHERE tblAdID = @Id";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", Id);
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                        }
+
+                    }
+
+                }
+            }
+        }
         public class SubCatType
         {
             //abuse title to show localised title in reload adapter
@@ -183,6 +260,7 @@ namespace Gagger.Data.Api
 
         public class AdsType
         {
+
             public string title { get; set; }
             public string titleAr { get; set; }
             public string titleDe { get; set; }

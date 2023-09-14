@@ -444,6 +444,10 @@
             };
 
         var update = await Data.Api.AdsApi.CreateAd(ad);
+
+
+        await JsRuntime.InvokeVoidAsync("alert", "Anzeigenbilde erstellt!");
+        NavManager.NavigateTo("/allads");
     }
 }
 
