@@ -1,4 +1,4 @@
-﻿@page "/allads"
+﻿@page "/alloffers"
 @using System.Collections.ObjectModel;
 @using Gagger.Helpers;
 @inject IJSRuntime JsRuntime
@@ -16,7 +16,7 @@
                 <td>
                     <div align="center" class="centerDiv" style="">
                         <!-- Adjust the height value as needed -->
-                        <table width="80%" style="height: 100px;">
+                        <table width="80%" style="height: 100px;" >
                             <tr>
                                 <td align="center" style="padding-top: 20px;">
                                     <strong style="font-size: 25px;">Alle aktiven Angebote</strong>
@@ -30,17 +30,17 @@
                             <tr>
                                 <td align="left" style="padding-top: 20px; overflow: hidden;">
                                     @{
-                                        foreach (var elem in fullAdTypes)
+                                        foreach (var elem in fullOfferType)
                                         {
                                             <div class="containeritem">
-                                                <table style="">
+                                                <table  style="">
                                                     <tr>
-                                                        <td style="width: 33%">
+                                                        <td style="width: 33%; vertical-align:baseline">
                                                             <div class="imageContainer">
                                                                 <img class="image" src="@Helpers.Converters.ReturnBase64ImageSourceFromBase64String(elem.thumbnail)" />
                                                             </div>
                                                         </td>
-                                                        <td style="vertical-align: top; width: 53%">
+                                                        <td style="vertical-align: top; width: 67%; padding-left: 10px;">
                                                             <table>
                                                                 <tr>
                                                                     <td>
@@ -51,20 +51,25 @@
                                                                         <strong>@elem.title</strong>
                                                                     </td>
                                                                 </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <p>@elem.extraInformation</p>
+                                                                    </td>
+                                                                </tr>
                                                             </table>
                                                         </td>
                                                         <td style="vertical-align: top; width: 10%">
-                                                            <button class="delete" @onclick="() => DelteAd(elem.tblAdID)">X</button>
+                                                            <button class="delete" @onclick="() => DelteAd(elem.id)">X</button>
                                                         </td>
                                                     </tr>
                                                 </table>
                                             </div>
-                                            <p style="font-size: 12px;">Offer-Id: @elem.tblAdID</p>
+                                            <p style="font-size: 12px;">Offer-Id: @elem.id</p>
                                         }
                                     }
                                 </td>
                             </tr>
-                        </table>
+                        </table>               
                     </div>
                 </td>
                 <td class="equalSize">
@@ -87,12 +92,13 @@
 
 <style>
 
-    .containeritem {
-        margin-top: 10px;
+    .containeritem{
+        margin-top: 10px; 
         vertical-align: top;
         border: 2px solid #000;
-        border-radius: 10px;
-        width: 300px;
+        border-radius: 10px; 
+        width: 350px;
+        height: 80px;
         padding-left: 10px;
         padding-right: 10px;
     }
@@ -107,17 +113,17 @@
     }
 
     .delete {
-        margin-top: 10px;
-        margin-left: 10px;
+        margin-top: 10px; 
+        margin-left: 10px; 
         border-radius: 10px;
     }
-
+    
     .singleCat {
-        margin-top: 10px;
-        color: white;
+        margin-top: 10px; 
+        color: white; 
         padding: 5px 10px 5px 10px;
         background-color: #7c7fe6;
-        width: 250px;
+        width: 250px; 
         border-radius: 15px;
     }
 
@@ -151,13 +157,13 @@
     }
 
 
-        .centerDiv:hover {
+    .centerDiv:hover {
             overflow: auto;
         }
 
     .maintable {
         width: 100%;
-        height: 100px;
+        height: 100px; 
     }
 
 
@@ -173,14 +179,14 @@
 
 @code {
 
-    List<Gagger.Data.Api.AdsApi.FullAdType> fullAdTypes = new List<Gagger.Data.Api.AdsApi.FullAdType>();
-    private int pagePos = 0;
+    List<Gagger.Data.Api.OfferType> fullOfferType = new List<Gagger.Data.Api.OfferType>();
+    private int pagePos = 0; 
     bool nextButtonInvisible = false;
 
     protected override async void OnInitialized()
     {
         base.OnInitialized();
-        await GetAllAds();
+        await GetAllOffers();
         StateHasChanged();
     }
 
@@ -192,15 +198,14 @@
         }
         else
         {
-            if (pagePos == 0) return; // cant go further back
+            if(pagePos == 0) return; // cant go further back
 
             pagePos--;
         }
 
-        await GetAllAds();
+        await GetAllOffers();
         StateHasChanged();
     }
-
 
     private async void DelteAd(string id)
     {
@@ -209,8 +214,8 @@
         if (confirmed)
         {
             // User clicked OK
-            await Data.Api.AdsApi.DeleteAdById(id);
-            await GetAllAds();
+            await Data.Api.OfferApi.DeleteOfferById(id);
+            await GetAllOffers();
             StateHasChanged();
         }
         else
@@ -221,11 +226,11 @@
 
 
 
-    protected async Task GetAllAds()
+    protected async Task GetAllOffers()
     {
-        fullAdTypes = await Data.Api.AdsApi.GetAllAds(pagePos * Constants.ELEMCOUNT, Helpers.Constants.ELEMCOUNT);
+        fullOfferType = await Data.Api.OfferApi.GetAllOffers(pagePos * Constants.ELEMCOUNT, Helpers.Constants.ELEMCOUNT);
 
-        if (fullAdTypes.Count < 5) nextButtonInvisible = true;
+        if (fullOfferType.Count < 5) nextButtonInvisible = true;
         else nextButtonInvisible = false;
     }
 

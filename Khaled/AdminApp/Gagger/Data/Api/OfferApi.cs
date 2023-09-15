@@ -18,7 +18,83 @@ namespace Gagger.Data.Api
 
     }
     public static class OfferApi
-    { 
+    {
+
+        public static async Task DeleteOfferById(string Id)
+        {
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
+            {
+                await connection.OpenAsync();
+
+                string query = @"
+                    DELETE
+                    FROM [offer]
+                    WHERE id = @Id";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", Id);
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+
+        public static async Task<List<OfferType>> GetAllOffers(int start, int count)
+        {
+
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
+            {
+                await connection.OpenAsync();
+
+                string query = @"
+                    SELECT *
+                    FROM [Offer]     
+                    ORDER BY DateCreated DESC
+                    OFFSET @Start ROWS FETCH NEXT @Count ROWS ONLY;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+
+                    command.Parameters.AddWithValue("@Start", start);
+                    command.Parameters.AddWithValue("@Count", count);
+
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        List<OfferType> ads = new List<OfferType>();
+                        while (reader.Read())
+                        {
+                            // var thumb = reader.GetValue(reader.GetOrdinal("thumbnail"));
+                            // byte[] thumbnail = { };
+                            // if (!string.IsNullOrEmpty(thumb.ToString())) thumbnail = (byte[])thumb;
+
+                            var x = new OfferType
+                            {
+                                id = Convert.ToString(reader[reader.GetOrdinal("id")]),
+                                order = Convert.ToInt32(reader[reader.GetOrdinal("order")]),
+                                type = Convert.ToString(reader[reader.GetOrdinal("type")]),
+                                extraInformation = Convert.ToString(reader[reader.GetOrdinal("extraInformation")]),
+                                title = Convert.ToString(reader[reader.GetOrdinal("title")]),
+                                thumbnail = Convert.ToString(reader.GetValue(reader.GetOrdinal("thumbnail"))),
+                            };
+                            ads.Add(x);
+                        }
+
+                        return ads;
+                    }
+                }
+            }
+        }
+
 
         public static async Task Createoffer(OfferType of)
         {

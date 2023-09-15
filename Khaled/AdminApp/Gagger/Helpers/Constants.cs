@@ -13,7 +13,7 @@
         public static int MAXIMAGESIZE = 500; // in kb
         public static int MAXUPLOADIN24 = 30; // NEED CHANGING WHEN LIVE LOL
         public static int IDLENGTH = 30;
-
+        public static int ELEMCOUNT = 5;
     }
 
     public enum MemePoints

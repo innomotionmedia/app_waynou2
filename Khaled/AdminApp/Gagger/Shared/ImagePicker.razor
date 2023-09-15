@@ -1,20 +1,19 @@
-﻿<InputFile OnChange="HandleFileChange" />
-<div class="container">
+﻿
+<InputFile OnChange="@LoadFiles" multiple accept=".jpg,.jpeg,.png"/>
+<div >
     @{
         //only one can ever be true
         bool profilePicVisible = false;
         bool memePicVisible = false;
 
-
-
-
         <div hidden="@memePicVisible" class="container2">
-            @*-- MEME PIC --*@
-            <div class="image-container">
-                <img src="@imageDataUrl">
-            </div>
+                @foreach (var file in loadedFiles)
+                {
+                    <div class="image-container">
+                        <img alt="" src="@base64data" />
+                    </div>
+                }
         </div>
-
     }
 
 </div>
@@ -22,12 +21,7 @@
 
 <style>
 
-    .container {
-        padding: 20px; 
-        display: flex;
-        justify-content: center; /* Horizontally center content */
-        align-items: center; /* Vertically center content */
-    }
+
 
     .imagecontainer {
         width: 150px;
@@ -63,7 +57,8 @@
     .container2 {
         display: flex;
         justify-content: center;
-        align-items: center;
+        padding-top: 20px;
+        align-items: baseline;
         width: 100%;
         height: 300px; /* Adjust to your desired container height */
     }
@@ -85,31 +80,75 @@
 </style>
 
 @code {
-
+    // this could handle mutiple images. but is now set to handle one. but thats we have list element and for each and so on. 
     [Parameter]
     public ImageType ImgType { get; set; }
-
-
     private string imageDataUrl;
-
     public static string ImageResult = "";
+    List<ImageFile> filesBase64 = new List<ImageFile>();
+    bool isDisabled = false;
+    private int maxAllowedFiles = 3;
+    private bool isLoading;
+    private string extensionname = "default";
+    private string base64data = ""; //you can set a defaut image
+    private string isdisplayimage;
+    private List<IBrowserFile> loadedFiles = new();
 
-    private async Task HandleFileChange(InputFileChangeEventArgs e)
+    //InputFile Chnage event
+    //new stuff
+    [Parameter]
+    public string ImgUrl { get; set; }
+    [Parameter]
+    public EventCallback<string> OnChange { get; set; }
+
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
     {
-        var file = e.File;
-
-        if (file != null)
+        isLoading = true;
+        loadedFiles.Clear();
+        foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
         {
-            using var stream = file.OpenReadStream();
-            var buffer = new byte[file.Size];
-            await stream.ReadAsync(buffer, 0, (int)file.Size);
+            try
+            {
+                loadedFiles.Add(file);
 
-            // Convert the image bytes to a base64 data URL
-            imageDataUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+                //get the upload file extension.
+                extensionname = Path.GetExtension(file.Name);
 
-            var res = Convert.ToBase64String(buffer);
-            ImageResult = res; 
+                var imagefiletypes = new List<string>() {
+                    ".png",".jpg",".jpeg"
+                };
+                if (imagefiletypes.Contains(extensionname))
+                {
+
+                    //resize the image and create the thumbnails
+                    var resizedFile = await file.RequestImageFileAsync(file.ContentType, 640, 480); // resize the image file
+                    var buf = new byte[resizedFile.Size]; // allocate a buffer to fill with the file's data
+                    using (var stream = resizedFile.OpenReadStream())
+                    {
+                        await stream.ReadAsync(buf); // copy the stream to the buffer
+                    }
+                    base64data = "data:image/png;base64," +  Convert.ToBase64String(buf); // convert to a base64 string!!
+                    await Task.Delay(100);
+                    //then you can send the base64 data to the server side and insert it into database.
+                    ImageResult = Convert.ToBase64String(buf);
+                    //show the thumbnails image
+                    isdisplayimage = "block";
+                }
+                else
+                {
+                    isdisplayimage = "none";
+                };
+            }
+            catch (Exception ex)
+            {
+                // Logger.LogError("File: {Filename} Error: {Error}",
+                //     file.Name, ex.Message);
+            }
+
+            StateHasChanged();
         }
+        isLoading = false;
     }
 
     public enum ImageType
@@ -118,4 +157,10 @@
         OfferPic, 
     }
 
+    public class ImageFile
+    {
+        public string base64data { get; set; }
+        public string contentType { get; set; }
+        public string fileName { get; set; }
+    }
 }

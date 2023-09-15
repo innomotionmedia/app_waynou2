@@ -211,6 +211,7 @@
 
         if (WithLink) type = "link";
 
+
         var of = new Data.Api.OfferType
             {
                 extraInformation = extraInformation,
@@ -224,6 +225,9 @@
         await Data.Api.OfferApi.Createoffer(of);
 
         ImagePicker.ImageResult = "";
+
+        await JsRuntime.InvokeVoidAsync("alert", "Anzegie ");
+        NavManager.NavigateTo("/allads");
     }
 
     private void HandleCheckboxChange(ChangeEventArgs e)
@@ -233,7 +237,7 @@
         if (WithLink)
         {
 
-            LinkText = "Dieses Angebot führt zu einer externen Website. Der Bröwser öffent sich automatisch, wenn der User auf das Angebot klickt. Bitte trage hier unten den Link zu der Website ein, wie im Beispiel genannt.";
+            LinkText = "Dieses Angebot führt zu einer externen Website. Der Browser öffent sich automatisch, wenn der User auf das Angebot klickt. Bitte trage hier unten den Link zu der Website ein, wie im Beispiel genannt.";
             placeholder = "https://www.example.com";
         }
         else
