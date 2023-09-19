@@ -14,8 +14,17 @@
         <RefreshView IsRefreshing="False" x:Name="refreshview_view" Refreshing="RefreshView_Refreshing">
            <ScrollView>
                 <StackLayout Spacing="0">
-
-                    <Image Aspect="AspectFill" VerticalOptions="FillAndExpand" x:Name="img_mainPic"/>
+                    <CarouselView HeightRequest="400" Loop="False" x:Name="carouselview">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                     <Image Source="{Binding ImageSource}"
+                                            Aspect="AspectFill" VerticalOptions="FillAndExpand"
+                                            HorizontalOptions="Center" />
+                                </StackLayout>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
                     <BoxView HeightRequest="1" BackgroundColor="{StaticResource LightGray}"/>
                     <Grid HeightRequest="50">
                         <Grid.ColumnDefinitions>

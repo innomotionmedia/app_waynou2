@@ -54,14 +54,29 @@ namespace Khaled.Views
 
 
             label_description.Text = Converters.ReturnCorrectLingua(data[0], TextType.adDescription);
-            ad.imageSource_fullPic = Converters.ReturnImageSourceFromString(data[0]?.fullPic);
+           // ad.imageSource_fullPic = Converters.ReturnImageSourceFromString(data[0]?.fullPic);
             label_adresse.Text = data[0]?.adresse;
             label_email.Text = data[0]?.email;
             label_hours.Text = data[0]?.hours;
             label_telephone.Text = data[0]?.telephone;
             label_web.Text = data[0]?.web;
 
-            img_mainPic.Source = ad.imageSource_fullPic;
+            GetImages();
+
+           // img_mainPic.Source = ad.imageSource_fullPic;
+        }
+
+        private async void GetImages()
+        {
+            var images = await AdImagesApi.GetAllImagesFromAdId(ad.tblAdID);
+
+            foreach(var elem in images)
+            {
+                elem.ImageSource = Converters.ReturnImageSourceFromString(elem.Image);
+            }
+
+            carouselview.ItemsSource = images;
+
         }
 
         async void RefreshView_Refreshing(System.Object sender, System.EventArgs e)
