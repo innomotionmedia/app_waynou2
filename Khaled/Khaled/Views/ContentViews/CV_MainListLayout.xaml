@@ -21,7 +21,7 @@
                            IsClippedToBounds="True"
                            Padding="0"
                            CornerRadius="0">
-                        <Image Aspect="Fill" Margin="{OnPlatform Android=1, iOS=0}" Source="{Binding imageSource_thumbnail}"/>
+                        <Image Aspect="AspectFill" Margin="{OnPlatform Android=1, iOS=0}" Source="{Binding imageSource_thumbnail}"/>
                     </Frame>
                     <StackLayout Grid.Column="1" Margin="10,0,0,0" >
                         <Label 

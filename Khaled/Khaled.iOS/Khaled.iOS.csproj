@@ -41,6 +41,7 @@
     <CodesignProvision>profile4</CodesignProvision>
     <CodesignKey>Apple Distribution: Khaled Safsouf (A72H7447A4)</CodesignKey>
     <MtouchUseLlvm>true</MtouchUseLlvm>
+    <MtouchI18n>west</MtouchI18n>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
