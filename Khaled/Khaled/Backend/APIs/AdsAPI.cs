@@ -441,7 +441,7 @@ namespace Khaled.Backend.APIs
         {
             var lat = Converters.TurnCommaIntoDot(inputLat.ToString());
             var longi = Converters.TurnCommaIntoDot(inputLong.ToString());
-
+            maxKmRadius = 10;  // todo 
             var sr = Constants.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(sr))
             {
