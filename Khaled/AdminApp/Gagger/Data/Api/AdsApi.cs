@@ -134,7 +134,6 @@ namespace Gagger.Data.Api
                     [description],
                     [tblAdID],
                     [thumbnail],
-                    [fullPic],
                     [descriptionENG],
                     [descriptionGER],
                     [descriptionAR],
@@ -156,7 +155,6 @@ namespace Gagger.Data.Api
                     @description,
                     @tblAdID,
                     @thumbnail,
-                    @fullPic,
                     @descriptionENG,
                     @descriptionGER,
                     @descriptionAR,
@@ -182,7 +180,6 @@ namespace Gagger.Data.Api
                         command.Parameters.AddWithValue("@titleDe", ad.titleDe);
                         command.Parameters.AddWithValue("@description", ad.description);
                         command.Parameters.AddWithValue("@thumbnail", ad.thumbnail);
-                        command.Parameters.AddWithValue("@fullPic", ad.fullPic);
                         command.Parameters.AddWithValue("@descriptionENG", ad.descriptionENG);
                         command.Parameters.AddWithValue("@descriptionGER", ad.descriptionGER);
                         command.Parameters.AddWithValue("@descriptionAR", ad.descriptionAR);
@@ -208,10 +205,7 @@ namespace Gagger.Data.Api
                 {
                 }
 
-
-                // now get user and return my dude 
-                //var x = await GetUserFromEmail(user.Email);
-                return null; // todo
+                return null; 
             }
         }
 

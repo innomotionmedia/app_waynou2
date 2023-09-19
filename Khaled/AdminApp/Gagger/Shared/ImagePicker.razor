@@ -2,16 +2,25 @@
 <InputFile OnChange="@LoadFiles" multiple accept=".jpg,.jpeg,.png"/>
 <div >
     @{
-        //only one can ever be true
-        bool profilePicVisible = false;
-        bool memePicVisible = false;
 
-        <div hidden="@memePicVisible" class="container2">
+        <div class="container2">
                 @foreach (var file in loadedFiles)
                 {
-                    <div class="image-container">
-                        <img alt="" src="@base64data" />
-                    </div>
+
+                      if (ImgType == ImageType.Thumbnail)
+                      {
+                          <div style="background-color: #cccc00; width: 100%; padding-top: 20px; padding-left: 10px; padding-right: 10px;">
+                              <AdsTemplate Base64Image="@base64data" Desc="@Desc" Title="@Title"></AdsTemplate>
+                          </div>
+                      }
+                      else
+                      {
+                          <div class="image-container">
+                              <img alt="" src="@base64data" />
+                          </div>
+
+                      }
+
                 }
         </div>
     }
@@ -83,6 +92,7 @@
     // this could handle mutiple images. but is now set to handle one. but thats we have list element and for each and so on. 
     [Parameter]
     public ImageType ImgType { get; set; }
+
     private string imageDataUrl;
     public static string ImageResult = "";
     List<ImageFile> filesBase64 = new List<ImageFile>();
@@ -101,60 +111,200 @@
     [Parameter]
     public EventCallback<string> OnChange { get; set; }
 
+    // needed for create ads
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public string Desc { get; set; }
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {
         isLoading = true;
         loadedFiles.Clear();
-        foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+
+        if(ImgType == ImageType.Thumbnail)
         {
-            try
+            foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
             {
-                loadedFiles.Add(file);
+                try
+                {
+                    loadedFiles.Add(file);
 
-                //get the upload file extension.
-                extensionname = Path.GetExtension(file.Name);
+                    //get the upload file extension.
+                    extensionname = Path.GetExtension(file.Name);
 
-                var imagefiletypes = new List<string>() {
+                    var imagefiletypes = new List<string>() {
                     ".png",".jpg",".jpeg"
                 };
-                if (imagefiletypes.Contains(extensionname))
-                {
-
-                    //resize the image and create the thumbnails
-                    var resizedFile = await file.RequestImageFileAsync(file.ContentType, 640, 480); // resize the image file
-                    var buf = new byte[resizedFile.Size]; // allocate a buffer to fill with the file's data
-                    using (var stream = resizedFile.OpenReadStream())
+                    if (imagefiletypes.Contains(extensionname))
                     {
-                        await stream.ReadAsync(buf); // copy the stream to the buffer
-                    }
-                    base64data = "data:image/png;base64," +  Convert.ToBase64String(buf); // convert to a base64 string!!
-                    await Task.Delay(100);
-                    //then you can send the base64 data to the server side and insert it into database.
-                    ImageResult = Convert.ToBase64String(buf);
-                    //show the thumbnails image
-                    isdisplayimage = "block";
-                }
-                else
-                {
-                    isdisplayimage = "none";
-                };
-            }
-            catch (Exception ex)
-            {
-                // Logger.LogError("File: {Filename} Error: {Error}",
-                //     file.Name, ex.Message);
-            }
 
-            StateHasChanged();
+                        var resizedFile = await file.RequestImageFileAsync(file.ContentType, 400, 400); // resize the image file
+                        var buf = new byte[resizedFile.Size];
+                        using (var stream = resizedFile.OpenReadStream())
+                        {
+                            await stream.ReadAsync(buf); // copy the stream to the buffer
+                        }
+                        base64data = "data:image/png;base64," + Convert.ToBase64String(buf); // convert to a base64 string!!
+                        await Task.Delay(100);
+                        ImageResult = Convert.ToBase64String(buf);
+                        isdisplayimage = "block";
+                    }
+                    else
+                    {
+                        isdisplayimage = "none";
+                    };
+                }
+                catch (Exception ex)
+                {
+                    // Logger.LogError("File: {Filename} Error: {Error}",
+                    //     file.Name, ex.Message);
+                }
+
+                StateHasChanged();
+            }
+            isLoading = false;
         }
-        isLoading = false;
+        else if(ImgType == ImageType.AnzeigenBild_1)
+        {
+            foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+            {
+                try
+                {
+                    loadedFiles.Add(file);
+
+                    //get the upload file extension.
+                    extensionname = Path.GetExtension(file.Name);
+
+                    var imagefiletypes = new List<string>() {
+                    ".png",".jpg",".jpeg"
+                    };
+                    if (imagefiletypes.Contains(extensionname))
+                    {
+
+                        var resizedFile = await file.RequestImageFileAsync(file.ContentType, 1000, 1000); // resize the image file
+                        var buf = new byte[resizedFile.Size];
+                        using (var stream = resizedFile.OpenReadStream())
+                        {
+                            await stream.ReadAsync(buf); // copy the stream to the buffer
+                        }
+                        base64data = "data:image/png;base64," + Convert.ToBase64String(buf); // convert to a base64 string!!
+                        await Task.Delay(100);
+                        Pages.Ads.CreateAds.Image_1 = Convert.ToBase64String(buf);
+                        isdisplayimage = "block";
+                    }
+                    else
+                    {
+                        isdisplayimage = "none";
+                    };
+                }
+                catch (Exception ex)
+                {
+                    // Logger.LogError("File: {Filename} Error: {Error}",
+                    //     file.Name, ex.Message);
+                }
+
+                StateHasChanged();
+            }
+            isLoading = false;
+        }
+        else if (ImgType == ImageType.AnzeigenBild_2)
+        {
+            foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+            {
+                try
+                {
+                    loadedFiles.Add(file);
+
+                    //get the upload file extension.
+                    extensionname = Path.GetExtension(file.Name);
+
+                    var imagefiletypes = new List<string>() {
+                    ".png",".jpg",".jpeg"
+                };
+                    if (imagefiletypes.Contains(extensionname))
+                    {
+
+                        var resizedFile = await file.RequestImageFileAsync(file.ContentType, 1000, 1000); // resize the image file
+                        var buf = new byte[resizedFile.Size];
+                        using (var stream = resizedFile.OpenReadStream())
+                        {
+                            await stream.ReadAsync(buf); // copy the stream to the buffer
+                        }
+                        base64data = "data:image/png;base64," + Convert.ToBase64String(buf); // convert to a base64 string!!
+                        await Task.Delay(100);
+                        Pages.Ads.CreateAds.Image_2 = Convert.ToBase64String(buf);
+                        isdisplayimage = "block";
+                    }
+                    else
+                    {
+                        isdisplayimage = "none";
+                    };
+                }
+                catch (Exception ex)
+                {
+                    // Logger.LogError("File: {Filename} Error: {Error}",
+                    //     file.Name, ex.Message);
+                }
+
+                StateHasChanged();
+            }
+            isLoading = false;
+        }
+        else if (ImgType == ImageType.AnzeigenBild_3)
+        {
+            foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+            {
+                try
+                {
+                    loadedFiles.Add(file);
+
+                    //get the upload file extension.
+                    extensionname = Path.GetExtension(file.Name);
+
+                    var imagefiletypes = new List<string>() {
+                    ".png",".jpg",".jpeg"
+                };
+                    if (imagefiletypes.Contains(extensionname))
+                    {
+
+                        var resizedFile = await file.RequestImageFileAsync(file.ContentType, 1000, 1000); // resize the image file
+                        var buf = new byte[resizedFile.Size];
+                        using (var stream = resizedFile.OpenReadStream())
+                        {
+                            await stream.ReadAsync(buf); // copy the stream to the buffer
+                        }
+                        base64data = "data:image/png;base64," + Convert.ToBase64String(buf); // convert to a base64 string!!
+                        await Task.Delay(100);
+                        Pages.Ads.CreateAds.Image_3 = Convert.ToBase64String(buf);
+                        isdisplayimage = "block";
+                    }
+                    else
+                    {
+                        isdisplayimage = "none";
+                    };
+                }
+                catch (Exception ex)
+                {
+                    // Logger.LogError("File: {Filename} Error: {Error}",
+                    //     file.Name, ex.Message);
+                }
+
+                StateHasChanged();
+            }
+            isLoading = false;
+        }
+
+      
     }
 
     public enum ImageType
     {
-        AnzeigenBild,
+        AnzeigenBild_1,
+        AnzeigenBild_2,
+        AnzeigenBild_3,
         OfferPic, 
+        Thumbnail
     }
 
     public class ImageFile

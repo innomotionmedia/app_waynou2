@@ -14,7 +14,7 @@
                 <td class="equalSize">
                 </td>
                 <td>
-                    <div align="center" class="centerDiv" style="">
+                    <div align="center" class="centerDiv" style=" background:#cccc00">
                         <!-- Adjust the height value as needed -->
                         <table width="80%" style="height: 100px;">
                             <tr>
@@ -28,38 +28,11 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td align="left" style="padding-top: 20px; overflow: hidden;">
+                                <td align="left" style=" overflow: hidden">
                                     @{
                                         foreach (var elem in fullAdTypes)
                                         {
-                                            <div class="containeritem">
-                                                <table style="">
-                                                    <tr>
-                                                        <td style="width: 33%">
-                                                            <div class="imageContainer">
-                                                                <img class="image" src="@Helpers.Converters.ReturnBase64ImageSourceFromBase64String(elem.thumbnail)" />
-                                                            </div>
-                                                        </td>
-                                                        <td style="vertical-align: top; width: 53%">
-                                                            <table>
-                                                                <tr>
-                                                                    <td>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>
-                                                                        <strong>@elem.title</strong>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                        <td style="vertical-align: top; width: 10%">
-                                                            <button class="delete" @onclick="() => DelteAd(elem.tblAdID)">X</button>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                            <p style="font-size: 12px;">Offer-Id: @elem.tblAdID</p>
+                                            <AdsTemplate Title="@elem.title" Desc="@elem.description" Image="@elem.thumbnail" Id="@elem.tblAdID" />
                                         }
                                     }
                                 </td>
@@ -176,9 +149,11 @@
     List<Gagger.Data.Api.AdsApi.FullAdType> fullAdTypes = new List<Gagger.Data.Api.AdsApi.FullAdType>();
     private int pagePos = 0;
     bool nextButtonInvisible = false;
+    public static AllAds Instance;
 
     protected override async void OnInitialized()
     {
+        Instance = this;
         base.OnInitialized();
         await GetAllAds();
         StateHasChanged();
@@ -201,7 +176,6 @@
         StateHasChanged();
     }
 
-
     private async void DelteAd(string id)
     {
         bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Sicher löschen? Das ist unumkehrbar!"); // Confirm
@@ -219,7 +193,10 @@
         }
     }
 
-
+    public async void TheStateHasChanged()
+    {
+        StateHasChanged();
+    }
 
     protected async Task GetAllAds()
     {

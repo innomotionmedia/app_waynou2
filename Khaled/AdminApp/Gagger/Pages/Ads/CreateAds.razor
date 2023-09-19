@@ -1,6 +1,7 @@
 ﻿@page "/mainpage"
 @using System.Collections.ObjectModel;
 @using Gagger.Helpers;
+@using static Gagger.Data.Api.AdImagesApi;
 @inject IJSRuntime JsRuntime
 @inject NavigationManager NavManager
 
@@ -180,14 +181,44 @@
 
                             </tr>
                             <tr>
-
+                                <td style="padding: 50px 0px 0px 60px">
+                                    <strong style="font-size: 20px;">#Bilder</strong>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="padding: 20px 60px 0px 60px">
-                                    <strong style="font-size: 15px;">Anzeigen Bild (1)</strong>
+                                    <strong style="font-size: 15px;">Thumbnail</strong>
                                     <div style="padding-top: 10px;">
-                                        <ImagePicker ImgType="ImagePicker.ImageType.AnzeigenBild" />
+                                        <ImagePicker Title="@TitleDeutsch" Desc="@DescriptionDeutsch" ImgType="ImagePicker.ImageType.Thumbnail" />
                                     </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px 60px 0px 60px">
+                                    <strong style="font-size: 15px;">Anzeigenbild (1)</strong>
+                                    <div style="padding-top: 10px;">
+                                        <ImagePicker ImgType="ImagePicker.ImageType.AnzeigenBild_1" />
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px 60px 0px 60px">
+                                    <strong style="font-size: 15px;">Anzeigenbild (2)</strong>
+                                    <div style="padding-top: 10px;">
+                                        <ImagePicker ImgType="ImagePicker.ImageType.AnzeigenBild_2" />
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px 60px 0px 60px">
+                                    <strong style="font-size: 15px;">Anzeigenbild (3)</strong>
+                                    <div style="padding-top: 10px;">
+                                        <ImagePicker ImgType="ImagePicker.ImageType.AnzeigenBild_3" />
+                                    </div>
+
                                 </td>
                             </tr>
                             <tr>
@@ -277,6 +308,12 @@
     string selectedSubCat = "";
     string selectedSubSubCat = "";
 
+    // will be writting to from imagepicker
+    public static string Image_1 = ""; 
+    public static string Image_2 = "";
+    public static string Image_3 = "";
+
+
     protected async override void OnInitialized()
     {
         // add null element
@@ -294,7 +331,6 @@
 
         base.OnInitialized();
     }
-
 
     private async void HandleDropdownChange(ChangeEventArgs e)
     {
@@ -347,7 +383,7 @@
         selectedSubSubCat = ""; // reset value
         selectedSubSubCat = e.Value.ToString();
     }
-  
+
     private async void LogInClicked()
     {
         var pic = ImagePicker.ImageResult;
@@ -435,18 +471,59 @@
                 descriptionGER = DescriptionDeutsch,
                 latitude = Latitude,
                 longitude = Longitude,
-                fullPic = pic, 
-                thumbnail = pic, //todo,
+                thumbnail = pic, 
                 telephone = Telephone,
                 UnixCreated = DateTime.Now,
                 web  = Web,
                 description = DescriptionEnglisch
             };
 
-        var update = await Data.Api.AdsApi.CreateAd(ad);
+        await Data.Api.AdsApi.CreateAd(ad);
 
+        List<AdImageType> images = new List<AdImageType>();
 
-        await JsRuntime.InvokeVoidAsync("alert", "Anzeigenbilde erstellt!");
+        if (!string.IsNullOrEmpty(Image_1))
+        {
+            var x = new AdImageType
+                {
+                    BelongsToAdId = ad.tblAdID,
+                    Id = Converters.ReturnRandomString(Constants.IDLENGTH),
+                    Image = Image_1
+                };
+            images.Add(x);
+        }
+        if (!string.IsNullOrEmpty(Image_2))
+        {
+            var x = new AdImageType
+                {
+                    BelongsToAdId = ad.tblAdID,
+                    Id = Converters.ReturnRandomString(Constants.IDLENGTH),
+                    Image = Image_2
+                };
+            images.Add(x);
+        }
+        if (!string.IsNullOrEmpty(Image_3))
+        {
+            var x = new AdImageType
+                {
+                    BelongsToAdId = ad.tblAdID,
+                    Id = Converters.ReturnRandomString(Constants.IDLENGTH),
+                    Image = Image_3
+                };
+            images.Add(x);
+        }
+
+        foreach(var elem in images)
+        {
+            await Data.Api.AdImagesApi.CreateAdImage(elem);
+        }
+
+        //reset images is importantanter
+        Image_1 = "";
+        Image_2 = "";
+        Image_3 = "";
+
+        await JsRuntime.InvokeVoidAsync("alert", "Anzeige erstellt!");
         NavManager.NavigateTo("/allads");
     }
 }
