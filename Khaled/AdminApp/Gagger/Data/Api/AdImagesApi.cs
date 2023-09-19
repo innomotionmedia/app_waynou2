@@ -19,13 +19,14 @@ namespace Gagger.Data.Api
                 INSERT INTO [AdImages] (
                     [Id],
                     [Image],
-                    [BelongsToAdId]
+                    [BelongsToAdId],
+                    [Position]
                 )
                 VALUES (
                     @Id,
                     @Image,
-                    @BelongsToAdId
-                
+                    @BelongsToAdId,
+                    @Position
                 );
             ";
                 try
@@ -35,6 +36,7 @@ namespace Gagger.Data.Api
                         command.Parameters.AddWithValue("@Id", adImage.Id);
                         command.Parameters.AddWithValue("@Image", adImage.Image);
                         command.Parameters.AddWithValue("@BelongsToAdId", adImage.BelongsToAdId);
+                        command.Parameters.AddWithValue("@Position", adImage.Position);
                         using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
                             while (reader.Read()) { }
@@ -54,6 +56,8 @@ namespace Gagger.Data.Api
             public string Id { get; set; }
             public string Image { get; set; }
             public string BelongsToAdId { get; set; }
+
+            public int Position { get; set; }
             public DateTime DateCreated { get; set; }
 
         }
