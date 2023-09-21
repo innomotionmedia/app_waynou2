@@ -7,6 +7,10 @@
 
 <PageTitle>Main</PageTitle>
 
+@foreach(var elem in Images){
+    <img style="max-height: 300px" src="@Converters.ReturnBase64ImageSourceFromBase64String(elem.Image)"/>
+
+}
 <body class="yolo">
     <div style="overflow:scroll; height: 100%; overflow-x: hidden;" class="mainDiv">
         <table style="padding: 20px;" class="maintable">
@@ -32,7 +36,7 @@
                                     @{
                                         foreach (var elem in fullAdTypes)
                                         {
-                                            <AdsTemplate Title="@elem.title" Desc="@elem.description" Image="@elem.thumbnail" Id="@elem.tblAdID" />
+                                            <AdsTemplate Title="@elem.titleDe" Desc="@elem.description" Image="@elem.thumbnail" Id="@elem.tblAdID" />
                                         }
                                     }
                                 </td>
@@ -147,6 +151,7 @@
 @code {
 
     List<Gagger.Data.Api.AdsApi.FullAdType> fullAdTypes = new List<Gagger.Data.Api.AdsApi.FullAdType>();
+    List<Data.Api.AdImagesApi.AdImageType> Images = new List<Data.Api.AdImagesApi.AdImageType>();
     private int pagePos = 0;
     bool nextButtonInvisible = false;
     public static AllAds Instance;
@@ -156,6 +161,7 @@
         Instance = this;
         base.OnInitialized();
         await GetAllAds();
+        await GetAdImage();
         StateHasChanged();
     }
 
@@ -196,6 +202,11 @@
     public async void TheStateHasChanged()
     {
         StateHasChanged();
+    }
+
+    private async Task GetAdImage()
+    {
+        Images = await Data.Api.AdImagesApi.GetAdImages("C8ZTG2Z5XGRXSVTSN7PW8CAAH3TOEK");
     }
 
     protected async Task GetAllAds()

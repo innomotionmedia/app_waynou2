@@ -6,6 +6,78 @@
 }
 
 <script>
+
+    function captureImage2() {
+        var canvas = document.createElement('canvas');
+        var img = document.getElementById('capturedImage2');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        return canvas.toDataURL('image/png');
+    }
+
+
+    window.previewImage2 = (inputElem, imgElem) => {
+        const url = URL.createObjectURL(inputElem.files[0]);
+        imgElem.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
+        imgElem.src = url;
+    }
+
+
+    function captureImage1() {
+        var canvas = document.createElement('canvas');
+        var img = document.getElementById('capturedImage1');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        return canvas.toDataURL('image/png');
+    }
+
+
+    window.previewImage1 = (inputElem, imgElem) => {
+        const url = URL.createObjectURL(inputElem.files[0]);
+        imgElem.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
+        imgElem.src = url;
+    }
+
+    function captureImage3() {
+        var canvas = document.createElement('canvas');
+        var img = document.getElementById('capturedImage3');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        return canvas.toDataURL('image/png');
+    }
+
+
+    window.previewImage3 = (inputElem, imgElem) => {
+        const url = URL.createObjectURL(inputElem.files[0]);
+        imgElem.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
+        imgElem.src = url;
+    }
+
+
+    function captureImage() {
+        var canvas = document.createElement('canvas');
+        var img = document.getElementById('capturedImage');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        return canvas.toDataURL('image/png');
+    }
+
+
+    window.previewImage = (inputElem, imgElem) => {
+        const url = URL.createObjectURL(inputElem.files[0]);
+        imgElem.addEventListener('load', () => URL.revokeObjectURL(url), { once: true });
+        imgElem.src = url;
+    }
+
+
     window.isScrollAtBottom = function (container) {
         console.log("scrollheight: " + container.scrollHeight  +"   clientHeight: " + container.clientHeight + "    container.scrollTop: " + container.scrollTop)
         //console.log("RESULT: " + (container.scrollHeight - container.scrollTop))

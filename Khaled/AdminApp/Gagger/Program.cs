@@ -6,7 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-   // .AddHubOptions(options => options.MaximumReceiveMessageSize = 640000 * 1024);
+// .AddHubOptions(options => options.MaximumReceiveMessageSize = 640000 * 1024);
+
+builder.Services.AddServerSideBlazor().AddHubOptions(o =>
+{
+    o.MaximumReceiveMessageSize = 10 * 1024 * 1024;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

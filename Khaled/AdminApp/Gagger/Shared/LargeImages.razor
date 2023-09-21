@@ -1,0 +1,132 @@
+﻿@inject IJSRuntime JS
+
+
+<InputFile @ref="inputFile" OnChange="@ShowPreview" style="padding-bottom: 20px;" />
+
+@if (ImgType == ImageType.Thumbnail)
+{
+
+    <div class="container" style="background-color: #cccc00; width: 100%; padding-top: 20px; padding-left: 10px; padding-right: 10px;">
+        <table class="main">
+            <tr>
+                <td  style="vertical-align: top;" class="thumbnailContainer">
+                    <img id="capturedImage" onchange="@Checker()" style="max-width:300px" @ref="previewImageElem" />
+                </td>
+                <td style="vertical-align: top;">
+                    <table>
+                        <tr>
+                            <td>
+                                <strong>
+                                    @Title
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>@Desc</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="vertical-align: top;">
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+else
+{
+
+    <div class="fillContainer">
+        <img id="capturedImage" onchange="@Checker()" style="max-width:800px;max-height:800px" @ref="previewImageElem" />
+    </div>
+}
+
+
+
+<style>
+    .container {
+        width: 100%;
+        background-color: white;
+        height: 160px;
+        border-radius: 1%;
+    }
+
+    .fillContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 400px;
+        width: 400px;
+        overflow: hidden;
+    }
+
+    .main {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    td {
+        width: auto; /* Allow cells to adjust their width based on content */
+    }
+
+    .thumbnailContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 140px;
+        width: 230px;
+        overflow: hidden;
+    }
+</style>
+
+@code {
+
+    [Parameter]
+    public ImageType ImgType { get; set; }
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public string Desc { get; set; }
+
+    private InputFile? inputFile;
+    private ElementReference previewImageElem;
+
+
+    private async Task ShowPreview() => await JS.InvokeVoidAsync(
+       "previewImage", inputFile!.Element, previewImageElem);
+   
+
+
+    private async Task Checker()
+    {
+        var result = await JS.InvokeAsync<string>("captureImage");
+
+        if (result == null) return;
+        if (result.Length < 20)
+        {
+            return;
+        }
+        else
+        {
+            string output = result.Substring(result.IndexOf(',') + 1);
+
+            if(ImgType == ImageType.Thumbnail)
+            {
+                Pages.Ads.CreateAds.Thumbnail = output;
+            }
+         
+        }
+
+    }
+
+
+    public enum ImageType
+    {
+        AnzeigenBild_1,
+        AnzeigenBild_2,
+        AnzeigenBild_3,
+        OfferPic,
+        Thumbnail
+    }
+}

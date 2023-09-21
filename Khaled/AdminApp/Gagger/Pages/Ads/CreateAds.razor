@@ -7,7 +7,6 @@
 
 
 <PageTitle>Main</PageTitle>
-
 <body class="yolo">
     <div style="overflow:scroll; height: 91vh; overflow-x: hidden;" class="mainDiv">
         <table style="padding: 20px;" class="maintable">
@@ -188,17 +187,21 @@
                             <tr>
                                 <td style="padding: 20px 60px 0px 60px">
                                     <strong style="font-size: 15px;">Thumbnail</strong>
+
                                     <div style="padding-top: 10px;">
-                                        <ImagePicker Title="@TitleDeutsch" Desc="@DescriptionDeutsch" ImgType="ImagePicker.ImageType.Thumbnail" />
+                                        <LargeImages ImgType="LargeImages.ImageType.Thumbnail" Title="@TitleDeutsch" Desc="@DescriptionDeutsch"></LargeImages>
                                     </div>
 
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 20px 60px 0px 60px">
-                                    <strong style="font-size: 15px;">Anzeigenbild (1)</strong>
+                                    <strong style="font-size: 15px;">Hauptbild (1)</strong>
                                     <div style="padding-top: 10px;">
-                                        <ImagePicker ImgType="ImagePicker.ImageType.AnzeigenBild_1" />
+                                        <div class="fillContainer">
+                                            <InputFile @ref="inputFile1" OnChange="@ShowPreview1" style="padding-bottom: 20px;" />
+                                            <img id="capturedImage1"  style="max-width:800px;max-height:800px" @ref="previewImageElem1" />
+                                        </div>
                                     </div>
 
                                 </td>
@@ -207,7 +210,10 @@
                                 <td style="padding: 20px 60px 0px 60px">
                                     <strong style="font-size: 15px;">Anzeigenbild (2)</strong>
                                     <div style="padding-top: 10px;">
-                                        <ImagePicker ImgType="ImagePicker.ImageType.AnzeigenBild_2" />
+                                        <div class="fillContainer">
+                                            <InputFile @ref="inputFile2" OnChange="@ShowPreview2" style="padding-bottom: 20px;" />
+                                            <img id="capturedImage2" style="max-width:800px;max-height:800px" @ref="previewImageElem2" />
+                                        </div>
                                     </div>
 
                                 </td>
@@ -216,7 +222,10 @@
                                 <td style="padding: 20px 60px 0px 60px">
                                     <strong style="font-size: 15px;">Anzeigenbild (3)</strong>
                                     <div style="padding-top: 10px;">
-                                        <ImagePicker ImgType="ImagePicker.ImageType.AnzeigenBild_3" />
+                                        <div class="fillContainer">
+                                            <InputFile @ref="inputFile3" OnChange="@ShowPreview3" style="padding-bottom: 20px;" />
+                                            <img id="capturedImage3"  style="max-width:800px;max-height:800px" @ref="previewImageElem3" />
+                                        </div>
                                     </div>
 
                                 </td>
@@ -312,7 +321,7 @@
     public static string Image_1 = ""; 
     public static string Image_2 = "";
     public static string Image_3 = "";
-
+    public static string Thumbnail = "";
 
     protected async override void OnInitialized()
     {
@@ -386,7 +395,7 @@
 
     private async void LogInClicked()
     {
-        var pic = ImagePicker.ImageResult;
+        var pic = Thumbnail;
 
         if (string.IsNullOrEmpty(pic))
         {
@@ -448,6 +457,11 @@
             await JsRuntime.InvokeVoidAsync("alert", "Email fehlt");
             return;
         }
+        //if (Image_1 == "")
+        //{
+        //    await JsRuntime.InvokeVoidAsync("alert", "Hauptbild fehlt fehlt");
+        //    return;
+        //}
 
         await CreateAd(pic);
     }
@@ -482,37 +496,42 @@
 
         List<AdImageType> images = new List<AdImageType>();
 
-        if (!string.IsNullOrEmpty(Image_1))
+        if (!string.IsNullOrEmpty(await JsRuntime.InvokeAsync<string>("captureImage1")))
         {
+            var result = await JsRuntime.InvokeAsync<string>("captureImage1");
+            string output = result.Substring(result.IndexOf(',') + 1);
             var x = new AdImageType
                 {
                     BelongsToAdId = ad.tblAdID,
                     Id = Converters.ReturnRandomString(Constants.IDLENGTH),
-                    Image = Image_1,
+                    Image = output,
                     Position = 0,
                 };
             images.Add(x);
         }
-        if (!string.IsNullOrEmpty(Image_2))
+        if (!string.IsNullOrEmpty(await JsRuntime.InvokeAsync<string>("captureImage2")))
         {
+            var result = await JsRuntime.InvokeAsync<string>("captureImage2");
+            string output = result.Substring(result.IndexOf(',') + 1);
             var x = new AdImageType
                 {
                     BelongsToAdId = ad.tblAdID,
                     Id = Converters.ReturnRandomString(Constants.IDLENGTH),
-                    Image = Image_2,
-                    Ord
-                    Position = 1 ,
+                    Image = output,
+                    Position = 1,
 
                 };
             images.Add(x);
         }
-        if (!string.IsNullOrEmpty(Image_3))
+        if (!string.IsNullOrEmpty(await JsRuntime.InvokeAsync<string>("captureImage3")))
         {
+            var result = await JsRuntime.InvokeAsync<string>("captureImage3");
+            string output = result.Substring(result.IndexOf(',') + 1);
             var x = new AdImageType
                 {
                     BelongsToAdId = ad.tblAdID,
                     Id = Converters.ReturnRandomString(Constants.IDLENGTH),
-                    Image = Image_3,
+                    Image = output,
                     Position = 2,
 
                 };
@@ -528,9 +547,32 @@
         Image_1 = "";
         Image_2 = "";
         Image_3 = "";
+        Thumbnail = "";
 
         await JsRuntime.InvokeVoidAsync("alert", "Anzeige erstellt!");
         NavManager.NavigateTo("/allads");
     }
+
+    private InputFile? inputFile1;
+    private ElementReference previewImageElem1;
+
+    private async Task ShowPreview1() => await JsRuntime.InvokeVoidAsync(
+       "previewImage1", inputFile1!.Element, previewImageElem1);
+
+    private InputFile? inputFile2;
+    private ElementReference previewImageElem2;
+
+    private async Task ShowPreview2() => await JsRuntime.InvokeVoidAsync(
+       "previewImage2", inputFile2!.Element, previewImageElem2);
+
+    private InputFile? inputFile3;
+    private ElementReference previewImageElem3;
+
+    private async Task ShowPreview3() => await JsRuntime.InvokeVoidAsync(
+       "previewImage3", inputFile3!.Element, previewImageElem3);
+
+
+
+
 }
 
