@@ -88,7 +88,32 @@ namespace Gagger.Data.Api
             }
         }
 
-   
+        public static async Task DeleteAdImages(string adId)
+        {
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
+            {
+                await connection.OpenAsync();
+
+                string query = @"
+                    DELETE
+                    FROM [AdImages]
+                    WHERE BelongsToAdId = @Id";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", adId);
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                        }
+
+                    }
+
+                }
+            }
+        }
         public class AdImageType
         {
             public string Id { get; set; }

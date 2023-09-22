@@ -7,10 +7,7 @@
 
 <PageTitle>Main</PageTitle>
 
-@foreach(var elem in Images){
-    <img style="max-height: 300px" src="@Converters.ReturnBase64ImageSourceFromBase64String(elem.Image)"/>
 
-}
 <body class="yolo">
     <div style="overflow:scroll; height: 100%; overflow-x: hidden;" class="mainDiv">
         <table style="padding: 20px;" class="maintable">
@@ -161,7 +158,6 @@
         Instance = this;
         base.OnInitialized();
         await GetAllAds();
-        await GetAdImage();
         StateHasChanged();
     }
 
@@ -204,10 +200,7 @@
         StateHasChanged();
     }
 
-    private async Task GetAdImage()
-    {
-        Images = await Data.Api.AdImagesApi.GetAdImages("C8ZTG2Z5XGRXSVTSN7PW8CAAH3TOEK");
-    }
+
 
     protected async Task GetAllAds()
     {

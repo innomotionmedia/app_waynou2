@@ -2,6 +2,7 @@
 using Microsoft.VisualBasic;
 using System.Data.SqlClient;
 using System.Diagnostics.Metrics;
+using System.Globalization;
 using Constants = Gagger.Helpers.Constants;
 
 namespace Gagger.Data.Api
@@ -107,8 +108,12 @@ namespace Gagger.Data.Api
                                 web = Convert.ToString(reader[reader.GetOrdinal("web")]),
                                 distance = Convert.ToString(reader[reader.GetOrdinal("Distance")]),
                                 fullPic = Convert.ToString(reader.GetValue(reader.GetOrdinal("fullPic"))),
-                                thumbnail = Convert.ToString(reader.GetValue(reader.GetOrdinal("thumbnail")))
-
+                                thumbnail = Convert.ToString(reader.GetValue(reader.GetOrdinal("thumbnail"))),
+                                latitude = (float)Convert.ToDouble(reader[reader.GetOrdinal("latitude")]),
+                                longitude = (float)Convert.ToDouble(reader[reader.GetOrdinal("longitude")]),
+                                category = Convert.ToInt32(reader[reader.GetOrdinal("category")]),
+                                subcategory = Convert.ToString(reader[reader.GetOrdinal("subcategory")]),
+                                subsubcategory = Convert.ToString(reader[reader.GetOrdinal("subsubcategory")]),
 
                             };
                             res = x;
@@ -233,6 +238,8 @@ namespace Gagger.Data.Api
                     }
 
                 }
+
+                await AdImagesApi.DeleteAdImages(Id);
             }
         }
         public class SubCatType

@@ -1,4 +1,5 @@
 ﻿@inject IJSRuntime JsRuntime
+@inject NavigationManager NavManager
 
 <div class="container">
     <table class="main">
@@ -29,7 +30,17 @@
         </tr>
     </table>
 </div>
-<p style="font-size: 12px;">Ad-Id: @Id</p>
+<table style="margin-top: -15px;">
+    <tr>
+        <td>
+            <button class="delete" @onclick="() => AlterAd(Id)">bearbeiten</button>
+        </td>
+        <td>
+            <p style="font-size: 12px; margin-top: 30px; margin-left: 20px;">Ad-Id: @Id</p>
+        </td>
+    </tr>
+</table>
+
 
 <style>
     .container{
@@ -99,6 +110,10 @@
         }
     }
 
-
+    private async void AlterAd(string id)
+    {
+        if (Id == "Null") return;
+        NavManager.NavigateTo("/mainpage?id=" + id);
+    }
 
 }

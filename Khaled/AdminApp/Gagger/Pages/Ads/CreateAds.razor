@@ -8,241 +8,6 @@
 
 <PageTitle>Main</PageTitle>
 <body class="yolo">
-    <div style="overflow:scroll; height: 91vh; overflow-x: hidden;" class="mainDiv">
-        <table style="padding: 20px;" class="maintable">
-            <tr>
-                <td class="equalSize">
-                </td>
-                <td>
-                    <div style="padding: 20px;" class="centerDiv">
-                        <table width="100%">
-                            <tr>
-                                <td align="center" style="padding-top: 20px;">
-                                    <strong style="font-size: 25px;">Anzeige Erstellen</strong>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 50px 0px 0px 60px">
-                                    <strong style="font-size: 20px;">#Titel</strong>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 20px 60px 10px 60px">
-                                    <input maxlength="100" type="text" @bind="@TitleDeutsch" placeholder="Deutscher Titel" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0px 60px 0px 60px">
-                                    <input maxlength="100" type="text" @bind="@TitleArabisch" placeholder="Arabischer Titel" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px 60px 0px 60px">
-                                    <input type="text" maxlength="100" @bind="@TitleEnglisch" placeholder="Englischer Titel" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 50px 0px 0px 60px">
-                                    <strong style="font-size: 20px;">#Beschreibungen</strong>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 20px 60px 10px 60px">
-                                   <textarea class="custom-textarea" @bind="DescriptionDeutsch" placeholder="Deutsche Beschreibung" rows="5"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0px 60px 0px 60px">
-                                    <textarea class="custom-textarea" @bind="DescriptionArabisch" placeholder="Arabische Beschreibung" rows="5"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px 60px 0px 60px">
-                                    <textarea class="custom-textarea" @bind="DescriptionEnglisch" placeholder="Englische Beschreibung" rows="5"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 50px 0px 0px 60px">
-                                    <strong style="font-size: 20px;">#Metadaten</strong>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 20px 60px 10px 60px">
-                                    <input maxlength="100" type="text" @bind="@Adresse" placeholder="123 FunnyStreet Funnyland" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0px 60px 0px 60px">
-                                    <input maxlength="30" type="text" @bind="@Hours" placeholder="06:00 Uhr - 20:00 Uhr" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px 60px 0px 60px">
-                                    <input type="text" maxlength="100" @bind="@Telephone" placeholder="+49 151 543321 432" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px 60px 0px 60px">
-                                    <input maxlength="100" type="text" @bind="@Web" placeholder="http://www.example.com" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px 60px 0px 60px">
-                                    <input maxlength="100" type="text" @bind="@Email" placeholder="name@firma.com" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 50px 0px 0px 60px">
-                                    <strong style="font-size: 20px;">#Kategorie</strong>
-                                </td>
-                            </tr>
-                            <tr >
-                                <td style="padding: 10px 60px 0px 60px">
-                                    <table> 
-                                        <tr>
-                                            <td>
-                                                <div>
-                                                    <label style="width:130px;" for="dropdown">Hauptkategorie:</label>
-                                                    <select id="dropdown" @onchange="HandleDropdownChange">
-                                                        @{
-                                                            foreach (var elem in enums)
-                                                            {
-                                                                var id = (int)elem;
-                                                                <option value="@id">@elem</option>
-                                                            }
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding-top: 5px;">
-                                                <div>
-                                                    <label style="width:130px;" for="dropdown">Subkategorie:</label>
-                                                    <select id="dropdown" @onchange="HandleDropdownChangeSub">
-                                                        @{
-                                                            foreach (var elem in SubCats)
-                                                            {
-                                                                <option value="@elem.Id">@elem.titleGer</option>
-                                                            }
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding-top: 5px;">
-                                                <div>
-                                                    <label style="width:130px;" for="dropdown">Subsubkategorie:</label>
-                                                    <select id="dropdown" @onchange="HandleDropdownChangeSubSub">
-                                                        @{
-                                                            foreach (var elem in SubSubCats)
-                                                            {
-                                                                <option value="@elem.Id">@elem.titleGer</option>
-                                                            }
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td style="padding: 50px 0px 0px 60px">
-                                    <strong style="font-size: 20px;">#Koordinaten</strong>
-                                    (Getrennt durch ein Kommata)
-                                </td>
-                            </tr>
-                            <tr >
-                                <td style="padding: 10px 60px 0px 60px">
-                                    <table style="width: 100%">
-                                        <tr>
-                                            <td>
-                                               Latitude
-                                            </td>
-                                            <td>
-                                                Longitude
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <input type="text" maxlength="30" @bind="@Latitude" placeholder="52,4423" />
-                                            </td>
-                                            <td >
-                                                <input type="text" maxlength="30" @bind="@Longitude" placeholder="10,342" />
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td style="padding: 50px 0px 0px 60px">
-                                    <strong style="font-size: 20px;">#Bilder</strong>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 20px 60px 0px 60px">
-                                    <strong style="font-size: 15px;">Thumbnail</strong>
-
-                                    <div style="padding-top: 10px;">
-                                        <LargeImages ImgType="LargeImages.ImageType.Thumbnail" Title="@TitleDeutsch" Desc="@DescriptionDeutsch"></LargeImages>
-                                    </div>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 20px 60px 0px 60px">
-                                    <strong style="font-size: 15px;">Hauptbild (1)</strong>
-                                    <div style="padding-top: 10px;">
-                                        <div class="fillContainer">
-                                            <InputFile @ref="inputFile1" OnChange="@ShowPreview1" style="padding-bottom: 20px;" />
-                                            <img id="capturedImage1"  style="max-width:800px;max-height:800px" @ref="previewImageElem1" />
-                                        </div>
-                                    </div>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 20px 60px 0px 60px">
-                                    <strong style="font-size: 15px;">Anzeigenbild (2)</strong>
-                                    <div style="padding-top: 10px;">
-                                        <div class="fillContainer">
-                                            <InputFile @ref="inputFile2" OnChange="@ShowPreview2" style="padding-bottom: 20px;" />
-                                            <img id="capturedImage2" style="max-width:800px;max-height:800px" @ref="previewImageElem2" />
-                                        </div>
-                                    </div>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 20px 60px 0px 60px">
-                                    <strong style="font-size: 15px;">Anzeigenbild (3)</strong>
-                                    <div style="padding-top: 10px;">
-                                        <div class="fillContainer">
-                                            <InputFile @ref="inputFile3" OnChange="@ShowPreview3" style="padding-bottom: 20px;" />
-                                            <img id="capturedImage3"  style="max-width:800px;max-height:800px" @ref="previewImageElem3" />
-                                        </div>
-                                    </div>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding:40px 60px 0px 60px">
-                                    <button class="goodButton" style="margin-top: 10px;" @onclick="LogInClicked">Anzeige Erstellen</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </td>
-                <td class="equalSize">
-                </td>
-            </tr>
-        </table>
-    </div>
 </body>
 
 
@@ -292,7 +57,8 @@
     TodoApp.Data.CategoriesEnum[] enums = (TodoApp.Data.CategoriesEnum[])Enum.GetValues(typeof(TodoApp.Data.CategoriesEnum));
     private List<Data.Api.Category.CategoryType> SubCats = new List<Data.Api.Category.CategoryType>();
     private List<Data.Api.Category.CategoryType> SubSubCats = new List<Data.Api.Category.CategoryType>();
-
+    private Data.Api.AdsApi.FullAdType ExistingAd = new Data.Api.AdsApi.FullAdType();
+    private List<Data.Api.AdImagesApi.AdImageType> AdImages = new List<AdImageType>();
 
     private string TitleDeutsch = "";
     private string TitleEnglisch = "";
@@ -323,6 +89,9 @@
     public static string Image_3 = "";
     public static string Thumbnail = "";
 
+    string existingAdId = "";
+    bool isEdit = false;
+
     protected async override void OnInitialized()
     {
         // add null element
@@ -333,14 +102,48 @@
                 belongsToSubCat = "",
                 titleGer = "keine"
             };
-
+      
         SubCats.Add(none);
         SubCats.AddRange(await Data.Api.Category.GetSubCatsInMainCat(selectedMainCat));
         StateHasChanged();
-
+      
+        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        if (Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query).TryGetValue("id", out var _id))
+        {
+            isEdit = true;
+            existingAdId = _id;
+            LoadAd();
+        }
         base.OnInitialized();
     }
 
+    private async void LoadAd()
+    {
+      if (isEdit)
+      {
+          ExistingAd = await Data.Api.AdsApi.GetFullAdInfo(existingAdId);
+          AdImages = await Data.Api.AdImagesApi.GetAdImages(existingAdId);
+     
+          TitleArabisch = ExistingAd.titleAr;
+          TitleDeutsch = ExistingAd.titleDe;
+          TitleEnglisch = ExistingAd.title;
+          DescriptionArabisch = ExistingAd.descriptionAR;
+          DescriptionDeutsch = ExistingAd.descriptionGER;
+          DescriptionEnglisch = ExistingAd.descriptionENG;
+          Email = ExistingAd.email;
+          Hours = ExistingAd.hours;
+          Latitude = ExistingAd.latitude;
+          Longitude = ExistingAd.longitude;
+          Telephone = ExistingAd.telephone;
+          Web = ExistingAd.web;
+          Adresse = ExistingAd.adresse;
+          selectedMainCat = ExistingAd.category.ToString();
+          selectedSubCat = ExistingAd.subcategory;
+          selectedSubSubCat = ExistingAd.subsubcategory;
+     
+          StateHasChanged();
+      }
+    }
     private async void HandleDropdownChange(ChangeEventArgs e)
     {
         selectedMainCat = "";      // reset value
