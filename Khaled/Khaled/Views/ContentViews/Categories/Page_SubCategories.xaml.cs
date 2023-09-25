@@ -24,7 +24,7 @@ namespace Khaled.Views.ContentViews.Categories
 		public Label filterCity;
 		List<CategoryIds> idList;
 		AdsListType adsListType;
-
+		private string title = "";
 		//filter values
 		public int radiusValue = Constants.sliderBaseValue;
 		public double startPosLong = 0;
@@ -35,11 +35,12 @@ namespace Khaled.Views.ContentViews.Categories
 
 		public Page_SubCategories(CategoriesEnum cat, string title)
 		{
+			this.title = title;
 			InitializeComponent();
 			Constants.CurrentCatWeWantToLoad.name = cat.ToString();
             Constants.CurrentCatWeWantToLoad.id = ((int)cat).ToString();
 			Constants.WhatPositionAmIOnRightNow = WhatPositionAmIOnRightNow.IamInJustIntoMainCategories;
-			text_pickCat.Text = title;
+			text_pickCat.Text = title +" "+ (CachedUser.radius + "km");
 			StartUp();
 		}
 
@@ -49,8 +50,9 @@ namespace Khaled.Views.ContentViews.Categories
 			Constants.CurrentCatWeWantToLoad.name = item.title;
 			Constants.CurrentCatWeWantToLoad.id = item.Id;
 			Constants.WhatPositionAmIOnRightNow = WhatPositionAmIOnRightNow.IamInTheSubCategorie;
-			text_pickCat.Text = item.titleDe;
-			StartUp();
+			text_pickCat.Text = item.titleDe + " " + (CachedUser.radius + "km");
+            this.title = item.titleDe;
+            StartUp();
 		}
 
 		private async void StartUp()
@@ -176,7 +178,8 @@ namespace Khaled.Views.ContentViews.Categories
 
 		async void listview_mainViews_Refreshing(System.Object sender, System.EventArgs e)
 		{
-			listview_mainViews.IsRefreshing = true;
+            text_pickCat.Text = title + " " + (CachedUser.radius + "km");
+            listview_mainViews.IsRefreshing = true;
 			list.Clear();
 			await GetCats();
             await LoadMainContent(false);

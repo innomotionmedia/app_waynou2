@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Khaled.Helpers;
 using Khaled.Resources;
 using Xamarin.Forms;
 
@@ -62,16 +63,7 @@ namespace Khaled.Backend.Helpers
 		}
 	}
 
-	public class SupportedCities
-	{
-		public CityNames name { get; set; }
-		public string displayName { get; set; }
-		public double centerLatitude { get; set; }
-		public double centerLongitude { get; set; }
-		public ImageSource thumbnail { get; set; }
-		public int radiusFromCenter { get; set; }
 
-	}
 
 	public enum CityNames
     {

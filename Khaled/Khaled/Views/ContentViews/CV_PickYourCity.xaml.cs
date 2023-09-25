@@ -8,7 +8,6 @@ using TodoApp.Data;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
-using SupportedCities = TodoApp.Data.SupportedCities;
 
 namespace Khaled.Views.ContentViews
 {	
@@ -122,7 +121,7 @@ namespace Khaled.Views.ContentViews
         void layout_cities_ItemSelected(System.Object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
         {
             var view = sender as ListView;
-            var item = view.SelectedItem as SupportedCities;
+            var item = view.SelectedItem as Helpers.SupportedCities;
             if (item == null)
                 return;
 
@@ -155,5 +154,8 @@ namespace Khaled.Views.ContentViews
             MainPage.Instance.GoToMainPage();
         }
     }
+
+
+
 }
 

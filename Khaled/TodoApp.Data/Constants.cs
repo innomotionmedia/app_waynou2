@@ -39,16 +39,7 @@ namespace TodoApp.Data
 
     }
 
-    public class CachedUser
-    {
-        public static localCodes localCode;
-        public static double lati = 0;
-        public static double longi = 0;
-        public static int radius = 0;
-        public static SupportedCities pickedCity;
-        public static bool cityPicked = false;
 
-    }
 
     public class SubCatToLoadType
     {
@@ -57,16 +48,7 @@ namespace TodoApp.Data
     }
 
 
-    public class SupportedCities
-    {
-        public CityNames name { get; set; }
-        public string displayName { get; set; }
-        public double centerLatitude { get; set; }
-        public double centerLongitude { get; set; }
-        //public ImageSource thumbnail { get; set; }
-        public int radiusFromCenter { get; set; }
 
-    }
 
     public enum WhatPositionAmIOnRightNow
     {

@@ -3,8 +3,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     BackgroundColor="White"
     xmlns:helpers="clr-namespace:Khaled.Helpers"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Khaled.Views.Page_FullAd">
     <NavigationPage.TitleView>
             <Grid>
@@ -17,10 +17,11 @@
                     <CarouselView HeightRequest="400" Loop="False" x:Name="carouselview">
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
-                                <StackLayout>
+                                <StackLayout >
                                      <Image Source="{Binding ImageSource}"
-                                            Aspect="AspectFill" VerticalOptions="FillAndExpand"
-                                            HorizontalOptions="Center" />
+                                            Scale="3.2"
+                                            HorizontalOptions="CenterAndExpand"
+                                            VerticalOptions="CenterAndExpand"/>
                                 </StackLayout>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
@@ -59,8 +60,10 @@
                             </Frame.GestureRecognizers>
                         </Frame>
                         <Frame  CornerRadius="0" x:Name="frame_heart" Grid.Column="4" Padding="10"  HasShadow="False">
-                            <abstractions:TintedImage TintColor="Transparent"
+                             
+                            <abstractions:TintedImage 
                                                       VerticalOptions="Center"
+                                                        TintColor="Transparent"
                                                       HorizontalOptions="Center"
                                                       Source="img_fav"
                                                       x:Name="img_heart"/>

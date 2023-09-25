@@ -31,19 +31,19 @@ namespace Khaled.Helpers
             List<FullAdType> x = new List<FullAdType>();
 
             if (adsListType == AdsListType.mainView)
-                x = await AdsAPI.GetAllAds(start, count, radius, inputLat, inputLong, categoryId, info);
+                x = await AdsAPI.GetAllAds(start, count, inputLat, inputLong, categoryId, info);
             else if (adsListType == AdsListType.inCat1)
-                x = await AdsAPI.GetAllAds_Cat1(start, count, radius, inputLat, inputLong, info);
+                x = await AdsAPI.GetAllAds_Cat1(start, count, inputLat, inputLong, info);
             else if (adsListType == AdsListType.title)
                 x = await AdsAPI.GetAdsByTitle(info, start, count);
             else if (adsListType == AdsListType.inCat2)
-                x = await AdsAPI.GetAllAds_Cat2(start, count, radius, inputLat, inputLong, info);
+                x = await AdsAPI.GetAllAds_Cat2(start, count, inputLat, inputLong, info);
             else if (adsListType == AdsListType.titleIncat1)
                 x = await AdsAPI.GetAdsByTitleCat1(info, start, count, categoryId);
             else if (adsListType == AdsListType.titleIncat2)
                 x = await AdsAPI.GetAdsByTitleCat2(info, start, count, categoryId);
             else if (adsListType == AdsListType.finalCat)
-                x = await AdsAPI.GetAdsByFinalCat(start, count, radius, inputLat, inputLong, info);
+                x = await AdsAPI.GetAdsByFinalCat(start, count, inputLat, inputLong, info);
             else if (adsListType == AdsListType.favorites)
             {
                 var favs = await App.DatabaseFAV.GetAllMyFavs();
@@ -67,7 +67,7 @@ namespace Khaled.Helpers
             }
             else
             {
-                x = await AdsAPI.GetAllAds(start, count, radius, inputLat, inputLong, categoryId, info);
+                x = await AdsAPI.GetAllAds(start, count, inputLat, inputLong, categoryId, info);
             }
             return await FormatAd(x);
         }

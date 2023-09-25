@@ -282,13 +282,11 @@ namespace Khaled.Backend.APIs
 
         }
 
-
-
-        public static async Task<List<FullAdType>> GetAdsByFinalCat(int start, int count, int maxKmRadius, double inputLat, double inputLong, string categoryId)
+        public static async Task<List<FullAdType>> GetAdsByFinalCat(int start, int count,  double inputLat, double inputLong, string categoryId)
         {
             var lat = Converters.TurnCommaIntoDot(inputLat.ToString());
             var longi = Converters.TurnCommaIntoDot(inputLong.ToString());
-
+            var maxKmRadius = CachedUser.radius;
             var sr = Constants.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(sr))
             {
@@ -366,11 +364,11 @@ namespace Khaled.Backend.APIs
             }
         }
 
-        public static async Task<List<FullAdType>> GetAllAds(int start, int count, int maxKmRadius, double inputLat, double inputLong, string categoryId, string title)
+        public static async Task<List<FullAdType>> GetAllAds(int start, int count,  double inputLat, double inputLong, string categoryId, string title)
         {
             var lat = Converters.TurnCommaIntoDot(inputLat.ToString());
             var longi = Converters.TurnCommaIntoDot(inputLong.ToString());
-
+            var maxKmRadius = CachedUser.radius;
             var sr = Constants.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(sr))
             {
@@ -437,11 +435,13 @@ namespace Khaled.Backend.APIs
             }
         }
 
-        public static async Task<List<FullAdType>> GetAllAds_Cat1(int start, int count, int maxKmRadius, double inputLat, double inputLong, string categoryId)
+        public static async Task<List<FullAdType>> GetAllAds_Cat1(int start, int count, double inputLat, double inputLong, string categoryId)
         {
             var lat = Converters.TurnCommaIntoDot(inputLat.ToString());
             var longi = Converters.TurnCommaIntoDot(inputLong.ToString());
-            maxKmRadius = 10;  // todo 
+
+
+           var  maxKmRadius = CachedUser.radius; 
             var sr = Constants.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(sr))
             {
@@ -519,11 +519,14 @@ namespace Khaled.Backend.APIs
             }
         }
 
-        public static async Task<List<FullAdType>> GetAllAds_Cat2(int start, int count, int maxKmRadius, double inputLat, double inputLong, string subcategory)
+        public static async Task<List<FullAdType>> GetAllAds_Cat2(int start, int count, double inputLat, double inputLong, string subcategory)
         {
             if (subcategory == null) return new List<FullAdType>(); 
             var lat = Converters.TurnCommaIntoDot(inputLat.ToString());
             var longi = Converters.TurnCommaIntoDot(inputLong.ToString());
+
+            var maxKmRadius = CachedUser.radius;
+
 
             var sr = Constants.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(sr))
@@ -598,6 +601,7 @@ namespace Khaled.Backend.APIs
 
         public static async Task<FullAdType> GetFullPic(int tblAdID)
         {
+
             List<FullAdType> ads = new List<FullAdType>();
             var sr = Constants.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(sr))

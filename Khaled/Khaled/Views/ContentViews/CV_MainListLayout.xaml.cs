@@ -23,25 +23,25 @@ namespace Khaled.Views.ContentViews
         {
             try
             {
-                var img = sender as TintedImage;
-                var context = img.BindingContext as FullAdType;
-                var color = Converters.ColorFromResourceKey("MainTheme");
-
-                var Source = ImageSource.FromFile("img_fav.png");
-
-                if (img.Source.ToString() != Source.ToString())
-                {
-                    //unfav
-                    img.Source = "img_fav.png";
-                    await App.DatabaseFAV.DeleteMyFav(context);
-            
-                }
-                else
-                {
-                    //fav
-                    img.Source = "img_fav_selected.png";
-                    await App.DatabaseFAV.SaveClickedOnFav(context);
-                }
+               var img = sender as TintedImage;
+               var context = img.BindingContext as FullAdType;
+               var color = Converters.ColorFromResourceKey("MainTheme");
+              
+               var Source = ImageSource.FromFile("img_fav.png");
+              
+               if (img.Source.ToString() != Source.ToString())
+               {
+                   //unfav
+                   img.Source = "img_fav.png";
+                   await App.DatabaseFAV.DeleteMyFav(context);
+              
+               }
+               else
+               {
+                   //fav
+                   img.Source = "img_fav_selected.png";
+                   await App.DatabaseFAV.SaveClickedOnFav(context);
+               }
             }
             catch { }
 

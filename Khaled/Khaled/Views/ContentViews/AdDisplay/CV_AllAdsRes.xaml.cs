@@ -264,6 +264,8 @@ namespace Khaled.Views.ContentViews.MainMenuTabs
                 }
                 label_radius.Text = value + " " + AppResources.KM;
                 radiusValue = Int32.Parse(value);
+
+                CachedUser.radius = radiusValue;
             }
             catch (Exception  ex)
             {
@@ -278,6 +280,8 @@ namespace Khaled.Views.ContentViews.MainMenuTabs
             label_radius.Text = "50" + " " + AppResources.KM;
             slider_sliderRadius.Value = Constants.sliderBaseValue;
             radiusValue = Constants.sliderBaseValue;
+            CachedUser.radius = radiusValue;
+
             await RefreshMainView();
         }
 

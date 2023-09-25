@@ -70,7 +70,7 @@ namespace Khaled.Views
         {
             var images = await AdImagesApi.GetAllImagesFromAdId(ad.tblAdID);
 
-            foreach(var elem in images)
+            foreach (var elem in images)
             {
                 elem.ImageSource = Converters.ReturnImageSourceFromString(elem.Image);
             }

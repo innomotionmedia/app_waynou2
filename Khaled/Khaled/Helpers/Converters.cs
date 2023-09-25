@@ -12,6 +12,9 @@ using TextType = TodoApp.Data.TextType;
 
 namespace Khaled.Helpers
 {
+
+
+
     public class Converters
     {
         public static string ReturnCorrectLingua(FullAdType input, TextType type)

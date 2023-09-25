@@ -2,7 +2,8 @@
 <ContentView
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+    xmlns:abstractions="clr-namespace:Plugin.CrossPlatformTintedImage.Abstractions;assembly=Plugin.CrossPlatformTintedImage.Abstractions"
+
     x:Class="Khaled.Views.ContentViews.CV_MainListLayout">
     <ContentView.Content>
             <Frame HasShadow="False" Padding="10" BackgroundColor="White">
@@ -45,16 +46,15 @@
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
                             <Grid>
-                                <controls:TintedImage HeightRequest="30"
+                                <abstractions:TintedImage  HeightRequest="30"
                                        WidthRequest="30"
-                                       TintColor="Transparent"
                                        HorizontalOptions="End"
                                        VerticalOptions="Start"
                                        Source="{Binding FaveImageSource}">
-                                    <controls:TintedImage.GestureRecognizers>
+                                    <abstractions:TintedImage.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="Tapped_Fav"/>
-                                    </controls:TintedImage.GestureRecognizers>
-                                </controls:TintedImage>
+                                    </abstractions:TintedImage.GestureRecognizers>
+                                </abstractions:TintedImage>
                             </Grid>
                             <Frame IsVisible="{Binding IsDistanceVisible}" HorizontalOptions="End" Grid.Row="1"
                                    BackgroundColor="{StaticResource MainTheme}" HasShadow="False" CornerRadius="8" Padding="6">
