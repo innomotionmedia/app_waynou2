@@ -102,6 +102,7 @@
         {
             // User clicked OK
             await Data.Api.AdsApi.DeleteAdById(id);
+            StateHasChanged();
             Pages.Ads.AllAds.Instance.TheStateHasChanged();
         }
         else

@@ -82,7 +82,7 @@
                                 <td style="padding: 20px 60px 0px 60px">
                                     <strong style="font-size: 15px;">Anzeigen Bild (1)</strong>
                                     <div style="padding-top: 10px;">
-                                        <ImagePicker ImgType="ImagePicker.ImageType.OfferPic" />
+                                        <LargeImages ImgType=" LargeImages.ImageType.OfferPic" />
                                     </div>
                                 </td>
                             </tr>
@@ -186,13 +186,12 @@
     string placeholder = "Anzeigen-Id";
     string LinkText = "Dieses Angebot führt nicht zu einer Website, sondern zu einer Ad in unserer App. Dann hier bitte die Anzeigen-Id eintragen.";
     private int order = 0;
-    bool WithLink = false; 
+    bool WithLink = false;
+    public static string AdPic = ""; // written to from largeimages
 
     private async void CreateNewOffer()
     {
-        var pic = ImagePicker.ImageResult;
-
-        if (string.IsNullOrEmpty(pic))
+        if (string.IsNullOrEmpty(AdPic))
         {
             await JsRuntime.InvokeVoidAsync("alert", "Bild fehlt.");
             return;
@@ -216,7 +215,7 @@
             {
                 extraInformation = extraInformation,
                 title = title,
-                thumbnail = pic,
+                thumbnail = AdPic,
                 id = Converters.ReturnRandomString(Constants.IDLENGTH),
                 order = order,
                 type = type
@@ -224,10 +223,9 @@
 
         await Data.Api.OfferApi.Createoffer(of);
 
-        ImagePicker.ImageResult = "";
-
-        await JsRuntime.InvokeVoidAsync("alert", "Anzegie ");
-        NavManager.NavigateTo("/allads");
+        await JsRuntime.InvokeVoidAsync("alert", "Angebot erstellt!");
+        AdPic = ""; 
+        NavManager.NavigateTo("/alloffers");
     }
 
     private void HandleCheckboxChange(ChangeEventArgs e)
