@@ -10,7 +10,17 @@
         <table class="main">
             <tr>
                 <td  style="vertical-align: top;" class="thumbnailContainer">
-                    <img id="capturedImage" onchange="@Checker()" style="max-width:300px" @ref="previewImageElem" />
+                    @{
+                        if (String.IsNullOrEmpty(ExistingImage))
+                        {
+                            <img id="capturedImage" onchange="@Checker()" style="max-width:300px" @ref="previewImageElem" />
+                        }
+                        else
+                        {
+                            <img id="capturedImage" src="@Helpers.Converters.ReturnBase64ImageSourceFromBase64String(ExistingImage)" onchange="@Checker()" style="max-width:300px" @ref="previewImageElem" />
+
+                        }
+                    }
                 </td>
                 <td style="vertical-align: top;">
                     <table>
@@ -34,12 +44,16 @@
         </table>
     </div>
 }
+else if(ImgType == ImageType.OfferPic)
+{
+    <div class="fillContainer">
+        <img id="capturedImage" onchange="@Checker()" style="max-width:700px;max-height:200px" @ref="previewImageElem" />
+    </div>
+}
 else
 {
 
-    <div class="fillContainer">
-        <img id="capturedImage" onchange="@Checker()" style="max-width:800px;max-height:800px" @ref="previewImageElem" />
-    </div>
+
 }
 
 
@@ -88,7 +102,8 @@ else
     public string Title { get; set; }
     [Parameter]
     public string Desc { get; set; }
-
+    [Parameter]
+    public string ExistingImage { get; set; }
     private InputFile? inputFile;
     private ElementReference previewImageElem;
 
@@ -115,7 +130,12 @@ else
             {
                 Pages.Ads.CreateAds.Thumbnail = output;
             }
-         
+            if (ImgType == ImageType.OfferPic)
+            {
+                Pages.Offers.CreateOffer.AdPic = output; 
+            }
+
+
         }
 
     }

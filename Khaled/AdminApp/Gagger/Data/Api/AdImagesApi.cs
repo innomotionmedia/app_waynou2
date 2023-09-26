@@ -19,7 +19,8 @@ namespace Gagger.Data.Api
                 string query = @"
                     SELECT *
                     FROM [AdImages]
-                    WHERE BelongsToAdId = @belongsToAdId";
+                    WHERE BelongsToAdId = @belongsToAdId
+                    ORDER BY Position";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -88,6 +89,32 @@ namespace Gagger.Data.Api
             }
         }
 
+        public static async Task DeleteAdImageById(string adImageid)
+        {
+            var sr = Constants.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(sr))
+            {
+                await connection.OpenAsync();
+
+                string query = @"
+                    DELETE
+                    FROM [AdImages]
+                    WHERE Id = @Id";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", adImageid);
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                        }
+
+                    }
+
+                }
+            }
+        }
         public static async Task DeleteAdImages(string adId)
         {
             var sr = Constants.GetConnectionString();

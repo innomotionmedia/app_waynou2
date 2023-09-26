@@ -5,9 +5,355 @@
 @inject IJSRuntime JsRuntime
 @inject NavigationManager NavManager
 
+<!-- Loading Indicator, will be shown over page layout -->
+<LoadingIndicator isLoading="@isLoading" />
 
 <PageTitle>Main</PageTitle>
 <body class="yolo">
+    <div style="overflow:scroll; height: 91vh; overflow-x: hidden;" class="mainDiv">
+        <table style="padding: 20px;" class="maintable">
+            <tr>
+                <td class="equalSize">
+                </td>
+                <td>
+                    <div style="padding: 20px;" class="centerDiv">
+                        <table width="100%">
+                            <tr>
+                                <td align="center" style="padding-top: 20px;">
+                                    <strong style="font-size: 25px;">Anzeige Erstellen</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 50px 0px 0px 60px">
+                                    <strong style="font-size: 20px;">#Titel</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px 60px 10px 60px">
+                                    <input maxlength="100" type="text" @bind="@TitleDeutsch" placeholder="Deutscher Titel" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0px 60px 0px 60px">
+                                    <input maxlength="100" type="text" @bind="@TitleArabisch" placeholder="Arabischer Titel" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 60px 0px 60px">
+                                    <input type="text" maxlength="100" @bind="@TitleEnglisch" placeholder="Englischer Titel" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 50px 0px 0px 60px">
+                                    <strong style="font-size: 20px;">#Beschreibungen</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px 60px 10px 60px">
+                                   <textarea class="custom-textarea" @bind="DescriptionDeutsch" placeholder="Deutsche Beschreibung" rows="5"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0px 60px 0px 60px">
+                                    <textarea class="custom-textarea" @bind="DescriptionArabisch" placeholder="Arabische Beschreibung" rows="5"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 60px 0px 60px">
+                                    <textarea class="custom-textarea" @bind="DescriptionEnglisch" placeholder="Englische Beschreibung" rows="5"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 50px 0px 0px 60px">
+                                    <strong style="font-size: 20px;">#Metadaten</strong>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 20px 60px 10px 60px">
+                                    <input maxlength="30" type="text" @bind="@Hours" placeholder="06:00 Uhr - 20:00 Uhr" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0px 60px 0px 60px">
+                                    <input type="text" maxlength="100" @bind="@Telephone" placeholder="+49 151 543321 432" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 60px 0px 60px">
+                                    <input maxlength="100" type="text" @bind="@Web" placeholder="http://www.example.com" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 60px 0px 60px">
+                                    <input maxlength="100" type="text" @bind="@Email" placeholder="name@firma.com" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 50px 0px 0px 60px">
+                                    <strong style="font-size: 20px;">#Kategorie</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 60px 0px 60px">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <label style="width:130px;" for="dropdown">Hauptkategorie:</label>
+                                                    <select id="dropdown"  @onchange="HandleDropdownChange">
+                                                        @{
+                                                            if (ExistingAd.category != 0) 
+                                                            {
+                                                                int counter = 0; 
+                                                                foreach (var elem in enums)
+                                                                {
+                                                                    counter++;
+
+                                                                    bool isSelected = false; 
+
+                                                                    if(counter == ExistingAd.category)
+                                                                    {
+                                                                        isSelected = true; 
+                                                                    }
+
+                                                                    var id = (int)elem;
+                                                                    <option selected="@isSelected" value="@id">@elem</option>
+                                                            
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                foreach (var elem in enums)
+                                                                {
+                                                                    var id = (int)elem;
+                                                                    <option value="@id">@elem</option>
+                                                                }
+                                                            }
+
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-top: 5px;">
+                                                <div>
+                                                    <label style="width:130px;" for="dropdown">Subkategorie:</label>
+                                                    <select id="dropdown"  @onchange="HandleDropdownChangeSub">
+                                                        @{
+                                                            if (!String.IsNullOrEmpty(ExistingAd.subcategory))
+                                                            {
+                                                                foreach (var elem in SubCats)
+                                                                {
+                                                                    bool IsSelected = false;
+                                                                    if (elem.Id == ExistingAd.subcategory) IsSelected = true;
+                                                                    <option selected="@IsSelected" value="@elem.Id">@elem.titleGer</option>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                foreach (var elem in SubCats)
+                                                                {
+                                                                    <option value="@elem.Id">@elem.titleGer</option>
+                                                                }
+                                                            }
+
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-top: 5px;">
+                                                <div>
+                                                    <label style="width:130px;" for="dropdown">Subsubkategorie:</label>
+                                                    <select id="dropdown" @onchange="HandleDropdownChangeSubSub">
+                                                        @{
+
+                                                            if (!String.IsNullOrEmpty(ExistingAd.subsubcategory))
+                                                            {
+                                                                foreach (var elem in SubSubCats)
+                                                                {
+                                                                    bool IsSelected = false;
+                                                                    if (elem.Id == ExistingAd.subsubcategory) IsSelected = true;
+                                                                    <option selected="@IsSelected" value="@elem.Id">@elem.titleGer</option>
+
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                foreach (var elem in SubSubCats)
+                                                                {
+                                                                    <option value="@elem.Id">@elem.titleGer</option>
+                                                                }
+                                                            }
+
+
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="padding: 50px 0px 0px 60px">
+                                    <strong style="font-size: 20px;">#Adresse</strong>
+                                    <br />Bitte eintragen, dann auf "Adresse suchen" drücken. <br />Wenn gefunden, werden Koordinaten eingetragen und die Adresse korrekt formatiert ausgegeben.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px 60px 10px 60px">
+                                    <input maxlength="100" type="text" @bind="@Adresse" placeholder="123 FunnyStreet Funnyland" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 60px 0px 60px">
+                                    <button class="goodButton" style="margin-top: -20px;" @onclick="FindAdresse">Adresse suchen</button>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 60px 0px 60px">
+                                    <table style="width: 100%">
+                                        <tr>
+                                            <td>
+                                                Latitude
+                                            </td>
+                                            <td>
+                                                Longitude
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" maxlength="30" @bind="@Latitude" placeholder="52,4423" />
+                                            </td>
+                                            <td>
+                                                <input type="text" maxlength="30" @bind="@Longitude" placeholder="10,342" />
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 0px 0px 60px">
+                                    <strong style="font-size: 17px;">Formatierte Adresse:  </strong>
+                                    @formattedAdresse
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 50px 0px 0px 60px">
+                                    <strong style="font-size: 20px;">#Bilder</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px 60px 0px 60px">
+                                    <strong style="font-size: 15px;">Thumbnail</strong>
+                                    @{
+                                        if(ExistingAd.thumbnail != null)
+                                        {
+                                            <div style="padding-top: 10px;">
+                                                <LargeImages ExistingImage="@ExistingAd.thumbnail" ImgType="LargeImages.ImageType.Thumbnail" Title="@TitleDeutsch" Desc="@DescriptionDeutsch"></LargeImages>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div style="padding-top: 10px;">
+                                                <LargeImages ImgType="LargeImages.ImageType.Thumbnail" Title="@TitleDeutsch" Desc="@DescriptionDeutsch"></LargeImages>
+                                            </div>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px 60px 0px 60px">
+                                    <strong style="font-size: 15px;">Hauptbild (1)</strong>
+                                    <button @onclick="() => DeleteImage(1)">delete</button>
+
+                                    <div style="padding-top: 10px;">
+                                        <div class="fillContainer">
+                                            <InputFile @key=@(inputFileId1) @ref="inputFile1" id="inputFile1" OnChange="@ShowPreview1" style="padding-bottom: 20px;" />
+                                            @{
+                                                if (AdImages.Count > 0)
+                                                {
+                                                    <img id="capturedImage1" src="@Converters.ReturnBase64ImageSourceFromBase64String(AdImages[0].Image)" style="max-width:800px;max-height:800px" @ref="previewImageElem1" />
+                                                }
+                                                else
+                                                {
+                                                    <img id="capturedImage1" style="max-width:800px;max-height:800px" @ref="previewImageElem1" />
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px 60px 0px 60px">
+                                    <strong style="font-size: 15px;">Anzeigenbild (2)</strong>
+                                    <button @onclick="() => DeleteImage(2)">delete</button>
+
+                                    <div style="padding-top: 10px;">
+                                        <div class="fillContainer">
+                                            <InputFile @key=@(inputFileId2) @ref="inputFile2" OnChange="@ShowPreview2" style="padding-bottom: 20px;" />
+                                            @{
+                                                if (AdImages.Count > 1)
+                                                {
+                                                    <img id="capturedImage2" src="@Converters.ReturnBase64ImageSourceFromBase64String(AdImages[1].Image)" style="max-width:800px;max-height:800px" @ref="previewImageElem2" />
+                                                }
+                                                else
+                                                {
+                                                    <img id="capturedImage2" style="max-width:800px;max-height:800px" @ref="previewImageElem2" />
+
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px 60px 0px 60px">
+                                    <strong style="font-size: 15px;">Anzeigenbild (3)</strong>
+                                    <button @onclick="() => DeleteImage(3)">delete</button>
+
+                                    <div style="padding-top: 10px;">
+                                        <div class="fillContainer">
+                                            <InputFile @key=@(inputFileId3) @ref="inputFile3" OnChange="@ShowPreview3" style="padding-bottom: 20px;" />
+                                            @{
+                                                if(AdImages.Count > 2)
+                                                {
+                                                    <img id="capturedImage3" src="@Converters.ReturnBase64ImageSourceFromBase64String(AdImages[2].Image)" style="max-width:800px;max-height:800px" @ref="previewImageElem3" />
+                                                }
+                                                else
+                                                {
+                                                    <img id="capturedImage3" style="max-width:800px;max-height:800px" @ref="previewImageElem3" />
+
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:40px 60px 0px 60px">
+                                    <button class="goodButton" style="margin-top: 10px;" @onclick="CreateAdClicked">Anzeige Erstellen</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+                <td class="equalSize">
+                </td>
+            </tr>
+        </table>
+    </div>
 </body>
 
 
@@ -54,6 +400,9 @@
 
 
 @code {
+
+    private bool isLoading = false;
+
     TodoApp.Data.CategoriesEnum[] enums = (TodoApp.Data.CategoriesEnum[])Enum.GetValues(typeof(TodoApp.Data.CategoriesEnum));
     private List<Data.Api.Category.CategoryType> SubCats = new List<Data.Api.Category.CategoryType>();
     private List<Data.Api.Category.CategoryType> SubSubCats = new List<Data.Api.Category.CategoryType>();
@@ -67,7 +416,7 @@
     private string DescriptionDeutsch = "";
     private string DescriptionEnglisch = "";
     private string DescriptionArabisch = "";
-
+    public string formattedAdresse = "";
     private string Adresse = "";
     private string Telephone = "";
     private string Hours = "";
@@ -84,9 +433,7 @@
     string selectedSubSubCat = "";
 
     // will be writting to from imagepicker
-    public static string Image_1 = ""; 
-    public static string Image_2 = "";
-    public static string Image_3 = "";
+
     public static string Thumbnail = "";
 
     string existingAdId = "";
@@ -102,11 +449,11 @@
                 belongsToSubCat = "",
                 titleGer = "keine"
             };
-      
+
         SubCats.Add(none);
         SubCats.AddRange(await Data.Api.Category.GetSubCatsInMainCat(selectedMainCat));
         StateHasChanged();
-      
+
         var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
         if (Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query).TryGetValue("id", out var _id))
         {
@@ -119,31 +466,96 @@
 
     private async void LoadAd()
     {
-      if (isEdit)
-      {
-          ExistingAd = await Data.Api.AdsApi.GetFullAdInfo(existingAdId);
-          AdImages = await Data.Api.AdImagesApi.GetAdImages(existingAdId);
-     
-          TitleArabisch = ExistingAd.titleAr;
-          TitleDeutsch = ExistingAd.titleDe;
-          TitleEnglisch = ExistingAd.title;
-          DescriptionArabisch = ExistingAd.descriptionAR;
-          DescriptionDeutsch = ExistingAd.descriptionGER;
-          DescriptionEnglisch = ExistingAd.descriptionENG;
-          Email = ExistingAd.email;
-          Hours = ExistingAd.hours;
-          Latitude = ExistingAd.latitude;
-          Longitude = ExistingAd.longitude;
-          Telephone = ExistingAd.telephone;
-          Web = ExistingAd.web;
-          Adresse = ExistingAd.adresse;
-          selectedMainCat = ExistingAd.category.ToString();
-          selectedSubCat = ExistingAd.subcategory;
-          selectedSubSubCat = ExistingAd.subsubcategory;
-     
-          StateHasChanged();
-      }
+        if (isEdit)
+        {
+            isLoading = true;
+
+            ExistingAd = await Data.Api.AdsApi.GetFullAdInfo(existingAdId);
+            AdImages = await Data.Api.AdImagesApi.GetAdImages(existingAdId);
+            isLoading = false;
+
+            TitleArabisch = ExistingAd.titleAr;
+            TitleDeutsch = ExistingAd.titleDe;
+            TitleEnglisch = ExistingAd.title;
+            DescriptionArabisch = ExistingAd.descriptionAR;
+            DescriptionDeutsch = ExistingAd.descriptionGER;
+            DescriptionEnglisch = ExistingAd.descriptionENG;
+            Email = ExistingAd.email;
+            Hours = ExistingAd.hours;
+            Latitude = ExistingAd.latitude;
+            Longitude = ExistingAd.longitude;
+            Telephone = ExistingAd.telephone;
+            Web = ExistingAd.web;
+            Adresse = ExistingAd.adresse;
+            selectedMainCat = ExistingAd.category.ToString();
+            selectedSubCat = ExistingAd.subcategory;
+            selectedSubSubCat = ExistingAd.subsubcategory;
+            FindAdresse();
+            StateHasChanged();
+        }
+
     }
+
+    private async void DeleteImage(int id)
+    {
+        if (isEdit)
+        {
+            bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Sicher löschen? Das löscht direkt das Bild vom Server und ist nicht zurückholbar!"); // Confirm
+
+            if (confirmed)
+            {
+                DeleteImageFromServer(id);
+            }
+
+        }
+        else
+        {
+            switch (id)
+            {
+                case 1:
+                    inputFileId1 = Guid.NewGuid();
+                    break;
+                case 2:
+                    inputFileId2 = Guid.NewGuid();
+                    break;
+                case 3:
+                    inputFileId3 = Guid.NewGuid();
+                    break;
+            }
+        }
+
+    }
+
+    private async void DeleteImageFromServer(int id)
+    {
+
+        switch (id)
+        {
+            case 1:
+                await Data.Api.AdImagesApi.DeleteAdImageById(AdImages[0].Id);
+                inputFileId1 = Guid.NewGuid();
+                AdImages.RemoveAt(0);
+
+
+                break;
+            case 2:
+                await Data.Api.AdImagesApi.DeleteAdImageById(AdImages[1].Id);
+                inputFileId2 = Guid.NewGuid();
+                AdImages.RemoveAt(1);
+
+                break;
+            case 3:
+                await Data.Api.AdImagesApi.DeleteAdImageById(AdImages[2].Id);
+                AdImages.RemoveAt(2);
+                inputFileId3 = Guid.NewGuid();
+                break;
+
+        }
+
+        StateHasChanged();
+
+    }
+
     private async void HandleDropdownChange(ChangeEventArgs e)
     {
         selectedMainCat = "";      // reset value
@@ -196,12 +608,48 @@
         selectedSubSubCat = e.Value.ToString();
     }
 
-    private async void LogInClicked()
+    private async void FindAdresse()
     {
+        if (!String.IsNullOrEmpty(Adresse))
+        {
+            var x = await Data.Api.RestHelper.ReverseGeoCoding(Adresse);
+            if(x != null)
+            {
+                if(x.results.Count != 0)
+                {
+                    // found
+                    Latitude = float.Parse(x.results[0].geometry.location.lat.ToString());
+                    Longitude = float.Parse(x.results[0].geometry.location.lng.ToString());
+                    formattedAdresse = x.results[0].formatted_address;
+                }
+                else
+                {
+                    // nothing
+                    await JsRuntime.InvokeVoidAsync("alert", "Keine Treffer gefunden. Versuche es nochmal!");
+                    Latitude = 0;
+                    Longitude = 0;
+                    formattedAdresse = "";
+                    StateHasChanged();
+                }
+            }
+        }
+        else
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "Bitte Adresse eingeben!");
+
+        }
+
+      
+    }
+
+    private async void CreateAdClicked()
+    {
+
         var pic = Thumbnail;
 
         if (string.IsNullOrEmpty(pic))
         {
+
             await JsRuntime.InvokeVoidAsync("alert", "Anzeigenbild fehlt.");
             return;
         }
@@ -240,6 +688,21 @@
             await JsRuntime.InvokeVoidAsync("alert", "Adresse fehlt");
             return;
         }
+        if (formattedAdresse == "")
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "Adresse fehlt");
+            return;
+        }
+        if (Latitude == 0)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "Latitude fehlt!");
+            return;
+        }
+        if (Longitude == 0)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "Longitude fehlt!");
+            return;
+        }
         if (Hours == "")
         {
             await JsRuntime.InvokeVoidAsync("alert", "Öffnungszeiten fehlen");
@@ -271,10 +734,12 @@
 
     private async Task CreateAd(string pic)
     {
+        isLoading = true;
+
         var ad = new Data.Api.AdsApi.FullAdType
             {
                 tblAdID = Converters.ReturnRandomString(Constants.IDLENGTH),
-                adresse = Adresse,
+                adresse = formattedAdresse, // results from google
                 category = Int32.Parse(selectedMainCat),
                 subcategory = selectedSubCat,
                 subsubcategory = selectedSubSubCat,
@@ -295,6 +760,14 @@
                 description = DescriptionEnglisch
             };
 
+        if (isEdit)
+        {
+            // delete old ad and just be good 
+            await Data.Api.AdsApi.DeleteAdById(ExistingAd.tblAdID);
+            // now take old id and put into new ad
+            ad.tblAdID = ExistingAd.tblAdID;
+        }
+
         await Data.Api.AdsApi.CreateAd(ad);
 
         List<AdImageType> images = new List<AdImageType>();
@@ -310,12 +783,14 @@
                     Image = output,
                     Position = 0,
                 };
-            images.Add(x);
+
+            if(x.Image != "") images.Add(x);
         }
         if (!string.IsNullOrEmpty(await JsRuntime.InvokeAsync<string>("captureImage2")))
         {
             var result = await JsRuntime.InvokeAsync<string>("captureImage2");
             string output = result.Substring(result.IndexOf(',') + 1);
+
             var x = new AdImageType
                 {
                     BelongsToAdId = ad.tblAdID,
@@ -324,7 +799,7 @@
                     Position = 1,
 
                 };
-            images.Add(x);
+            if (x.Image != "") images.Add(x);
         }
         if (!string.IsNullOrEmpty(await JsRuntime.InvokeAsync<string>("captureImage3")))
         {
@@ -338,7 +813,7 @@
                     Position = 2,
 
                 };
-            images.Add(x);
+            if (x.Image != "") images.Add(x);
         }
 
         foreach(var elem in images)
@@ -347,11 +822,10 @@
         }
 
         //reset images is importantanter
-        Image_1 = "";
-        Image_2 = "";
-        Image_3 = "";
+
         Thumbnail = "";
 
+        isLoading = false;
         await JsRuntime.InvokeVoidAsync("alert", "Anzeige erstellt!");
         NavManager.NavigateTo("/allads");
     }
@@ -374,6 +848,9 @@
     private async Task ShowPreview3() => await JsRuntime.InvokeVoidAsync(
        "previewImage3", inputFile3!.Element, previewImageElem3);
 
+    private Guid inputFileId1 = Guid.NewGuid();
+    private Guid inputFileId2 = Guid.NewGuid();
+    private Guid inputFileId3 = Guid.NewGuid();
 
 
 

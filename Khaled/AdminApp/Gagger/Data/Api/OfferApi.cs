@@ -59,7 +59,7 @@ namespace Gagger.Data.Api
                 string query = @"
                     SELECT *
                     FROM [Offer]     
-                    ORDER BY DateCreated DESC
+                    ORDER BY [order] ASC
                     OFFSET @Start ROWS FETCH NEXT @Count ROWS ONLY;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
