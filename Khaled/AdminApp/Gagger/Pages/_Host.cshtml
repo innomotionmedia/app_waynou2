@@ -7,6 +7,22 @@
 
 <script>
 
+    function makeBold(id) {
+        // Get the textarea element by its id
+        var element = "custom-textarea" + id;
+
+        var textarea = document.getElementById(element);
+        // Get the selected text
+       var selectedText = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
+        // Add '%' signs before and after the selected text
+        var newText = '<b>' + selectedText + '</b>';
+        // Update the textarea with the modified text
+       textarea.value = textarea.value.substring(0, textarea.selectionStart) + newText + textarea.value.substring(textarea.selectionEnd);    
+       // Update the cursor position
+       textarea.selectionStart = textarea.selectionEnd = textarea.selectionStart + newText.length;   
+       // Trigger the input event to update the binding (if you're using a framework like Blazor)
+       textarea.dispatchEvent(new Event('input'));
+    }
 
     function captureImage2() {
         var canvas = document.createElement('canvas');

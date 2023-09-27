@@ -9,6 +9,11 @@
 <LoadingIndicator isLoading="@isLoading" />
 
 <PageTitle>Main</PageTitle>
+
+
+
+
+
 <body class="yolo">
     <div style="overflow:scroll; height: 91vh; overflow-x: hidden;" class="mainDiv">
         <table style="padding: 20px;" class="maintable">
@@ -29,13 +34,8 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="padding: 20px 60px 10px 60px">
+                                <td style="padding: 20px 60px 0px 60px">
                                     <input maxlength="100" type="text" @bind="@TitleDeutsch" placeholder="Deutscher Titel" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0px 60px 0px 60px">
-                                    <input maxlength="100" type="text" @bind="@TitleArabisch" placeholder="Arabischer Titel" />
                                 </td>
                             </tr>
                             <tr>
@@ -44,23 +44,29 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td style="padding: 10px 60px 0px 60px">
+                                    <input maxlength="100" type="text" @bind="@TitleArabisch" placeholder="Arabischer Titel" />
+                                </td>
+                            </tr>
+                            <tr>
                                 <td style="padding: 50px 0px 0px 60px">
                                     <strong style="font-size: 20px;">#Beschreibungen</strong>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="padding: 20px 60px 10px 60px">
-                                   <textarea class="custom-textarea" @bind="DescriptionDeutsch" placeholder="Deutsche Beschreibung" rows="5"></textarea>
+                                <td style="padding: 20px 60px 00px 60px">
+                                    <TextArea Language="TextArea.PossibleLanguage.Deutsch" @bind-Value="DescriptionDeutsch"></TextArea>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 00px 60px 0px 60px">
+                                    <TextArea Language="TextArea.PossibleLanguage.Englisch" @bind-Value="DescriptionEnglisch"></TextArea>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 0px 60px 0px 60px">
-                                    <textarea class="custom-textarea" @bind="DescriptionArabisch" placeholder="Arabische Beschreibung" rows="5"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px 60px 0px 60px">
-                                    <textarea class="custom-textarea" @bind="DescriptionEnglisch" placeholder="Englische Beschreibung" rows="5"></textarea>
+                                    <TextArea Language="TextArea.PossibleLanguage.Arabisch" @bind-Value="DescriptionArabisch"></TextArea>
                                 </td>
                             </tr>
                             <tr>
@@ -68,7 +74,6 @@
                                     <strong style="font-size: 20px;">#Metadaten</strong>
                                 </td>
                             </tr>
-
                             <tr>
                                 <td style="padding: 20px 60px 10px 60px">
                                     <input maxlength="30" type="text" @bind="@Hours" placeholder="06:00 Uhr - 20:00 Uhr" />
@@ -385,7 +390,7 @@
     }
 
     .maintable {
-        width: 100%;
+        width: 140%;
     }
 
 
@@ -413,9 +418,7 @@
     private string TitleEnglisch = "";
     private string TitleArabisch = "";
 
-    private string DescriptionDeutsch = "";
-    private string DescriptionEnglisch = "";
-    private string DescriptionArabisch = "";
+
     public string formattedAdresse = "";
     private string Adresse = "";
     private string Telephone = "";
@@ -438,6 +441,10 @@
 
     string existingAdId = "";
     bool isEdit = false;
+
+    private string DescriptionDeutsch { get; set; } = string.Empty;      //Results from Editor
+    private string DescriptionEnglisch { get; set; } = string.Empty;     //Results from Editor
+    private string DescriptionArabisch { get; set; } = string.Empty;     //Results from Editor
 
     protected async override void OnInitialized()
     {

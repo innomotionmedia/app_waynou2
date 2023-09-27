@@ -1,0 +1,68 @@
+﻿@inject IJSRuntime JsRuntime
+@inject NavigationManager NavManager
+
+
+<table width="100%" style="margin-bottom: 20px;">
+    <tr>
+        <td>
+            <table width="100%">
+                <tr>
+                    <td>
+                          <button onclick="makeBold(@id)"><strong>Bold</strong></button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @{
+                string which = "custom-textarea" + id;
+                string placeholder = "";
+                if (Language == PossibleLanguage.Deutsch) placeholder = "Deutsche Beschreibung";
+                if (Language == PossibleLanguage.Englisch) placeholder = "Englische Beschreibung";
+                if (Language == PossibleLanguage.Arabisch) placeholder = "Arabische Beschreibung";
+                <textarea value="@Value" class="custom-textarea" id="@which" @onchange="FinishAsync" placeholder="@placeholder" rows="5"></textarea> @*setting VALUE as pre selected when edit ad as onchange is already used*@
+            }
+        </td>
+    </tr>
+</table>
+
+@code {
+    [Parameter] public PossibleLanguage Language { get; set; }
+    [Parameter] public string Value { get; set; }
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+    [Parameter] public string InputValue { get; set; }
+
+    int id = 0; // needed to differntiate between the diffrent ones 
+    private string result = "";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        id = (int)Language;
+
+        StartTimer();
+    }
+
+    private async void StartTimer()
+    {
+        // so this will wait a bit for the parent to have the results ready and THEN load the component anew. This is because we might already have data that we want to fill in (edit ad)
+        await Task.Delay(2000);
+        StateHasChanged(); 
+    }
+
+    private void FinishAsync(ChangeEventArgs e)
+    {
+        // binds the values and gives it back to the parent via "Value" 
+        result = e.Value.ToString(); 
+        ValueChanged.InvokeAsync(result);
+    }
+
+    public enum PossibleLanguage
+    {
+        Deutsch,
+        Englisch,
+        Arabisch
+    }
+}
